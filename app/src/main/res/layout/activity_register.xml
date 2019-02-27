@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/kudu_logo" />
 
     <EditText
-        android:id="@+id/EdtxtFirstName"
+        android:id="@+id/EdtxtFirstNameReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -27,7 +27,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/EdtxtLastName"
+        android:id="@+id/EdtxtLastNameReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -35,7 +35,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/EdtxtUsername"
+        android:id="@+id/EdtxtUsernameReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -43,7 +43,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/EdtxtEmailAddress"
+        android:id="@+id/EdtxtEmailAddressReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -51,7 +51,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/EdtxtPassword"
+        android:id="@+id/EdtxtPasswordReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -59,7 +59,7 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/EdtxtPasswordConfirmation"
+        android:id="@+id/EdtxtPasswordConfirmationReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -67,7 +67,7 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/BtnRegister"
+        android:id="@+id/BtnRegisterReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register" />
@@ -85,7 +85,7 @@
             android:text="Already have an account?" />
 
         <TextView
-            android:id="@+id/txtViewLogin"
+            android:id="@+id/txtViewLoginReg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
