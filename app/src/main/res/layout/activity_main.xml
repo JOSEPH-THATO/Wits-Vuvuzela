@@ -12,7 +12,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        app:srcCompat="@android:drawable/presence_video_busy" />
+        app:srcCompat="@drawable/kudu_logo" />
 
     <EditText
         android:id="@+id/editText"
@@ -61,4 +61,5 @@
             android:layout_weight="1"
             android:text="Register" />
     </LinearLayout>
+
 </LinearLayout>
