@@ -20,7 +20,8 @@
 
     <EditText
         android:id="@+id/EdtxtFirstName"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="First Name"
@@ -28,7 +29,8 @@
 
     <EditText
         android:id="@+id/EdtxtLastName"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Last Name"
@@ -36,7 +38,8 @@
 
     <EditText
         android:id="@+id/EdtxtUsername"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="User Name"
@@ -44,7 +47,8 @@
 
     <EditText
         android:id="@+id/EdtxtEmailAddress"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email Address"
@@ -52,7 +56,8 @@
 
     <EditText
         android:id="@+id/EdtxtPassword"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Password"
@@ -60,7 +65,8 @@
 
     <EditText
         android:id="@+id/EdtxtPasswordConfirmation"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Password Confirmation"
@@ -68,21 +74,28 @@
 
     <Button
         android:id="@+id/BtnRegister"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
+        android:background="#080b45"
+        android:textColor="#e2ac19"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="Register" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="26dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        >
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Already have an account?" />
+            android:text="Already have an account?"
+            android:textAlignment="center"
+            />
 
         <TextView
             android:id="@+id/txtViewLogin"
