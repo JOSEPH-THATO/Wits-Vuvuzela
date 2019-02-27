@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/kudu_logo" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/EdtxtFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -27,7 +27,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/EdtxtLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -35,7 +35,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/EdtxtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -43,7 +43,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/EdtxtEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -51,7 +51,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/EdtxtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -59,7 +59,7 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/editText9"
+        android:id="@+id/EdtxtPasswordConfirmation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -67,7 +67,7 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/BtnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register" />
@@ -85,7 +85,7 @@
             android:text="Already have an account?" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txtViewLogin"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
