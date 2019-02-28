@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "191434287155",
+    "firebase_url": "https://witsvuvuzeladatabase.firebaseio.com",
+    "project_id": "witsvuvuzeladatabase",
+    "storage_bucket": "witsvuvuzeladatabase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191434287155:android:f2c505532a8ae375",
+        "android_client_info": {
+          "package_name": "com.example.wits_vuvuzela_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191434287155-md5pli4490c599hcm1f7ptt741qiuqcn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApvEt1QtBjxDQx90Ao2XiZKVtxDVOWF1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
