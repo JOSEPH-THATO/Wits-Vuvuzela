@@ -7,136 +7,111 @@
     android:orientation="vertical"
     tools:context=".Register">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/kudu_logo" />
-
-    <EditText
-<<<<<<< HEAD
-        android:id="@+id/EdtxtFirstNameReg"
+    <ScrollView
         android:layout_width="match_parent"
-=======
-        android:id="@+id/EdtxtFirstName"
-        android:layout_gravity="center"
-        android:layout_width="200dp"
->>>>>>> f8f69d941b30d9e2d6397fbcd15e6e61f9891a4c
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName" />
+        android:layout_height="match_parent">
 
-    <EditText
-<<<<<<< HEAD
-        android:id="@+id/EdtxtLastNameReg"
-        android:layout_width="match_parent"
-=======
-        android:id="@+id/EdtxtLastName"
-        android:layout_gravity="center"
-        android:layout_width="200dp"
->>>>>>> f8f69d941b30d9e2d6397fbcd15e6e61f9891a4c
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Last Name"
-        android:inputType="textPersonName" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <EditText
-<<<<<<< HEAD
-        android:id="@+id/EdtxtUsernameReg"
-        android:layout_width="match_parent"
-=======
-        android:id="@+id/EdtxtUsername"
-        android:layout_gravity="center"
-        android:layout_width="200dp"
->>>>>>> f8f69d941b30d9e2d6397fbcd15e6e61f9891a4c
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="User Name"
-        android:inputType="textPersonName" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/kudu_logo" />
 
-    <EditText
-<<<<<<< HEAD
-        android:id="@+id/EdtxtEmailAddressReg"
-        android:layout_width="match_parent"
-=======
-        android:id="@+id/EdtxtEmailAddress"
-        android:layout_width="200dp"
-        android:layout_gravity="center"
->>>>>>> f8f69d941b30d9e2d6397fbcd15e6e61f9891a4c
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email Address"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/EdtxtFirstNameReg"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="First Name"
+                android:inputType="textPersonName" />
 
-    <EditText
-<<<<<<< HEAD
-        android:id="@+id/EdtxtPasswordReg"
-        android:layout_width="match_parent"
-=======
-        android:id="@+id/EdtxtPassword"
-        android:layout_gravity="center"
-        android:layout_width="200dp"
->>>>>>> f8f69d941b30d9e2d6397fbcd15e6e61f9891a4c
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/EdtxtLastNameReg"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Last Name"
+                android:inputType="textPersonName" />
 
-    <EditText
-<<<<<<< HEAD
-        android:id="@+id/EdtxtPasswordConfirmationReg"
-        android:layout_width="match_parent"
-=======
-        android:id="@+id/EdtxtPasswordConfirmation"
-        android:layout_gravity="center"
-        android:layout_width="200dp"
->>>>>>> f8f69d941b30d9e2d6397fbcd15e6e61f9891a4c
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password Confirmation"
-        android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/EdtxtUsernameReg"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="User Name"
+                android:inputType="textPersonName" />
 
-    <Button
-<<<<<<< HEAD
-        android:id="@+id/BtnRegisterReg"
-        android:layout_width="match_parent"
-=======
-        android:id="@+id/BtnRegister"
-        android:layout_width="200dp"
-        android:background="#080b45"
-        android:textColor="#e2ac19"
-        android:layout_gravity="center"
->>>>>>> f8f69d941b30d9e2d6397fbcd15e6e61f9891a4c
-        android:layout_height="wrap_content"
-        android:text="Register" />
+            <EditText
+                android:id="@+id/EdtxtEmailAddressReg"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Email Address"
+                android:inputType="textPersonName" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="26dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp"
-        >
+            <EditText
+                android:id="@+id/EdtxtPasswordReg"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Already have an account?"
-            android:textAlignment="center"
-            />
+            <EditText
+                android:id="@+id/EdtxtPasswordConfirmationReg"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Password Confirmation"
+                android:inputType="textPassword" />
 
-        <TextView
-            android:id="@+id/txtViewLoginReg"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Login" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/BtnRegisterReg"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#080b45"
+                android:text="Register"
+                android:textColor="#e2ac19" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Already have an account?"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/txtViewLoginReg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Login" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
