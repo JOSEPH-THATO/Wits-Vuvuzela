@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".Register">
 
+<<<<<<< HEAD
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -62,6 +63,82 @@
                 android:ems="10"
                 android:hint="Email Address"
                 android:inputType="textPersonName" />
+=======
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/kudu_logo" />
+
+    <EditText
+        android:id="@+id/EdtxtFirstNameReg"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/EdtxtLastNameReg"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/EdtxtUsernameReg"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="User Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/EdtxtEmailAddressReg"
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Email Address"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/EdtxtPasswordReg"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/EdtxtPasswordConfirmationReg"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password Confirmation"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/BtnRegisterReg"
+        android:layout_width="200dp"
+        android:layout_marginTop="20dp"
+        android:background="#080b45"
+        android:textColor="#e2ac19"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Register" />
+>>>>>>> bd4c771f2354b8eecc644ac566edf834b0b4e9c2
 
             <EditText
                 android:id="@+id/EdtxtPasswordReg"
@@ -114,4 +191,17 @@
         </LinearLayout>
     </ScrollView>
 
+<<<<<<< HEAD
+=======
+        <TextView
+            android:id="@+id/txtViewLoginReg"
+            android:textColor="#080b45"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:linksClickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Login" />
+    </LinearLayout>
+>>>>>>> bd4c771f2354b8eecc644ac566edf834b0b4e9c2
 </LinearLayout>
