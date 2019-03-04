@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Username = (EditText)findViewById(R.id.EdtxtUsernameLogin);
-        Username1 = (EditText)findViewById(R.id.EdtxtUsernameLogin);
+        //Username1 = (EditText)findViewById(R.id.EdtxtUsernameLogin);
         Password = (EditText)findViewById(R.id.EdTxtPasswordLogin);
         Login = (Button)findViewById(R.id.BtnLogin);
         ForgotPassword = (TextView)findViewById(R.id.txtViewForgotPasswordLogin);
