@@ -14,6 +14,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
+import java.sql.DatabaseMetaData;
 
 public class Register extends AppCompatActivity {
 
@@ -27,6 +30,7 @@ public class Register extends AppCompatActivity {
     TextView Login;
 
     private FirebaseAuth firebaseauth;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,6 @@ public class Register extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // EnterLoginPage();
-
 
                 registerUser();
             }
@@ -77,15 +79,15 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
-                            Toast.makeText(Register.this, "successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Register.this, "successful", Toast.LENGTH_SHORT).show();
+                            SendEmailConfirmation();
                         }
                         else {
-                            Toast.makeText(Register.this, "failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Register.this, "failed", Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 });
-
     }
 
 
@@ -96,4 +98,20 @@ public class Register extends AppCompatActivity {
 
     }
 
+    private void SendEmailConfirmation(){
+
+        firebaseauth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if (task.isSuccessful()){
+                    Toast.makeText(Register.this, "Registration was Succesful Please Check Your Email For Verification Code", Toast.LENGTH_LONG).show();
+                }
+
+                else{
+                    Toast.makeText(Register.this, "Send Email Verification failed please try again", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
 }
