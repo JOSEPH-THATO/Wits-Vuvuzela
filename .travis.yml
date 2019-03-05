@@ -9,8 +9,13 @@ android:
     - tools
     - build-tools-28.0.3
     - android-28
+<<<<<<< HEAD
+    -sys-img-armeabi-v7a-addon-google_apis-google-28
+    #- sys-img-armeabi-v7-android-28
+=======
     #- sys-img-armeabi-v7a-addon-google_apis-google-28
     - sys-img-armeabi-v7a-android-22
+>>>>>>> 4737ea0eb6385a2472e4fb9dc08aa978c9df0e2c
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-android-supportsys
@@ -22,8 +27,12 @@ android:
 
 before_script:
   # Create and start emulator
+<<<<<<< HEAD
+  - echo no | android create avd --force -n test -t android-28 --abi google_apis/armeabi-v7a
+=======
  # - android list targets 
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+>>>>>>> 4737ea0eb6385a2472e4fb9dc08aa978c9df0e2c
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
