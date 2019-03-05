@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/optisolcoms3009/Wits-Vuvuzela-App.svg?branch=master)](https://travis-ci.org/optisolcoms3009/Wits-Vuvuzela-App)
+
 # Wits-Vuvuzela-App
 This file was edited by Knowledge.
 This file was edited by Joseph.
