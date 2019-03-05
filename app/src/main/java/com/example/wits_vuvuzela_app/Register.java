@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.DatabaseMetaData;
 
@@ -29,8 +30,11 @@ public class Register extends AppCompatActivity {
     Button Register;
     TextView Login;
 
-    private FirebaseAuth firebaseauth;
-    private DatabaseReference databaseReference;
+     FirebaseDatabase database;
+     FirebaseAuth firebaseauth;
+     DatabaseReference databaseReference;
+
+    UserProfile userProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,8 @@ public class Register extends AppCompatActivity {
         PasswordConfirmation = (EditText)findViewById(R.id.EdtxtPasswordConfirmationReg);
         Register = (Button)findViewById(R.id.BtnRegisterReg);
         Login = (TextView)findViewById(R.id.txtViewLoginReg);
+        userProfile = new UserProfile();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
 
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,9 +72,7 @@ public class Register extends AppCompatActivity {
 
     private void registerUser(){
 
-        String user_fName = FirstName.getText().toString().trim();
-        String User_lName = LastName.getText().toString().trim();
-        String User_username = Username.getText().toString().trim();
+
         String User_email = EmailAddress.getText().toString().trim();
         String User_password = Password.getText().toString().trim();
 
@@ -105,6 +109,20 @@ public class Register extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
 
                 if (task.isSuccessful()){
+
+                    String User_fName = FirstName.getText().toString().trim();
+                   String User_lName = LastName.getText().toString().trim();
+                    String User_username = Username.getText().toString().trim();
+                    String User_email = EmailAddress.getText().toString().trim();
+                    String User_password = Password.getText().toString().trim();
+
+                    userProfile.setUser_email(User_email);
+                    userProfile.setUser_fName(User_fName);
+                    userProfile.setUser_lName(User_lName);
+                    userProfile.setUser_username(User_username);
+                    userProfile.setUser_password(User_password);
+
+                    databaseReference.push().setValue(userProfile);
                     Toast.makeText(Register.this, "Registration was Succesful Please Check Your Email For Verification Code", Toast.LENGTH_LONG).show();
                 }
 
