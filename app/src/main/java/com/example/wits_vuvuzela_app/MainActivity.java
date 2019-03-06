@@ -22,12 +22,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Username = (EditText)findViewById(R.id.EdtxtUsernameLogin);
-        //Username1 = (EditText)findViewById(R.id.EdtxtUsernameLogin);
-        Password = (EditText)findViewById(R.id.EdTxtPasswordLogin);
-        Login = (Button)findViewById(R.id.BtnLogin);
-        ForgotPassword = (TextView)findViewById(R.id.txtViewForgotPasswordLogin);
-        Register = (TextView)findViewById(R.id.txtViewRegisterLogin);
+        Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
+        Password = (EditText) findViewById(R.id.EdTxtPasswordLogin);
+        Login = (Button) findViewById(R.id.BtnLogin);
+        ForgotPassword = (TextView) findViewById(R.id.txtViewForgotPasswordLogin);
+        Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void EnterRegistrationPage() {
 
-        Intent intent = new Intent(this,Register.class);
+        Intent intent = new Intent(this, Register.class);
         startActivity(intent);
-
 
     }
 
@@ -58,4 +56,6 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = new Intent(this,Register.class);
         //startActivity(intent);
     }
+
+
 }
