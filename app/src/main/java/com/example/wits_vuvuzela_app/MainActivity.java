@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText Username;
@@ -22,11 +24,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
         Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
         Password = (EditText) findViewById(R.id.EdTxtPasswordLogin);
         Login = (Button) findViewById(R.id.BtnLogin);
         ForgotPassword = (TextView) findViewById(R.id.txtViewForgotPasswordLogin);
         Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
+=======
+
+        Username = (EditText)findViewById(R.id.EdtxtUsernameLogin);
+        Password = (EditText)findViewById(R.id.EdTxtPasswordLogin);
+        Login = (Button)findViewById(R.id.BtnLogin);
+        ForgotPassword = (TextView)findViewById(R.id.txtViewForgotPasswordLogin);
+        Register = (TextView)findViewById(R.id.txtViewRegisterLogin);
+>>>>>>> add37b5e00032d892a2929b810733268a1ce2650
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
