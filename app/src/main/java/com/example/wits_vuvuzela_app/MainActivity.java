@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
+/*
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,8 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 EnterRegistrationPage();
             }
         });
-
+*/
     }
+
+    /*
 
     private void EnterRegistrationPage() {
 
@@ -77,6 +79,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,Register.class);
         startActivity(intent);
     }
-
+*/
 
 }

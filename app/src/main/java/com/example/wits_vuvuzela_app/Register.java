@@ -56,17 +56,19 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                registerUser();
+                //registerUser();
             }
         });
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EnterLoginPage();
+             //   EnterLoginPage();
             }
         });
     }
+
+    /*
 
     private void registerUser(){
 
@@ -101,6 +103,7 @@ public class Register extends AppCompatActivity {
     }
 
     private boolean validateEmail(){
+
         String emailIput = EmailAddress.getEditableText().toString().trim();
 
         if(emailIput.isEmpty()){
@@ -152,5 +155,5 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
-    }
+    } */
 }
