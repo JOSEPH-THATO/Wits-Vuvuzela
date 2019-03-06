@@ -10,9 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
 import java.util.regex.Pattern;
-=======
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.DatabaseMetaData;
->>>>>>> add37b5e00032d892a2929b810733268a1ce2650
 
 public class Register extends AppCompatActivity {
 
@@ -44,17 +41,6 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-<<<<<<< HEAD
-        FirstName = (EditText) findViewById(R.id.EdtxtFirstNameReg);
-        LastName = (EditText) findViewById(R.id.EdtxtLastNameReg);
-        Username = (EditText) findViewById(R.id.EdtxtUsernameReg);
-        EmailAddress = (EditText) findViewById(R.id.EdtxtEmailAddressReg);
-        Password = (EditText) findViewById(R.id.EdtxtPasswordReg);
-        PasswordConfirmation = (EditText) findViewById(R.id.EdtxtPasswordConfirmationReg);
-        Register = (Button) findViewById(R.id.BtnRegisterReg);
-        Login = (TextView) findViewById(R.id.txtViewLoginReg);
-=======
         firebaseauth = FirebaseAuth.getInstance();
 
         FirstName = (EditText)findViewById(R.id.EdtxtFirstNameReg);
@@ -67,7 +53,6 @@ public class Register extends AppCompatActivity {
         Login = (TextView)findViewById(R.id.txtViewLoginReg);
         userProfile = new UserProfile();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
->>>>>>> add37b5e00032d892a2929b810733268a1ce2650
 
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +102,6 @@ public class Register extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
     private boolean validateEmail(){
         String emailIput = EmailAddress.getEditableText().toString().trim();
 
@@ -141,7 +125,6 @@ public class Register extends AppCompatActivity {
         Toast.makeText(this,"invalid email", Toast.LENGTH_SHORT).show();
     }
 
-=======
     private void SendEmailConfirmation(){
 
         firebaseauth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -172,5 +155,4 @@ public class Register extends AppCompatActivity {
             }
         });
     }
->>>>>>> add37b5e00032d892a2929b810733268a1ce2650
 }
