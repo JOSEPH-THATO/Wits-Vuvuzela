@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
