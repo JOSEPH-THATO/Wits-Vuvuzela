@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                       else {
 
                           Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                          Username.setError("Wrong User name of passoword");
                       }
                     }
                 });
