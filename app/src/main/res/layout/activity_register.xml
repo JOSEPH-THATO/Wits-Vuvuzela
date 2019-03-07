@@ -13,21 +13,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:layout_margin="0dp"
+                android:padding="0dp"
                 app:srcCompat="@drawable/kudu_logo" />
 
             <EditText
+                android:layout_marginTop="20dp"
                 android:id="@+id/EdtxtFirstNameReg"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
@@ -82,9 +80,11 @@
                 android:hint="Password Confirmation"
                 android:inputType="textPassword" />
 
+
             <Button
                 android:id="@+id/BtnRegisterReg"
                 android:layout_width="200dp"
+                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#080b45"

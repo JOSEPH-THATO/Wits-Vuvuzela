@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.sql.DatabaseMetaData;
 public class Register extends AppCompatActivity {
 
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    //"(?=.*[0-9])" +         //at least 1 digit
+                    //"(?=.*[a-z])" +         //at least 1 lower case letter
+                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                   // "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
     EditText FirstName;
     EditText LastName;
     EditText Username;
@@ -39,7 +50,12 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-      /**  SetupUI();
+        EmailAddress = (EditText)findViewById(R.id.EdtxtEmailAddressReg);
+        Username = (EditText)findViewById(R.id.EdtxtUsernameReg) ;
+        Password = (EditText)findViewById(R.id.EdtxtPasswordReg);
+        PasswordConfirmation = (EditText)findViewById(R.id.EdtxtPasswordConfirmationReg);
+        Login =(TextView)findViewById(R.id.txtViewLoginReg) ;
+        SetupUI();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
         firebaseauth = FirebaseAuth.getInstance();
@@ -48,6 +64,9 @@ public class Register extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                validateEmail();
+                validatePassword();
+                validateUsername();
                 registerUser();
             }
         });
@@ -57,7 +76,10 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 EnterLoginPage();
             }
-        });*/
+        });
+
+
+
     }
 
     private void registerUser(){
@@ -88,28 +110,68 @@ public class Register extends AppCompatActivity {
 
     }
 
-    private boolean validateEmail(){
+    private boolean validateEmail() {
+        String emailInput = EmailAddress.getText().toString().trim();
 
-        String emailIput = EmailAddress.getEditableText().toString().trim();
-
-        if(emailIput.isEmpty()){
-            EmailAddress.setError("Field cannot be empty");
+        if (emailInput.isEmpty()) {
+            EmailAddress.setError("Field can't be empty");
             return false;
-        }else if(emailIput.length() < 5){
-            EmailAddress.setError("Email Address too short");
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            EmailAddress.setError("Please enter a valid email address");
             return false;
-        }else EmailAddress.setError(null);
-        return true;
+        } else {
+            EmailAddress.setError(null);
+            return true;
+        }
     }
 
-    public  void confirmInput(View v){
-        if(!validateEmail()){
+    private boolean validateUsername() {
+        String usernameInput = Username.getText().toString().trim();
+
+        if (usernameInput.isEmpty()) {
+            Username.setError("Field can't be empty");
+            return false;
+        } else if (usernameInput.length() > 15) {
+            Username.setError("Username too long");
+            return false;
+        } else {
+            Username.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword() {
+        String passwordInput = Password.getText().toString().trim();
+        String PasswordCorn = PasswordConfirmation.getText().toString().trim();
+        if (passwordInput.isEmpty()) {
+            Password.setError("Field can't be empty");
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            Password.setError("Password too weak");
+            return false;
+        }else if (!passwordInput.equals(PasswordCorn))
+                    {
+                        PasswordConfirmation.setError("Password does not match");
+                        return  false;
+                    }
+        else {
+            Password.setError(null);
+            return true;
+        }
+    }
+
+    public void confirmInput(View v) {
+        if (!validateEmail() | !validateUsername() | !validatePassword()) {
             return;
         }
 
-     //   String input = "Email: " + EmailAddress.getEditableText().toString();
+        String input = "Email: " + EmailAddress.getText().toString();
+        input += "\n";
+        input += "Username: " + Username.getText().toString();
+        input += "\n";
+        input += "Password: " + Password.getText().toString();
 
-        Toast.makeText(this,"invalid email", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
     }
 
     private void SendEmailConfirmation(){
@@ -121,7 +183,7 @@ public class Register extends AppCompatActivity {
                 if (task.isSuccessful()){
 
                     String User_fName = FirstName.getText().toString().trim();
-                   String User_lName = LastName.getText().toString().trim();
+                    String User_lName = LastName.getText().toString().trim();
                     String User_username = Username.getText().toString().trim();
                     String User_email = EmailAddress.getText().toString().trim();
                     String User_password = Password.getText().toString().trim();
@@ -134,6 +196,11 @@ public class Register extends AppCompatActivity {
 
                     databaseReference.push().setValue(userProfile);
                     Toast.makeText(Register.this, "Registration was Succesful Please Check Your Email For Verification Code", Toast.LENGTH_LONG).show();
+                    FirstName.setText("");
+                    LastName.setText("");
+                    Username.setText("");
+                    EmailAddress.setText("");
+                    Password.setText("");
                 }
 
                 else{
