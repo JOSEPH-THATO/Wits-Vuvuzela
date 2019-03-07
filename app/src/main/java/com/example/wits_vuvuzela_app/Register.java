@@ -30,52 +30,40 @@ public class Register extends AppCompatActivity {
     Button Register;
     TextView Login;
 
-     FirebaseAuth firebaseauth;
-     DatabaseReference databaseReference;
-
+    FirebaseAuth firebaseauth;
+    DatabaseReference databaseReference;
     UserProfile userProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        firebaseauth = FirebaseAuth.getInstance();
 
-        FirstName = (EditText)findViewById(R.id.EdtxtFirstNameReg);
-        LastName = (EditText)findViewById(R.id.EdtxtLastNameReg);
-        Username = (EditText)findViewById(R.id.EdtxtUsernameReg);
-        EmailAddress = (EditText)findViewById(R.id.EdtxtEmailAddressReg);
-        Password = (EditText)findViewById(R.id.EdtxtPasswordReg);
-        PasswordConfirmation = (EditText)findViewById(R.id.EdtxtPasswordConfirmationReg);
-        Register = (Button)findViewById(R.id.BtnRegisterReg);
-        Login = (TextView)findViewById(R.id.txtViewLoginReg);
-        userProfile = new UserProfile();
+      /**  SetupUI();
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
+        firebaseauth = FirebaseAuth.getInstance();
+        userProfile = new UserProfile();
 
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //registerUser();
+                registerUser();
             }
         });
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   EnterLoginPage();
+                EnterLoginPage();
             }
-        });
+        });*/
     }
-
-    /*
 
     private void registerUser(){
 
-
         String User_email = EmailAddress.getText().toString().trim();
         String User_password = Password.getText().toString().trim();
-
 
         firebaseauth.createUserWithEmailAndPassword(User_email,User_password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -89,11 +77,9 @@ public class Register extends AppCompatActivity {
                         else {
                             Toast.makeText(Register.this, "failed", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
     }
-
 
     private void EnterLoginPage() {
 
@@ -155,5 +141,18 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
-    } */
+    }
+
+    private void SetupUI(){
+
+        FirstName = (EditText)findViewById(R.id.EdtxtFirstNameReg);
+        LastName = (EditText)findViewById(R.id.EdtxtLastNameReg);
+        Username = (EditText)findViewById(R.id.EdtxtUsernameReg);
+        EmailAddress = (EditText)findViewById(R.id.EdtxtEmailAddressReg);
+        Password = (EditText)findViewById(R.id.EdtxtPasswordReg);
+        PasswordConfirmation = (EditText)findViewById(R.id.EdtxtPasswordConfirmationReg);
+        Register = (Button)findViewById(R.id.BtnRegisterReg);
+        Login = (TextView)findViewById(R.id.txtViewLoginReg);
+
+    }
 }
