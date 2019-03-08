@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void EnterHomePage() {
 
-        Intent intent = new Intent(this,Register.class);
+        Intent intent = new Intent(this,HomePage.class);
         startActivity(intent);
     }
 
