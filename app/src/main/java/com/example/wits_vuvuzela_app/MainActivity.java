@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
+      Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
         Password = (EditText) findViewById(R.id.EdTxtPasswordLogin);
         Login = (Button) findViewById(R.id.BtnLogin);
         ForgotPassword = (TextView) findViewById(R.id.txtViewForgotPasswordLogin);
@@ -46,10 +46,13 @@ public class MainActivity extends AppCompatActivity {
                       if(task.isSuccessful()){
 
                           EnterHomePage();
+                          Username.setText("");
+                          Password.setText("");
                       }
                       else {
 
                           Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                          Username.setError("Wrong User name of passoword");
                       }
                     }
                 });
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void EnterRegistrationPage() {
 
