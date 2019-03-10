@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class Register extends AppCompatActivity {
     EditText PasswordConfirmation;
     Button Register;
     TextView Login;
+    ProgressBar progressBar;
 
     FirebaseAuth firebaseauth;
     DatabaseReference databaseReference;
@@ -50,12 +52,9 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        EmailAddress = (EditText)findViewById(R.id.EdtxtEmailAddressReg);
-        Username = (EditText)findViewById(R.id.EdtxtUsernameReg) ;
-        Password = (EditText)findViewById(R.id.EdtxtPasswordReg);
-        PasswordConfirmation = (EditText)findViewById(R.id.EdtxtPasswordConfirmationReg);
-        Login =(TextView)findViewById(R.id.txtViewLoginReg) ;
         SetupUI();
+
+        progressBar.setVisibility(View.GONE);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
         firebaseauth = FirebaseAuth.getInstance();
@@ -67,7 +66,10 @@ public class Register extends AppCompatActivity {
                 validateEmail();
                 validatePassword();
                 validateUsername();
-                registerUser();
+
+                if(validateEmail() && validatePassword() && validateUsername()) {
+                    registerUser();
+                }
             }
         });
 
@@ -77,12 +79,12 @@ public class Register extends AppCompatActivity {
                 EnterLoginPage();
             }
         });
-
-
-
     }
 
     private void registerUser(){
+
+        progressBar.setVisibility(View.VISIBLE);
+        Register.setVisibility(View.GONE);
 
         String User_email = EmailAddress.getText().toString().trim();
         String User_password = Password.getText().toString().trim();
@@ -93,11 +95,17 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
-                            Toast.makeText(Register.this, "successful", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(Register.this, "aaaaaa", Toast.LENGTH_SHORT).show();
+                            //Register.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                            //Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             SendEmailConfirmation();
                         }
                         else {
-                            Toast.makeText(Register.this, "failed", Toast.LENGTH_SHORT).show();
+                            Register.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -111,6 +119,7 @@ public class Register extends AppCompatActivity {
     }
 
     private boolean validateEmail() {
+
         String emailInput = EmailAddress.getText().toString().trim();
 
         if (emailInput.isEmpty()) {
@@ -126,6 +135,7 @@ public class Register extends AppCompatActivity {
     }
 
     private boolean validateUsername() {
+
         String usernameInput = Username.getText().toString().trim();
 
         if (usernameInput.isEmpty()) {
@@ -138,11 +148,14 @@ public class Register extends AppCompatActivity {
             Username.setError(null);
             return true;
         }
+
     }
 
     private boolean validatePassword() {
+
         String passwordInput = Password.getText().toString().trim();
         String PasswordCorn = PasswordConfirmation.getText().toString().trim();
+
         if (passwordInput.isEmpty()) {
             Password.setError("Field can't be empty");
             return false;
@@ -158,6 +171,7 @@ public class Register extends AppCompatActivity {
             Password.setError(null);
             return true;
         }
+
     }
 
     public void confirmInput(View v) {
@@ -195,7 +209,8 @@ public class Register extends AppCompatActivity {
                     userProfile.setUser_password(User_password);
 
                     databaseReference.push().setValue(userProfile);
-                    Toast.makeText(Register.this, "Registration was Succesful Please Check Your Email For Verification Code", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this, "Registration was Successful Please Check Your Email For Verification Code", Toast.LENGTH_LONG).show();
+                    EnterLoginPage();
                     FirstName.setText("");
                     LastName.setText("");
                     Username.setText("");
@@ -220,6 +235,8 @@ public class Register extends AppCompatActivity {
         PasswordConfirmation = (EditText)findViewById(R.id.EdtxtPasswordConfirmationReg);
         Register = (Button)findViewById(R.id.BtnRegisterReg);
         Login = (TextView)findViewById(R.id.txtViewLoginReg);
+        progressBar = (ProgressBar)findViewById(R.id.progressBarReg);
+
 
     }
 }

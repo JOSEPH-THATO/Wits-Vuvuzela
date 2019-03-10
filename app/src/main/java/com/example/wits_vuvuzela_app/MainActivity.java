@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,35 +27,58 @@ public class MainActivity extends AppCompatActivity {
     TextView ForgotPassword;
     TextView Register;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
-        Password = (EditText) findViewById(R.id.EdTxtPasswordLogin);
-        Login = (Button) findViewById(R.id.BtnLogin);
-        ForgotPassword = (TextView) findViewById(R.id.txtViewForgotPasswordLogin);
-        Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
+
+        SetupUserInterface();
+
+        progressBar.setVisibility(View.GONE);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                progressBar.setVisibility(View.VISIBLE);
+                Login.setVisibility(View.GONE);
+
                 firebaseAuth.signInWithEmailAndPassword(Username.getText().toString(),Password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                       if(task.isSuccessful()){
 
-                          EnterHomePage();
-                          Username.setText("");
-                          Password.setText("");
+                          firebaseUser = firebaseAuth.getCurrentUser();
+
+                          if(firebaseUser.isEmailVerified()) {
+                              progressBar.setVisibility(View.GONE);
+                              Login.setVisibility(View.VISIBLE);
+                              EnterHomePage();
+                              Username.setText("");
+                              Password.setText("");
+                          }
+
+                          else{
+                              progressBar.setVisibility(View.GONE);
+                              Login.setVisibility(View.VISIBLE);
+                             // Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                              Toast.makeText(MainActivity.this,"Email not yet verified , Please Go To Your Email",Toast.LENGTH_SHORT).show();
+                          }
                       }
                       else {
 
-                          Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                          Username.setError("Wrong User name of passoword");
+                          progressBar.setVisibility(View.GONE);
+                          Login.setVisibility(View.VISIBLE);
+                          Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                          Username.setError("Wrong Email of password");
+
                       }
                     }
                 });
@@ -65,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 EnterRegistrationPage();
             }
         });
-
     }
 
 
@@ -73,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
-
     }
 
     private void EnterHomePage() {
@@ -82,5 +106,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void SetupUserInterface(){
 
+        Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
+        Password = (EditText) findViewById(R.id.EdTxtPasswordLogin);
+        Login = (Button) findViewById(R.id.BtnLogin);
+        ForgotPassword = (TextView) findViewById(R.id.txtViewForgotPasswordLogin);
+        Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
+        progressBar = (ProgressBar)findViewById(R.id.progressBarLog);
+
+    }
 }
