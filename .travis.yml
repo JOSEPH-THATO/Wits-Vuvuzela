@@ -61,3 +61,6 @@ script:
 
 after_failure:
   - cat $TRAVIS_BUILD_DIR/app/build/reports/lint-results.xml
+  
+after_success:
+  - ./gradlew test jacocoTestReport coveralls
