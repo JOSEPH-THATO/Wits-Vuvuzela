@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/optisolcoms3009/Wits-Vuvuzela-App.svg?branch=master)](https://travis-ci.org/optisolcoms3009/Wits-Vuvuzela-App)
 
+[![Coverage Status](https://coveralls.io/repos/github/optisolcoms3009/Wits-Vuvuzela-App/badge.svg?branch=master)](https://coveralls.io/github/optisolcoms3009/Wits-Vuvuzela-App?branch=master)
+
 # Wits-Vuvuzela-App
 
 The following paragraph is a high level overview of a successful run of the app at this current inception stage. Please note that it is subject to change as development occurs:
