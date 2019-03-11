@@ -29,7 +29,7 @@ task clean(type: Delete) {
 
 plugins {
     id 'jacoco'
-    id 'com.github.kt3k.coveralls' version '2.6.3'
+    id 'com.github.kt3k.coveralls' version '2.8.2'
 }
 
 jacocoTestReport {
