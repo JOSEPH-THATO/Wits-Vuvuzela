@@ -62,5 +62,4 @@ script:
 after_failure:
   - cat $TRAVIS_BUILD_DIR/app/build/reports/lint-results.xml
 
-#after_success:
-#  - ./gradlew pitest coveralls
+
