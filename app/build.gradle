@@ -24,7 +24,7 @@ android {
 
     }
 }
-
+/*
 coveralls {
     jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
 }
@@ -33,6 +33,7 @@ tasks.coveralls {
     dependsOn 'connectedAndroidTest'
     onlyIf { System.env.'CI' }
 }
+*/
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
