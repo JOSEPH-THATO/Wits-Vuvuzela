@@ -34,10 +34,6 @@ tasks.coveralls {
     onlyIf { System.env.'CI' }
 }
 */
-<<<<<<< HEAD
-
-=======
->>>>>>> 138a72fc2c1f8e4a6c555f4dac06966893e6d564
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
