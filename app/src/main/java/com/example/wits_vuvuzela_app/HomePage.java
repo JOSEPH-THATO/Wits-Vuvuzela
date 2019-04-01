@@ -28,19 +28,26 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        Intent intent = getIntent();
-        email = intent.getStringExtra("Email");
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("UserProfile");
-
-        FName = (TextView) findViewById(R.id.tvFirstName);
-        LName = (TextView) findViewById(R.id.tvLastName);
-        UName = (TextView) findViewById(R.id.tvUserName);
-        Email = (TextView) findViewById(R.id.tvEmail);
-        //FName = (TextView)findViewById(R.id.tvP);
-
+     /**/
     }
 
+}
+
+
+/*
+    Intent intent = getIntent();
+        email = intent.getStringExtra("Email");
+
+                databaseReference = FirebaseDatabase.getInstance().getReference("UserProfile");
+
+                FName = (TextView) findViewById(R.id.tvFirstName);
+                LName = (TextView) findViewById(R.id.tvLastName);
+                UName = (TextView) findViewById(R.id.tvUserName);
+                Email = (TextView) findViewById(R.id.tvEmail);
+//FName = (TextView)findViewById(R.id.tvP);
+*/
+
+    /*
     @Override
     protected void onStart() {
         super.onStart();
@@ -70,5 +77,4 @@ public class HomePage extends AppCompatActivity {
             }
         });
     }
-
-}
+*/
