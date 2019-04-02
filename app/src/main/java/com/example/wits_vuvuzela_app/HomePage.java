@@ -1,14 +1,18 @@
 package com.example.wits_vuvuzela_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,12 +29,23 @@ public class HomePage extends AppCompatActivity {
     TextView Password;
     private DatabaseReference databaseReference;
     String email;
+    ListView listView;
 
+    String[] Articles = {"Jacob Zuma","Wits University","Elections","Load Shedding","Champions League","University Graduation"};
+    String[] ArticlesAuthor = {"1 Jan 2018","2 Feb 2018","3 Mar 2018","4 Apr 2018","5 May 2018","6 Jun 2019"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        listView =(ListView)findViewById(R.id.listview);
+
+        CustomAdapter customAdapter = new CustomAdapter();
+
+        listView.setAdapter(customAdapter);
+
+        Toast.makeText(HomePage.this,"Entered" ,Toast.LENGTH_LONG).show();
 
      /**/
     }
@@ -39,7 +54,7 @@ public class HomePage extends AppCompatActivity {
 
         @Override
         public int getCount() {
-          return 0;
+          return Articles.length;
         }
 
         @Override
@@ -54,16 +69,21 @@ public class HomePage extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = getLayoutInflater().inflate(R.layout.articlelayout,null);
 
-            ImageView imageView = (ImageView)convertView.findViewById(R.id.ArticleImage);
-            TextView textView_heading =(TextView)convertView.findViewById(R.id.ArticleHeading);
-            TextView textView_author = (TextView)convertView.findViewById(R.id.ArticleAuthor);
+            LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View convertView1 = layoutInflater.inflate(R.layout.articlelayout,parent,false);
+
+             //convertView = getLayoutInflater().inflate(R.layout.articlelayout,null);
+
+            //ImageView imageView = convertView1.findViewById(R.id.ArticleImage);
+            TextView textView_heading = convertView1.findViewById(R.id.ArticleHeading);
+            TextView textView_author = convertView1 .findViewById(R.id.ArticleAuthor);
 
             //imageView.setImageResource(IMAGES[position]);
-            //textView_heading.setText(NAMES[position]);
-            //textView_author.setText(AUTHORNAMES[position]);
-            return null;
+            textView_heading.setText(Articles[position]);
+            textView_author.setText(ArticlesAuthor [position]);
+            return convertView1;
         }
     }
 
