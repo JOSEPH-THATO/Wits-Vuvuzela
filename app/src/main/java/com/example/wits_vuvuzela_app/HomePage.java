@@ -84,6 +84,8 @@ public class HomePage extends AppCompatActivity {
             textView_heading.setText(Articles[position]);
             textView_author.setText(ArticlesAuthor [position]);
             return convertView1;
+
+
         }
     }
 

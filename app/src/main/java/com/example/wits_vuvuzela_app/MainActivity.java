@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 EnterHomePage();
-
+            /*
                 progressBar.setVisibility(View.VISIBLE);
                 Login.setVisibility(View.GONE);
 
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                       }
                     }
                 });
+                */
             }
         });
 
