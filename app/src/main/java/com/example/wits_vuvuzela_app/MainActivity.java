@@ -1,6 +1,7 @@
 package com.example.wits_vuvuzela_app;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText Username;
@@ -30,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
     private ProgressBar progressBar;
+    ArrayList<String> ArticlesHead;
+    ArrayList<String> ArticlesAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
     private void EnterHomePage() {
 
         Intent intent = new Intent(this,HomePage.class);
+      //  intent.putExtra("Head",ArticlesHead);
+      //  intent.putExtra("Auth",ArticlesAuth);
         startActivity(intent);
     }
 
