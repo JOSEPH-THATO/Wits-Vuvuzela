@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,6 +34,7 @@ public class HomePage extends AppCompatActivity {
 
     String[] Articles = {"Jacob Zuma","Wits University","Elections","Load Shedding","Champions League","University Graduation"};
     String[] ArticlesAuthor = {"1 Jan 2018","2 Feb 2018","3 Mar 2018","4 Apr 2018","5 May 2018","6 Jun 2019"};
+    String[] ArticleHeading = {"State Capture Report","Best Institution in Africa","Eskom Crisis"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,15 @@ public class HomePage extends AppCompatActivity {
 
         listView.setAdapter(customAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(HomePage.this,ReadArticleActivity.class);
+                    intent.putExtra("Author",Articles[position]);
+                    startActivity(intent);
+                    Toast.makeText(HomePage.this,"Hello World",Toast.LENGTH_LONG).show();
+            }
+        });
         Toast.makeText(HomePage.this,"Entered" ,Toast.LENGTH_LONG).show();
 
      /**/
