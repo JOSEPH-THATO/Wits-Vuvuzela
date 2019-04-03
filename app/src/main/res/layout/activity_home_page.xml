@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#080b45"
-            android:text="Newsfeed"
+            android:text="NEWSFEED"
             android:textAlignment="center"
             android:textColor="#e2ac19"
             android:textSize="30dp" />
@@ -42,8 +42,9 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/articlelayout"
-        />
+        android:layout_margin="5dp"
+
+        tools:listitem="@layout/articlelayout" />
 
 
 </LinearLayout>
