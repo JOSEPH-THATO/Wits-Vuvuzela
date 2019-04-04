@@ -73,9 +73,14 @@ public class ReadArticleActivity extends AppCompatActivity {
                         Author = mArticleBody;
                     }
 
+                    else if(i == 1){
+                        //AuthorOrDate = mArticleBody.split();
+                        Heading1.add(mArticleBody);
+                    }
+
                     else {
 
-                        Heading1.add(mArticleBody);
+                        Heading1.add(" " + mArticleBody);
                         words += mArticleBody;
                     }
                 }
