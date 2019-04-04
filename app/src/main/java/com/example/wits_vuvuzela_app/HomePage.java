@@ -51,6 +51,7 @@ public class HomePage extends AppCompatActivity {
 
     ArrayList<String> ArticlesHead;
     ArrayList<String> ArticlesAuth;
+    ArrayList<String> ArticlesLink;
 
     String[] Articles = {"Jacob Zuma","Wits University","Elections","Load Shedding","Champions League","University Graduation"};
     String[] ArticlesAuthor = {"1 Jan 2018","2 Feb 2018","3 Mar 2018","4 Apr 2018","5 May 2018","6 Jun 2019"};
@@ -63,6 +64,7 @@ public class HomePage extends AppCompatActivity {
 
         ArticlesHead = new ArrayList<>();
         ArticlesAuth = new ArrayList<>();
+        ArticlesLink = new ArrayList<>();
 
         new doit().execute();
 
@@ -114,6 +116,7 @@ public class HomePage extends AppCompatActivity {
 
         ArrayList<String> Heading1;
         ArrayList<String> Author1;
+        ArrayList<String> Link1;
 
         String words = "";
 
@@ -124,6 +127,7 @@ public class HomePage extends AppCompatActivity {
 
                 Heading1 = new ArrayList<>();
                 Author1 = new ArrayList<>();
+                Link1 = new ArrayList<>();
 
                // String imgURL  = "https://www.google.com/images/srpr/logo11w.png";
                // new DownLoadImageTask(iv).execute(imgURL);
@@ -147,7 +151,8 @@ public class HomePage extends AppCompatActivity {
                     words+=mAuthorName;
 
                     //Elements mElementCategories = mBlogDocument.select("div[class=post-categories]").select("a").eq(i);
-                    //String mCategories = mElementArticle.attr("href");
+                    String mArticleLink = mElementArticle.attr("href");
+                    Link1.add(mArticleLink);
 
                     //words+= mCategories;
 
@@ -209,7 +214,7 @@ public class HomePage extends AppCompatActivity {
             super.onPostExecute(aVoid);
             ArticlesAuth = Author1;
             ArticlesHead = Heading1;
-            Toast.makeText(HomePage.this,ArticlesAuth.get(0) ,Toast.LENGTH_LONG).show();
+            ArticlesLink = Link1;
 
             listView =(ListView)findViewById(R.id.listview);
 
@@ -221,14 +226,12 @@ public class HomePage extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(HomePage.this,ReadArticleActivity.class);
-                    intent.putExtra("Author",ArticlesHead.get(position));
+                    intent.putExtra("Heading",ArticlesHead.get(position));
+                    intent.putExtra("Link",ArticlesLink.get(position));
                     startActivity(intent);
-                    Toast.makeText(HomePage.this,"Hello World",Toast.LENGTH_LONG).show();
                 }
             });
-            Toast.makeText(HomePage.this,"Entered" ,Toast.LENGTH_LONG).show();
-
-
+         //   Toast.makeText(HomePage.this,"Entered" ,Toast.LENGTH_LONG).show();
         }
     }
 /*
