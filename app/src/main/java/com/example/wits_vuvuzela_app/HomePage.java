@@ -26,6 +26,9 @@ import org.jsoup.select.Elements;
 import java.io.InputStream;
 import java.net.URL;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,28 +42,29 @@ import java.util.ArrayList;
 
 public class HomePage extends AppCompatActivity {
 
+    FirebaseAuth firebaseauth;
+    DatabaseReference databaseReference;
+    Article article;
     TextView FName;
     TextView LName;
     TextView UName;
     TextView Email;
     TextView Password;
-    private DatabaseReference databaseReference;
     String email;
     ListView listView;
-    TextView textView_heading;
 
     ArrayList<String> ArticlesHead;
     ArrayList<String> ArticlesAuth;
     ArrayList<String> ArticlesLink;
 
-    String[] Articles = {"Jacob Zuma","Wits University","Elections","Load Shedding","Champions League","University Graduation"};
-    String[] ArticlesAuthor = {"1 Jan 2018","2 Feb 2018","3 Mar 2018","4 Apr 2018","5 May 2018","6 Jun 2019"};
-    String[] ArticleHeading = {"State Capture Report","Best Institution in Africa","Eskom Crisis"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Article");
+        firebaseauth = FirebaseAuth.getInstance();
+        article = new Article();
 
         ArticlesHead = new ArrayList<>();
         ArticlesAuth = new ArrayList<>();
@@ -68,12 +72,6 @@ public class HomePage extends AppCompatActivity {
 
         new doit().execute();
 
-       // if(!ArticlesAuth.isEmpty()){
-         //   Toast.makeText(HomePage.this,ArticlesAuth.get(0) + "aaaaa" ,Toast.LENGTH_LONG).show();
-        //}
-
-        //ArticlesHead.add("saas");
-        //textView_heading.setText(ArticlesHead.get(0));
     }
 
     class CustomAdapter extends BaseAdapter{
@@ -138,6 +136,8 @@ public class HomePage extends AppCompatActivity {
 
                 for (int i = 0; i < 6 ; i++) {
 
+                    //Toast.makeText(HomePage.this, "Article sent", Toast.LENGTH_LONG).show();
+
                     Elements mElementArticle = mBlogDocument.select("h2[class=entry-title]").select("a[href]").eq(i);
                     String mArticleHead = mElementArticle.text();
 
@@ -153,6 +153,7 @@ public class HomePage extends AppCompatActivity {
                     //Elements mElementCategories = mBlogDocument.select("div[class=post-categories]").select("a").eq(i);
                     String mArticleLink = mElementArticle.attr("href");
                     Link1.add(mArticleLink);
+
 
                     //words+= mCategories;
 
@@ -202,6 +203,7 @@ public class HomePage extends AppCompatActivity {
                     // Elements mElementBlogUploadDate = mBlogDocument.select("span[class=post-date updated]").eq(i);
                     // String mBlogUploadDate = mElementBlogUploadDate.text();
 
+
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -227,12 +229,28 @@ public class HomePage extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(HomePage.this,ReadArticleActivity.class);
                     intent.putExtra("Heading",ArticlesHead.get(position));
-                    intent.putExtra("Link",ArticlesLink.get(position));
+                    SendArticle(ArticlesHead.get(position),ArticlesLink.get(position));
+
                     startActivity(intent);
                 }
             });
          //   Toast.makeText(HomePage.this,"Entered" ,Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void SendArticle(String ArticleHeading,String ArticleLink){
+
+
+        article = new Article();
+
+        //article.setArticleAutherName(ArticleAuthor);
+        article.setArticleTitle(ArticleHeading);
+        article.setArticleLink(ArticleLink);
+
+        databaseReference.push().setValue(article);
+        Toast.makeText(HomePage.this, "Article sent", Toast.LENGTH_LONG).show();
+
+        //EnterLoginPage();
     }
 /*
     private class DownLoadImageTask extends AsyncTask<String,Void, Bitmap>{
@@ -261,49 +279,3 @@ public class HomePage extends AppCompatActivity {
     }*/
 
 }
-
-
-/*
-    Intent intent = getIntent();
-        email = intent.getStringExtra("Email");
-
-                databaseReference = FirebaseDatabase.getInstance().getReference("UserProfile");
-
-                FName = (TextView) findViewById(R.id.tvFirstName);
-                LName = (TextView) findViewById(R.id.tvLastName);
-                UName = (TextView) findViewById(R.id.tvUserName);
-                Email = (TextView) findViewById(R.id.tvEmail);
-//FName = (TextView)findViewById(R.id.tvP);
-*/
-
-    /*
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
-
-                    UserProfile userProfile = artistSnapshot.getValue(UserProfile.class);
-
-                    if (userProfile.getUser_email().equals(email)) {
-
-                        FName.setText(userProfile.getUser_fName());
-                        LName.setText(userProfile.getUser_lName());
-                        UName.setText(userProfile.getUser_username());
-                        Email.setText(userProfile.getUser_email());
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-*/

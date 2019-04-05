@@ -38,62 +38,8 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
 
-        new doit().execute();
 
     }
 
-    public class doit extends AsyncTask<Void, Void, Void> {
 
-        ArrayList<String> Heading1;
-
-        String words = "";
-        String[] AuthorOrDate;
-        String Author = "";
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            try {
-
-                Heading1 = new ArrayList<>();
-
-                // String imgURL  = "https://www.google.com/images/srpr/logo11w.png";
-                // new DownLoadImageTask(iv).execute(imgURL);
-                Document mBlogDocument = Jsoup.connect(urlLink).get();
-                Elements mElementDataSize = mBlogDocument.select("div[class=entry-content]");
-                int mElementSize = mElementDataSize.size();
-
-                for (int i = 0; i < 10; i++) {
-
-                    Elements mElementArticle = mBlogDocument.select("p").eq(i);
-                    String mArticleBody = mElementArticle.text();
-
-                   if(i == 0){
-                        //AuthorOrDate = mArticleBody.split();
-                        Author = mArticleBody;
-                    }
-
-                    else if(i == 1){
-                        //AuthorOrDate = mArticleBody.split();
-                        Heading1.add(mArticleBody);
-                    }
-
-                    else {
-
-                        Heading1.add(" " + mArticleBody);
-                        words += mArticleBody;
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            ArticleBody.setText(words);
-            //ArticleHeading.setText();
-        }
-    }
 }

@@ -7,25 +7,52 @@ import java.util.Date;
 
 public class Article {
 
-    Image ArticleImage;
-    String ArticleTitle;
-    String ArticleAutherName;
-    ArrayList<String>  ArticleComments;
-    Date ArticleDateUploaded;
+    private String ArticleImage="no Image";
+    private String ArticleTitle=" No Title";
+    private String ArticleAutherName="No Auther";
+    private String ArticleComments= "No Comments";
+    private String ArticleDateUploaded = "NoDate";
+    private String ArticleLink = "No lInk";
+    private String ArticleLikes = "0";
+    private String ArticleDislikes = "0";
 
-
-    public Article(Image articleImage, String articleTitle, String articleAutherName, Date articleDateUploaded) {
-        ArticleImage = articleImage;
-        ArticleTitle = articleTitle;
-        ArticleAutherName = articleAutherName;
-        ArticleDateUploaded = articleDateUploaded;
+    public String getArticleLikes() {
+        return ArticleLikes;
     }
 
-    public Image getArticleImage() {
+    public void setArticleLikes(String articleLikes) {
+        ArticleLikes = articleLikes;
+    }
+
+    public String getArticleDislikes() {
+        return ArticleDislikes;
+    }
+
+    public void setArticleDislikes(String articleDislikes) {
+        ArticleDislikes = articleDislikes;
+    }
+
+    public String getArticleComments() {
+        return ArticleComments;
+    }
+
+    public void setArticleComments(String articleComments) {
+        ArticleComments = articleComments;
+    }
+
+    public String getArticleLink() {
+        return ArticleLink;
+    }
+
+    public void setArticleLink(String articleLink) {
+        ArticleLink = articleLink;
+    }
+
+    public String getArticleImage() {
         return ArticleImage;
     }
 
-    public void setArticleImage(Image articleImage) {
+    public void setArticleImage(String articleImage) {
         ArticleImage = articleImage;
     }
 
@@ -45,16 +72,12 @@ public class Article {
         ArticleAutherName = articleAutherName;
     }
 
-    public Date getArticleDateUploaded() {
+    public String getArticleDateUploaded() {
         return ArticleDateUploaded;
     }
 
-    public void setArticleDateUploaded(Date articleDateUploaded) {
+    public void setArticleDateUploaded(String articleDateUploaded) {
         ArticleDateUploaded = articleDateUploaded;
     }
 
-
-    public void AddComment(String addComment){
-        ArticleComments.add(addComment);
-    }
 }
