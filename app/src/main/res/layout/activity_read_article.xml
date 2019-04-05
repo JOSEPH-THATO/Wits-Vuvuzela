@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -30,11 +31,13 @@
 
                 <TextView
                     android:id="@+id/ReadArticleHeading"
-                    android:layout_width="389dp"
-                    android:layout_height="56dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scrollbars="vertical"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
                     android:text="Article"
-                    android:textSize="16dp" />
+                    android:textSize="30dp" />
 
                 <ImageView
                     android:id="@+id/SelectedArticleImage"
@@ -52,9 +55,60 @@
                 <TextView
                     android:id="@+id/ReadArticleBody"
                     android:layout_width="match_parent"
-                    android:layout_height="286dp"
+                    android:layout_height="wrap_content"
                     android:scrollbars="vertical"
                     android:text="Article" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        app:srcCompat="@android:drawable/btn_dialog" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="Dislike" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@android:drawable/star_big_off" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Like" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:hint="Comment" />
+
+                <ListView
+                    android:id="@+id/viewCommentsID"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    tools:listitem="@layout/commentlayout" />
 
             </LinearLayout>
         </LinearLayout>

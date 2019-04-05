@@ -7,19 +7,9 @@ import java.util.Date;
 
 public class Article {
 
-    Image ArticleImage;
+    String ArticleImage;
     String ArticleTitle;
     String ArticleAutherName;
-    ArrayList<String>  ArticleComments;
-    Date ArticleDateUploaded;
-
-
-    public Article(Image articleImage, String articleTitle, String articleAutherName, Date articleDateUploaded) {
-        ArticleImage = articleImage;
-        ArticleTitle = articleTitle;
-        ArticleAutherName = articleAutherName;
-        ArticleDateUploaded = articleDateUploaded;
-    }
 
     public Image getArticleImage() {
         return ArticleImage;
