@@ -10,11 +10,11 @@ public class Article {
     private String ArticleImage="no Image";
     private String ArticleTitle=" No Title";
     private String ArticleAutherName="No Auther";
-    private String ArticleComments= "No Comments";
+    private String ArticleComments= "Comment1/Comment2/Comment3";
     private String ArticleDateUploaded = "NoDate";
     private String ArticleLink = "No lInk";
     private String ArticleLikes = "0";
-    private String ArticleDislikes = "0";
+    private String ArticleDislikes = "4";
 
     public String getArticleLikes() {
         return ArticleLikes;
