@@ -98,7 +98,7 @@ public class ReadArticleActivity extends AppCompatActivity {
                         NumLikes.setText(likes + " Likes");
                         NumDislikes.setText(dislikes + " Dislikes");
 
-                        String[] CommentsArray = Comments.split("/");
+                        //String[] CommentsArray = Comments.split("/");
 
                        // for(int i = 0;i < CommentsArray.length;++i){
 
@@ -181,8 +181,8 @@ public class ReadArticleActivity extends AppCompatActivity {
             TextView txtUserName = convertView2.findViewById(R.id.userEmail);
             TextView txtComment = convertView2.findViewById(R.id.TxtComment);
 
-            txtUserName.setText(UserNames(position));
-            txtComment.setText(UserComments(position));
+            txtUserName.setText(UserNames[position]);
+            txtComment.setText(UserComments[position]);
             return convertView2;
         }
     }
