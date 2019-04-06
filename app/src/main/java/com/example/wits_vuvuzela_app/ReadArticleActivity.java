@@ -100,11 +100,11 @@ public class ReadArticleActivity extends AppCompatActivity {
 
                         String[] CommentsArray = Comments.split("/");
 
-                        for(int i = 0;i < CommentsArray.length;++i){
+                       // for(int i = 0;i < CommentsArray.length;++i){
 
-                            CommentsArrayList.add(CommentsArray[i]);
+                            //CommentsArrayList.add(CommentsArray[i]);
 
-                        }
+                        //}
 
                         viewComments = (ListView) findViewById(R.id.viewCommentsID);
                         CustomAdapter customAdapter = new CustomAdapter();
@@ -161,7 +161,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     class CustomAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return CommentsArrayList.size();
+            return UserNames.length;
         }
 
         @Override
@@ -181,8 +181,8 @@ public class ReadArticleActivity extends AppCompatActivity {
             TextView txtUserName = convertView2.findViewById(R.id.userEmail);
             TextView txtComment = convertView2.findViewById(R.id.TxtComment);
 
-            txtUserName.setText("None");
-            txtComment.setText(CommentsArrayList.get(position));
+            txtUserName.setText(UserNames(position));
+            txtComment.setText(UserComments(position));
             return convertView2;
         }
     }
