@@ -134,7 +134,7 @@ public class HomePage extends AppCompatActivity {
                 // Locate the content attribute
                 int mElementSize = mElementDataSize.size();
 
-                for (int i = 0; i < 6 ; i++) {
+                for (int i = 0; i < 12 ; i++) {
 
                     //Toast.makeText(HomePage.this, "Article sent", Toast.LENGTH_LONG).show();
 

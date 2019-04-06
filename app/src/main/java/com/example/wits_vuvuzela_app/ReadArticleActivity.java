@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,11 +46,13 @@ public class ReadArticleActivity extends AppCompatActivity {
     ImageView DislikeButton;
     TextView NumLikes;
     TextView NumDislikes;
-
+    EditText EditComment;
+    ImageView CommentBtn;
     ArrayList<String> CommentsArrayList;
 
     String[] UserNames = {"Jacob Zuma", "Wits University", "Elections"};
     String[] UserComments = {"State Capture Report", "Best Institution in Africa", "Eskom Crisis"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +66,14 @@ public class ReadArticleActivity extends AppCompatActivity {
         String heading = bundle.getString("Heading");
         head = heading;
 
+        CommentBtn =(ImageView) findViewById(R.id.commentBtn);
+
+        EditComment=(EditText)findViewById(R.id.editComment);
+
         LikeButton = (ImageView)findViewById(R.id.likebtn);
         DislikeButton = (ImageView)findViewById(R.id.dislikebtn);
         NumDislikes = (TextView)findViewById(R.id.dislikeNum);
         NumLikes = (TextView)findViewById(R.id.likeNum);
-
 
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
@@ -74,6 +81,20 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
 
+        CommentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CommentsArrayList.add(EditComment.getText().toString());
+                Toast.makeText(ReadArticleActivity.this,"Comment posted",Toast.LENGTH_LONG).show();
+                for (int i=0;i<CommentsArrayList.size();i++){
+                    Toast.makeText(ReadArticleActivity.this,CommentsArrayList.get(i),Toast.LENGTH_LONG).show();
+
+                }
+                EditComment.setText("");
+
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -127,7 +148,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         LikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LikeArticle();
+                //LikeArticle();
             }
         });
 
