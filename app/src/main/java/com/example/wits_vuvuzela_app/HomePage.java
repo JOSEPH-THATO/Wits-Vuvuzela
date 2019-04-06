@@ -52,6 +52,7 @@ public class HomePage extends AppCompatActivity {
     TextView Password;
     String email;
     ListView listView;
+    Boolean ArticleExists = false;
 
     ArrayList<String> ArticlesHead;
     ArrayList<String> ArticlesAuth;
@@ -246,10 +247,31 @@ public class HomePage extends AppCompatActivity {
         //article.setArticleAutherName(ArticleAuthor);
         article.setArticleTitle(ArticleHeading);
         article.setArticleLink(ArticleLink);
+        
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        databaseReference.push().setValue(article);
-        Toast.makeText(HomePage.this, "Article sent", Toast.LENGTH_LONG).show();
+                for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
+                    Article article = artistSnapshot.getValue(Article.class);
+
+                    if(article.getArticleTitle().equals(ArticleHeading)){
+                       
+                        ArticleExists = true;
+                   
+                    }
+                }
+                
+                if(ArticleExists.equals(false)){
+                    
+                    databaseReference.push().setValue(article);
+                    Toast.makeText(HomePage.this, "Article sent", Toast.LENGTH_LONG).show();
+
+       
+            }
+
+        
         //EnterLoginPage();
     }
 /*
@@ -259,7 +281,6 @@ public class HomePage extends AppCompatActivity {
         public DownLoadImageTask(ImageView imageView){
             this.imageView = imageView;
         }
-
         protected Bitmap doInBackground(String...urls){
             String urlOfImage = urls[0];
             Bitmap logo = null;
