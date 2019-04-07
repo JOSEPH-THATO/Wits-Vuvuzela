@@ -10,11 +10,14 @@ public class Article {
     private String ArticleImage="no Image";
     private String ArticleTitle=" No Title";
     private String ArticleAutherName="No Auther";
-    private String ArticleComments= "Comment1/Comment2/Comment3";
+    private String ArticleComments= "User1-Comment1/User2-Comment2";
     private String ArticleDateUploaded = "NoDate";
     private String ArticleLink = "No lInk";
     private String ArticleLikes = "0";
-    private String ArticleDislikes = "4";
+    private String ArticleDislikes = "0";
+    private String ArticleLikedList ="User1/User2";
+    private String ArticleDislikedList ="User1/User2";
+    private String RateStatus = "none";
 
     public String getArticleLikes() {
         return ArticleLikes;
@@ -78,6 +81,17 @@ public class Article {
 
     public void setArticleDateUploaded(String articleDateUploaded) {
         ArticleDateUploaded = articleDateUploaded;
+    }
+
+    public void AddComment(String NewComment,String User){
+
+        if(ArticleComments.equals("")){
+            ArticleComments = ArticleComments + User + "-" + NewComment;
+        }
+
+        else {
+            ArticleComments = ArticleComments + "/" + User + "-" + NewComment;
+        }
     }
 
 }

@@ -116,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private void EnterHomePage() {
 
         Intent intent = new Intent(this,HomePage.class);
-      //  intent.putExtra("Head",ArticlesHead);
-      //  intent.putExtra("Auth",ArticlesAuth);
+        intent.putExtra("Email",Username.getText().toString().trim());
         startActivity(intent);
     }
 

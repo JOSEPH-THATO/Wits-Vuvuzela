@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,10 +50,9 @@ public class ReadArticleActivity extends AppCompatActivity {
     EditText EditComment;
     ImageView CommentBtn;
     ArrayList<String> CommentsArrayList;
-
-    String[] UserNames = {"Jacob Zuma", "Wits University", "Elections"};
-    String[] UserComments = {"State Capture Report", "Best Institution in Africa", "Eskom Crisis"};
-
+    ArrayList<String> NamesArrayList;
+    Article article;
+    String Email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +60,17 @@ public class ReadArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_read_article);
 
         CommentsArrayList = new ArrayList<>();
+        NamesArrayList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("Article");
 
         Bundle bundle = getIntent().getExtras();
         String heading = bundle.getString("Heading");
+        String email = bundle.getString("Email");
         head = heading;
+        Email = email;
 
         CommentBtn =(ImageView) findViewById(R.id.commentBtn);
-
         EditComment=(EditText)findViewById(R.id.editComment);
-
         LikeButton = (ImageView)findViewById(R.id.likebtn);
         DislikeButton = (ImageView)findViewById(R.id.dislikebtn);
         NumDislikes = (TextView)findViewById(R.id.dislikeNum);
@@ -81,7 +82,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
 
-        CommentBtn.setOnClickListener(new View.OnClickListener() {
+        /*CommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -94,14 +95,14 @@ public class ReadArticleActivity extends AppCompatActivity {
                 EditComment.setText("");
 
             }
-        });
+        });*/
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
-                    Article article = artistSnapshot.getValue(Article.class);
+                    article = artistSnapshot.getValue(Article.class);
 
                     if(article.getArticleTitle().equals(head)){
 
@@ -119,17 +120,72 @@ public class ReadArticleActivity extends AppCompatActivity {
                         NumLikes.setText(likes + " Likes");
                         NumDislikes.setText(dislikes + " Dislikes");
 
-                        //String[] CommentsArray = Comments.split("/");
+                        String[] CommentsArray = Comments.split("/");
 
-                       // for(int i = 0;i < CommentsArray.length;++i){
+                        for(int i = 0;i < CommentsArray.length;++i){
 
-                            //CommentsArrayList.add(CommentsArray[i]);
+                            String[] NamesArray = CommentsArray[i].split("-");
 
-                        //}
+                            String name = NamesArray[0];
+                            //EditComment.setText(name);
+                            String comment = NamesArray[1];
+
+                            CommentsArrayList.add(comment);
+                            NamesArrayList.add(name);
+                        }
 
                         viewComments = (ListView) findViewById(R.id.viewCommentsID);
                         CustomAdapter customAdapter = new CustomAdapter();
                         viewComments.setAdapter(customAdapter);
+
+                        CommentBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                AddComment(article,EditComment.getText().toString());
+                                Toast.makeText(ReadArticleActivity.this,"Comment posted",Toast.LENGTH_LONG).show();
+                                EditComment.setText("");
+
+                                databaseReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                        for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
+
+                                            article = artistSnapshot.getValue(Article.class);
+
+                                            if(article.getArticleTitle().equals(head)){
+
+                                                String Comments = article.getArticleComments();
+
+                                                String[] CommentsArray = Comments.split("/");
+
+                                                for(int i = 0;i < CommentsArray.length;++i){
+
+                                                    String[] NamesArray = CommentsArray[i].split("-");
+
+                                                    String name = NamesArray[0];
+                                                    String comment = NamesArray[1];
+
+                                                    CommentsArrayList.add(comment);
+                                                    NamesArrayList.add(name);
+                                                }
+
+                                                viewComments = (ListView) findViewById(R.id.viewCommentsID);
+                                                CustomAdapter customAdapter = new CustomAdapter();
+                                                viewComments.setAdapter(customAdapter);
+
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        });
 
                         new doit().execute();
                     }
@@ -141,9 +197,6 @@ public class ReadArticleActivity extends AppCompatActivity {
 
             }
         });
-
-
-        //new doit().execute();
 
         LikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,13 +214,18 @@ public class ReadArticleActivity extends AppCompatActivity {
 
     }
 
-    public void AddComment(String Comment){
 
-        ArticleComments += ("/" + Comment);
+    public void AddComment(Article article,String Comment){
 
-        //Send Comment to database
+        DatabaseReference databaseReference4;
+
+        article.AddComment(Comment,Email);
+
+        databaseReference4 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
+        databaseReference4.child("articleComments").setValue(article.getArticleComments());
 
     }
+
 
     public void LikeArticle(){
         likes+=1;
@@ -182,7 +240,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     class CustomAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return UserNames.length;
+            return CommentsArrayList.size();
         }
 
         @Override
@@ -202,8 +260,8 @@ public class ReadArticleActivity extends AppCompatActivity {
             TextView txtUserName = convertView2.findViewById(R.id.userEmail);
             TextView txtComment = convertView2.findViewById(R.id.TxtComment);
 
-            txtUserName.setText(UserNames[position]);
-            txtComment.setText(UserComments[position]);
+            txtUserName.setText(NamesArrayList.get(position));
+            txtComment.setText(CommentsArrayList.get(position));
             return convertView2;
         }
     }
