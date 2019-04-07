@@ -86,7 +86,7 @@ public class Article {
     public void AddComment(String NewComment,String User){
 
         if(ArticleComments.equals("")){
-            ArticleComments = ArticleComments + User + "-" + NewComment;
+            ArticleComments = User + "-" + NewComment;
         }
 
         else {

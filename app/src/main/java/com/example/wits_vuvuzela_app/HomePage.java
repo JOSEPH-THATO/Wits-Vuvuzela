@@ -135,7 +135,6 @@ public class HomePage extends AppCompatActivity {
 
                 for (int i = 0; i < 12; i++) {
 
-
                     Elements mElementArticle = mBlogDocument.select("h2[class=entry-title]").select("a[href]").eq(i);
                     String mArticleHead = mElementArticle.text();
 
@@ -146,7 +145,7 @@ public class HomePage extends AppCompatActivity {
                     String mAuthorName = mElementAuthorName.attr("src");
 
                     Author1.add(mAuthorName);
-                    words += mAuthorName;
+                    //words += mAuthorName;
 
                     String mArticleLink = mElementArticle.attr("href");
                     Link1.add(mArticleLink);

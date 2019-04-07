@@ -120,6 +120,8 @@ public class ReadArticleActivity extends AppCompatActivity {
                         NumLikes.setText(likes + " Likes");
                         NumDislikes.setText(dislikes + " Dislikes");
 
+                        CommentsArrayList = new ArrayList<>();
+
                         String[] CommentsArray = Comments.split("/");
 
                         for(int i = 0;i < CommentsArray.length;++i){
@@ -127,7 +129,6 @@ public class ReadArticleActivity extends AppCompatActivity {
                             String[] NamesArray = CommentsArray[i].split("-");
 
                             String name = NamesArray[0];
-                            //EditComment.setText(name);
                             String comment = NamesArray[1];
 
                             CommentsArrayList.add(comment);
@@ -142,48 +143,9 @@ public class ReadArticleActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
 
-                                AddComment(article,EditComment.getText().toString());
+                                AddComment(article,EditComment.getText().toString(),databaseReference);
                                 Toast.makeText(ReadArticleActivity.this,"Comment posted",Toast.LENGTH_LONG).show();
                                 EditComment.setText("");
-
-                                databaseReference.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                        for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
-
-                                            article = artistSnapshot.getValue(Article.class);
-
-                                            if(article.getArticleTitle().equals(head)){
-
-                                                String Comments = article.getArticleComments();
-
-                                                String[] CommentsArray = Comments.split("/");
-
-                                                for(int i = 0;i < CommentsArray.length;++i){
-
-                                                    String[] NamesArray = CommentsArray[i].split("-");
-
-                                                    String name = NamesArray[0];
-                                                    String comment = NamesArray[1];
-
-                                                    CommentsArrayList.add(comment);
-                                                    NamesArrayList.add(name);
-                                                }
-
-                                                viewComments = (ListView) findViewById(R.id.viewCommentsID);
-                                                CustomAdapter customAdapter = new CustomAdapter();
-                                                viewComments.setAdapter(customAdapter);
-
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
                             }
                         });
 
@@ -215,14 +177,12 @@ public class ReadArticleActivity extends AppCompatActivity {
     }
 
 
-    public void AddComment(Article article,String Comment){
-
-        DatabaseReference databaseReference4;
+    public void AddComment(Article article,String Comment,DatabaseReference databaseReference){
 
         article.AddComment(Comment,Email);
 
-        databaseReference4 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
-        databaseReference4.child("articleComments").setValue(article.getArticleComments());
+        databaseReference = FirebaseDatabase.getInstance().getReference("Article").child(Key);
+        databaseReference.child("articleComments").setValue(article.getArticleComments());
 
     }
 

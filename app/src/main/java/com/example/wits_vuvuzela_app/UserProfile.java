@@ -50,4 +50,6 @@ public class UserProfile {
     public void setUser_password(String user_password) {
         User_password = user_password;
     }
+
+
 }

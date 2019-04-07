@@ -42,7 +42,6 @@ public class Register extends AppCompatActivity {
     Button Register;
     TextView Login;
     ProgressBar progressBar;
-
     FirebaseAuth firebaseauth;
     DatabaseReference databaseReference;
     UserProfile userProfile;
@@ -55,7 +54,6 @@ public class Register extends AppCompatActivity {
         SetupUI();
 
         progressBar.setVisibility(View.GONE);
-
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
         firebaseauth = FirebaseAuth.getInstance();
         userProfile = new UserProfile();
@@ -96,10 +94,7 @@ public class Register extends AppCompatActivity {
 
                         if (task.isSuccessful()){
 
-                            Toast.makeText(Register.this, "aaaaaa", Toast.LENGTH_SHORT).show();
-                            //Register.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
-                            //Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             SendEmailConfirmation();
                         }
                         else {
@@ -236,7 +231,6 @@ public class Register extends AppCompatActivity {
         Register = (Button)findViewById(R.id.BtnRegisterReg);
         Login = (TextView)findViewById(R.id.txtViewLoginReg);
         progressBar = (ProgressBar)findViewById(R.id.progressBarReg);
-
 
     }
 }
