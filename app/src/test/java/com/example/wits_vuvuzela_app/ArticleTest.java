@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ArticleTest {
-/*
+
     @Test
     public void getArticleLikes() {
 
@@ -292,6 +292,71 @@ public class ArticleTest {
     }
 
     @Test
+    public void LikeAnArticle() {
+
+        Article article = new Article();
+
+        String User = "Abdullah";
+
+        article.setArticleLikedList("Abdullah/Ayo/Edwin");
+
+        article.setArticleLikes("1");
+        article.setArticleDislikes("2");
+
+        article.LikeAnArticle(User);
+
+        String ActualLikes = "1";
+        String ExpectedLikes = article.getArticleLikes() ;
+
+        String ActualDislikes = "2";
+        String ExpectedDislikes = article.getArticleDislikes();
+
+        assertEquals(ExpectedLikes,ActualLikes);
+        assertEquals(ExpectedDislikes,ActualDislikes);
+
+        Article article2 = new Article();
+
+        String User2 = "Joseph";
+
+        article2.setArticleDislikedList("Abd/Ay/Edw/Joseph");
+
+        article2.setArticleLikes("1");
+        article2.setArticleDislikes("2");
+
+        article2.LikeAnArticle(User2);
+
+        String ActualLikes2 = "2";
+        String ExpectedLikes2 = article2.getArticleLikes() ;
+
+        String ActualDislikes2 = "1";
+        String ExpectedDislikes2 = article2.getArticleDislikes();
+
+        assertEquals(ExpectedLikes2,ActualLikes2);
+        assertEquals(ExpectedDislikes2,ActualDislikes2);
+
+        Article article3 = new Article();
+
+        String User3 = "Joseph";
+
+        article3.setArticleLikedList("Abdullah/Ayo/Edwin");
+        article3.setArticleDislikedList("Abdullah/Ayo/Edwin");
+
+        article3.setArticleLikes("1");
+        article3.setArticleDislikes("2");
+
+        article3.LikeAnArticle(User3);
+
+        String ActualLikes3 = "2";
+        String ExpectedLikes3 = article3.getArticleLikes() ;
+
+        String ActualDislikes3 = "2";
+        String ExpectedDislikes3 = article3.getArticleDislikes();
+
+        assertEquals(ExpectedLikes3,ActualLikes3);
+        assertEquals(ExpectedDislikes3,ActualDislikes3);
+    }
+
+    @Test
     public void DislikeAnArticle() {
 
         Article article = new Article();
@@ -314,46 +379,147 @@ public class ArticleTest {
         assertEquals(ExpectedLikes,ActualLikes);
         assertEquals(ExpectedDislikes,ActualDislikes);
 
-
         Article article2 = new Article();
 
         String User2 = "Joseph";
 
-        article2.setArticleDislikedList("Abdullah/Ayo/Edwin");
+        article2.setArticleLikedList("Abd/Ay/Edw/Joseph");
 
         article2.setArticleLikes("1");
         article2.setArticleDislikes("2");
 
-        article2.DislikeAnArticle(User);
+        article2.DislikeAnArticle(User2);
 
-        String ActualLikes2 = "1";
+        String ActualLikes2 = "0";
         String ExpectedLikes2 = article2.getArticleLikes() ;
 
-        String ActualDislikes2 = "2";
+        String ActualDislikes2 = "3";
         String ExpectedDislikes2 = article2.getArticleDislikes();
 
         assertEquals(ExpectedLikes2,ActualLikes2);
         assertEquals(ExpectedDislikes2,ActualDislikes2);
 
-
         Article article3 = new Article();
 
         String User3 = "Joseph";
 
-        //article2.setArticleDislikedList("Abdullah/Ayo/Edwin");
+        article3.setArticleLikedList("Abdullah/Ayo/Edwin");
+        article3.setArticleDislikedList("Abdullah/Ayo/Edwin");
 
-        article2.setArticleLikes("1");
-        article2.setArticleDislikes("2");
+        article3.setArticleLikes("1");
+        article3.setArticleDislikes("2");
 
-        article2.DislikeAnArticle(User3);
+        article3.DislikeAnArticle(User3);
 
         String ActualLikes3 = "1";
         String ExpectedLikes3 = article3.getArticleLikes() ;
 
-        String ActualDislikes3 = "2";
+        String ActualDislikes3 = "3";
         String ExpectedDislikes3 = article3.getArticleDislikes();
 
         assertEquals(ExpectedLikes3,ActualLikes3);
         assertEquals(ExpectedDislikes3,ActualDislikes3);
-    }*/
+    }
+
+    @Test
+    public void RemoveUserFromLikedArticleList() {
+
+        String User = "Sheldon";
+
+        Article article = new Article();
+
+        article.setArticleLikedList("Sheldon/Cooper/Leornard");
+
+        article.RemoveUserFromLikedArticleList(User);
+
+        String Actual = "User/Cooper/Leornard";
+
+        String Expected = article.getArticleLikedList();
+
+        assertEquals(Expected,Actual);
+
+    }
+    @Test
+    public void RemoveUserFromDislikedArticleList() {
+
+        String User = "Sheldon";
+
+        Article article = new Article();
+
+        article.setArticleDislikedList("Sheldon/Cooper/Leornard");
+
+        article.RemoveUserFromDislikedArticleList(User);
+
+        String Actual = "User1/Cooper/Leornard";
+
+        String Expected = article.getArticleDislikedList();
+
+        assertEquals(Expected,Actual);
+
+    }
+
+    @Test
+    public void ArticleAlreadyLiked() {
+
+        String User = "Sheldon";
+
+        Boolean likeStatus = false;
+        Boolean Actual = false;
+        Article article = new Article();
+
+        article.setArticleLikedList("Sheldon/Cooper/Leornard");
+
+        Actual = true;
+
+        Boolean Expected = false;
+
+        if(article.ArticleAlreadyLiked(User)){
+            Expected = true;
+        }
+
+        assertEquals(Expected,Actual);
+
+    }
+
+    @Test
+    public void ArticleAlreadyDisliked() {
+
+        String User = "Sheldon";
+
+        Boolean likeStatus = false;
+        Boolean Actual = false;
+        Article article = new Article();
+
+        article.setArticleDislikedList("Sheldon/Cooper/Leornard");
+
+        Actual = true;
+
+        Boolean Expected = false;
+
+        if(article.ArticleAlreadyDisliked(User)){
+            Expected = true;
+        }
+
+        assertEquals(Expected,Actual);
+
+    }
+
+    @Test
+    public void AddComent() {
+
+        String NewComment = "This Is A new Comment";
+        String User = "Abdullah";
+
+        Article article = new Article();
+
+        String Actual = article.getArticleComments()+ "/" + User+"-"+NewComment;
+
+        article.AddComment(NewComment,User);
+
+        String Expected = article.getArticleComments();
+
+        assertEquals(Expected,Actual);
+
+    }
+
 }

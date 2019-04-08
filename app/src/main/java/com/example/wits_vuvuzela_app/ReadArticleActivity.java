@@ -128,14 +128,14 @@ public class ReadArticleActivity extends AppCompatActivity {
                         LikeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                LikeArticle(article,"User");
+                                LikeArticle(article,Email);
                             }
                         });
 
                         DislikeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                DislikeArticle(article,"User");
+                                DislikeArticle(article,Email);
                             }
                         });
 

@@ -7,16 +7,16 @@ import java.util.Date;
 
 public class Article {
 
-    private String ArticleImage="no Image";
-    private String ArticleTitle=" No Title";
-    private String ArticleAutherName="No Auther";
-    private String ArticleComments= "User-comment/user2-comment";
+    private String ArticleImage = "no Image";
+    private String ArticleTitle = " No Title";
+    private String ArticleAutherName = "No Auther";
+    private String ArticleComments = "User-comment/user2-comment";
     private String ArticleDateUploaded = "NoDate";
     private String ArticleLink = "No lInk";
     private String ArticleLikes = "0";
     private String ArticleDislikes = "0";
-    private String ArticleLikedList ="User1/User2";
-    private String ArticleDislikedList ="User1/User2";
+    private String ArticleLikedList = "User1/User2";
+    private String ArticleDislikedList = "User1/User2";
     private String RateStatus = "none";
 
     public String getRateStatus() {
@@ -91,77 +91,75 @@ public class Article {
         ArticleDateUploaded = articleDateUploaded;
     }
 
-    public void AddComment(String NewComment,String User){
+    public void AddComment(String NewComment, String User) {
 
-        if(ArticleComments.equals("")){
+        if (ArticleComments.equals("")) {
             ArticleComments = User + "-" + NewComment;
-        }
-
-        else {
+        } else {
             ArticleComments = ArticleComments + "/" + User + "-" + NewComment;
         }
     }
 
-    public boolean ArticleAlreadyLiked(String User){
+    public boolean ArticleAlreadyLiked(String User) {
 
         String[] LikedArticle = ArticleLikedList.split("/");
 
-        for(int i = 0;i < LikedArticle.length;++i){
-            if(User.equals(LikedArticle[i])){
+        for (int i = 0; i < LikedArticle.length; ++i) {
+            if (User.equals(LikedArticle[i])) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean ArticleAlreadyDisliked(String User){
+    public boolean ArticleAlreadyDisliked(String User) {
 
         String[] DislikedArticle = ArticleDislikedList.split("/");
 
-        for(int i = 0;i < DislikedArticle.length;++i){
-            if(User.equals(DislikedArticle[i])){
+        for (int i = 0; i < DislikedArticle.length; ++i) {
+            if (User.equals(DislikedArticle[i])) {
                 return true;
             }
         }
         return false;
     }
 
-    public void RemoveUserFromLikedArticleList(String User){
+    public void RemoveUserFromLikedArticleList(String User) {
 
         String[] LikedArticle = ArticleLikedList.split("/");
 
         String NewList = "User";
 
-        for(int i = 0;i < LikedArticle.length;++i){
-            if(User.equals(LikedArticle[i])) {
+        for (int i = 0; i < LikedArticle.length; ++i) {
+            if (User.equals(LikedArticle[i])) {
                 continue;
             }
 
-            NewList+=("/"+LikedArticle[i]);
+            NewList += ("/" + LikedArticle[i]);
         }
 
         ArticleLikedList = NewList;
     }
 
-    public void RemoveUserFromDislikedArticleList(String User){
+    public void RemoveUserFromDislikedArticleList(String User) {
 
         String[] DislikedArticle = ArticleDislikedList.split("/");
 
         String NewList = "User1";
 
-        for(int i = 0;i < DislikedArticle.length;++i){
-            if(User.equals(DislikedArticle[i])) {
+        for (int i = 0; i < DislikedArticle.length; ++i) {
+            if (User.equals(DislikedArticle[i])) {
                 continue;
             }
 
-            NewList+=("/"+DislikedArticle[i]);
+            NewList += ("/" + DislikedArticle[i]);
         }
 
         ArticleDislikedList = NewList;
     }
 
 
-    public void LikeAnArticle(String User){
+    public void LikeAnArticle(String User) {
 
         int NumLikes = Integer.parseInt(ArticleLikes);
         int NumDislikes = Integer.parseInt(ArticleDislikes);
@@ -183,6 +181,22 @@ public class Article {
             NumLikes+=1;
             ArticleLikes = String.valueOf(NumLikes);
         }
+    }
+
+    public String getArticleLikedList() {
+        return ArticleLikedList;
+    }
+
+    public void setArticleLikedList(String articleLikedList) {
+        ArticleLikedList = articleLikedList;
+    }
+
+    public String getArticleDislikedList() {
+        return ArticleDislikedList;
+    }
+
+    public void setArticleDislikedList(String articleDislikedList) {
+        ArticleDislikedList = articleDislikedList;
     }
 
     public void DislikeAnArticle(String User){
