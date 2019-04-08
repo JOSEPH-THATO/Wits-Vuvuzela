@@ -143,11 +143,14 @@ public class HomePage extends AppCompatActivity {
                     Heading1.add(mArticleHead);
                     words += mArticleHead;
 
-                    Elements mElementAuthorName = mBlogDocument.select("div[post-media]").select("a[entry-featured-image-url]").select("img").eq(i);
-                    String mAuthorName = mElementAuthorName.attr("src");
+                    Elements mElementAuthorName = mBlogDocument.select("span[class=author vcard]").select("a").eq(i);
+                    String mAuthorName = mElementAuthorName.text();
+
+                   // Elements mElementAuthorName = mBlogDocument.select("div[post-media]").select("a[entry-featured-image-url]").select("img").eq(i);
+                   // String mAuthorName = mElementAuthorName.attr("src");
 
                     Author1.add(mAuthorName);
-                    //words += mAuthorName;
+                    words += mAuthorName;
 
                     String mArticleLink = mElementArticle.attr("href");
                     Link1.add(mArticleLink);

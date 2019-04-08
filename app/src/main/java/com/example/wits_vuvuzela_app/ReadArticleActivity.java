@@ -92,6 +92,7 @@ public class ReadArticleActivity extends AppCompatActivity {
                         String Dislikes = article.getArticleDislikes();
 
                         article.DetermineRateStatus(Email);
+                        //EditComment.setText(article.getArticleLikedList());
 
                         Key = key;
                         urlLink = links;
@@ -177,6 +178,8 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         databaseReference5 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
         databaseReference5.child("articleLikes").setValue(article.getArticleLikes());
+        String List = article.getArticleLikedList();
+        databaseReference5.child("articleLikedList").setValue(List += ("/" + Email));
     }
 
     public void DislikeArticle(Article article,String User){
@@ -187,6 +190,8 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         databaseReference6 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
         databaseReference6.child("articleDislikes").setValue(article.getArticleDislikes());
+        String List = article.getArticleDislikedList();
+        databaseReference6.child("articleDislikedList").setValue(List += ("/"+ Email));
 
     }
 
