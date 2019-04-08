@@ -1,6 +1,7 @@
-[![Build Status](https://travis-ci.org/optisolcoms3009/Wits-Vuvuzela-App.svg?branch=master)](https://travis-ci.org/optisolcoms3009/Wits-Vuvuzela-App)
+[![codecov](https://codecov.io/gh/optisolcoms3009/Wits-Vuvuzela-App/branch/master/graph/badge.svg)](https://codecov.io/gh/optisolcoms3009/Wits-Vuvuzela-App)
 
-[![Coverage Status](https://coveralls.io/repos/github/optisolcoms3009/Wits-Vuvuzela-App/badge.svg?branch=master)](https://coveralls.io/github/optisolcoms3009/Wits-Vuvuzela-App?branch=master)
+[![Build Status](https://travis-ci.org/optisolcoms3009/Wits-Vuvuzela-App.png)](https://travis-ci.org/optisolcoms3009/Wits-Vuvuzela-App)
+
 
 # Wits-Vuvuzela-App
 
