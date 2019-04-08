@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.jsoup.Jsoup;
@@ -51,6 +52,7 @@ public class HomePage extends AppCompatActivity {
     ArrayList<String> ArticlesLink;
     String SendArticleHeading;
     String Email="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
