@@ -19,6 +19,19 @@ public class Article {
     private String ArticleDislikedList = "User1/User2";
     private String RateStatus = "none";
 
+    public void DetermineRateStatus(String User){
+        if (ArticleAlreadyLiked(User)){
+            RateStatus = "Liked";
+        }
+
+        else if(ArticleAlreadyDisliked(User)){
+            RateStatus = "Disliked";
+        }
+        else{
+            RateStatus = "none";
+        }
+    }
+
     public String getRateStatus() {
         return RateStatus;
     }

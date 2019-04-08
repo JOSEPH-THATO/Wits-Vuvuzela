@@ -91,6 +91,8 @@ public class ReadArticleActivity extends AppCompatActivity {
                         String Likes = article.getArticleLikes();
                         String Dislikes = article.getArticleDislikes();
 
+                        article.DetermineRateStatus(Email);
+
                         Key = key;
                         urlLink = links;
                         dislikes = Integer.parseInt(Dislikes);
@@ -125,19 +127,23 @@ public class ReadArticleActivity extends AppCompatActivity {
                             }
                         });
 
-                        LikeButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                LikeArticle(article,Email);
-                            }
-                        });
+                        if(!article.getRateStatus().equals("Liked")){
+                            LikeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    LikeArticle(article, Email);
+                                }
+                            });
+                        }
 
-                        DislikeButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                DislikeArticle(article,Email);
-                            }
-                        });
+                        if(!article.getRateStatus().equals("Disliked")) {
+                            DislikeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    DislikeArticle(article, Email);
+                                }
+                            });
+                        }
 
                         new doit().execute();
                     }
