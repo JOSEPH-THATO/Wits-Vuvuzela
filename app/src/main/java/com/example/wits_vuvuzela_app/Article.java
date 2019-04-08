@@ -196,8 +196,8 @@ public class Article {
 
         else if(ArticleAlreadyLiked(User)){
 
-            NumLikes-=1;
-            NumDislikes+=1;
+            NumLikes -= 1;
+            NumDislikes += 1;
             ArticleLikes = String.valueOf(NumLikes);
             ArticleDislikes = String.valueOf(NumDislikes);
             RemoveUserFromLikedArticleList(User);;
