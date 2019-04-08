@@ -290,4 +290,70 @@ public class ArticleTest {
 
         assertEquals(Expected2,Actual2);
     }
+
+    @Test
+    public void DislikeAnArticle() {
+
+        Article article = new Article();
+
+        String User = "Abdullah";
+
+        article.setArticleDislikedList("Abdullah/Ayo/Edwin");
+
+        article.setArticleLikes("1");
+        article.setArticleDislikes("2");
+
+        article.DislikeAnArticle(User);
+
+        String ActualLikes = "1";
+        String ExpectedLikes = article.getArticleLikes() ;
+
+        String ActualDislikes = "2";
+        String ExpectedDislikes = article.getArticleDislikes();
+
+        assertEquals(ExpectedLikes,ActualLikes);
+        assertEquals(ExpectedDislikes,ActualDislikes);
+
+
+        Article article2 = new Article();
+
+        String User2 = "Joseph";
+
+        article2.setArticleDislikedList("Abdullah/Ayo/Edwin");
+
+        article2.setArticleLikes("1");
+        article2.setArticleDislikes("2");
+
+        article2.DislikeAnArticle(User);
+
+        String ActualLikes2 = "1";
+        String ExpectedLikes2 = article2.getArticleLikes() ;
+
+        String ActualDislikes2 = "2";
+        String ExpectedDislikes2 = article2.getArticleDislikes();
+
+        assertEquals(ExpectedLikes2,ActualLikes2);
+        assertEquals(ExpectedDislikes2,ActualDislikes2);
+
+
+        Article article3 = new Article();
+
+        String User3 = "Joseph";
+
+        article2.setArticleDislikedList("Abdullah/Ayo/Edwin");
+
+        article2.setArticleLikes("1");
+        article2.setArticleDislikes("2");
+
+        article2.DislikeAnArticle(User3);
+
+        String ActualLikes3 = "1";
+        String ExpectedLikes3 = article3.getArticleLikes() ;
+
+        String ActualDislikes3 = "2";
+        String ExpectedDislikes3 = article3.getArticleDislikes();
+
+        assertEquals(ExpectedLikes3,ActualLikes3);
+        assertEquals(ExpectedDislikes3,ActualDislikes3);
+    }
 }

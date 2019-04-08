@@ -10,20 +10,21 @@ public class Article {
     private String ArticleImage="no Image";
     private String ArticleTitle=" No Title";
     private String ArticleAutherName="No Auther";
-    private String ArticleComments= "User1-Comment1/User2-Comment2";
+    private String ArticleComments= "User-comment/user2-comment";
     private String ArticleDateUploaded = "NoDate";
     private String ArticleLink = "No lInk";
-    private String ArticleLikes = "5";
-    private String ArticleDislikes = "6";
+    private String ArticleLikes = "0";
+    private String ArticleDislikes = "0";
     private String ArticleLikedList ="User1/User2";
     private String ArticleDislikedList ="User1/User2";
     private String RateStatus = "none";
 
-    public String getRateStatus(String User) {
-
-        DetermineRateStatus(User);
-
+    public String getRateStatus() {
         return RateStatus;
+    }
+
+    public void setRateStatus(String rateStatus) {
+        RateStatus = rateStatus;
     }
 
     public String getArticleLikes() {
@@ -101,35 +102,6 @@ public class Article {
         }
     }
 
-
-    public void RemoveUserFromLikedArticleList(String User){
-
-        String[] LikedArticle = ArticleLikedList.split("/");
-
-        String NewList = "User";
-
-        for(int i = 0;i < LikedArticle.length;++i){
-            if(User.equals(LikedArticle[i])) {
-                continue;
-            }
-
-            NewList+=("/"+LikedArticle[i]);
-        }
-
-        ArticleLikedList = NewList;
-    }
-
-    public void DetermineRateStatus(String User){
-
-        if(ArticleAlreadyLiked(User)){
-            RateStatus = "Liked";
-        }
-
-        else if(ArticleAlreadyDisliked(User)){
-            RateStatus = "Disliked";
-        }
-    }
-
     public boolean ArticleAlreadyLiked(String User){
 
         String[] LikedArticle = ArticleLikedList.split("/");
@@ -152,6 +124,23 @@ public class Article {
             }
         }
         return false;
+    }
+
+    public void RemoveUserFromLikedArticleList(String User){
+
+        String[] LikedArticle = ArticleLikedList.split("/");
+
+        String NewList = "User";
+
+        for(int i = 0;i < LikedArticle.length;++i){
+            if(User.equals(LikedArticle[i])) {
+                continue;
+            }
+
+            NewList+=("/"+LikedArticle[i]);
+        }
+
+        ArticleLikedList = NewList;
     }
 
     public void RemoveUserFromDislikedArticleList(String User){
@@ -219,5 +208,4 @@ public class Article {
             ArticleDislikes = String.valueOf(NumDislikes);
         }
     }
-
 }
