@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +46,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     ListView viewComments;
     ImageView LikeButton;
     ImageView DislikeButton;
+    ImageView BackButton;
     TextView NumLikes;
     TextView NumDislikes;
     EditText EditComment;
@@ -61,6 +63,15 @@ public class ReadArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_read_article);
 
         SetupUi();
+
+        BackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // startActivity(new Intent(ReadArticleActivity.this,HomePage.class));
+              finish();
+            }
+
+        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Article");
 
@@ -142,6 +153,7 @@ public class ReadArticleActivity extends AppCompatActivity {
                             }
                         });
 
+
                         new doit().execute();
                     }
                 }
@@ -152,6 +164,7 @@ public class ReadArticleActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     public void AddComment(Article article,String Comment,DatabaseReference databaseReference){
@@ -269,6 +282,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         NumLikes = (TextView)findViewById(R.id.likeNum);
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
+        BackButton = (ImageView) findViewById(R.id.backbtn);
 
 
     }
