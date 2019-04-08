@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/optisolcoms3009/Wits-Vuvuzela-App/branch/master/graph/badge.svg)](https://codecov.io/gh/optisolcoms3009/Wits-Vuvuzela-App)
+[![codecov](https://codecov.io/gh/Ayo-Akinkugbe/Wits-Vuvuzela-App/branch/master/graph/badge.svg)](https://codecov.io/gh/Ayo-Akinkugbe/Wits-Vuvuzela-App)
 
 [![Build Status](https://travis-ci.org/Ayo-Akinkugbe/Wits-Vuvuzela-App.svg?branch=master)](https://travis-ci.org/Ayo-Akinkugbe/Wits-Vuvuzela-App)
 
