@@ -59,7 +59,7 @@ script:
   - ./gradlew connectedDebugAndroidTest -PdisablePreDex --continue --stacktrace
   - ./gradlew connectedCheck
   - ./gradlew build jacocoTestReport
- # - ./gradlew connectedAndroidTest coveralls
+  - ./gradlew connectedAndroidTest coveralls
 after_failure:
   - cat $TRAVIS_BUILD_DIR/app/build/reports/lint-results.xml
 after_success:
