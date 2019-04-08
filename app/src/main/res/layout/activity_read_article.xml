@@ -57,12 +57,7 @@
                 </LinearLayout>
 
 
-                <ImageView
-                    android:id="@+id/SelectedArticleImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/googleg_standard_color_18"
-                    />
+
 
             </LinearLayout>
             <LinearLayout
@@ -86,7 +81,7 @@
                         android:layout_height="50dp"
                         android:layout_marginRight="20dp"
 
-                        app:srcCompat="@drawable/dislike"/>
+                        app:srcCompat="@drawable/like"/>
 
                     <TextView
                         android:id="@+id/likeNum"
@@ -94,14 +89,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
-                        android:text="Dislike" />
+                        android:text="Like" />
 
                     <ImageView
                         android:id="@+id/dislikebtn"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/like" />
+                        app:srcCompat="@drawable/dislike" />
 
                     <TextView
                         android:id="@+id/dislikeNum"
@@ -110,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Like" />
+                        android:text="Dislike" />
 
                 </LinearLayout>
     <LinearLayout
