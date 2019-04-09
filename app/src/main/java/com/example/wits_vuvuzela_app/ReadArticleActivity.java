@@ -35,7 +35,6 @@ import java.util.ArrayList;
 
 public class ReadArticleActivity extends AppCompatActivity {
 
-
     TextView ArticleBody;
     TextView ArticleHeading;
     String urlLink;
@@ -62,7 +61,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_read_article);
+        setContentView(R.layout.sample);
 
         SetUpUI();
 
@@ -93,25 +92,18 @@ public class ReadArticleActivity extends AppCompatActivity {
                         String Likes = article.getArticleLikes();
                         String Dislikes = article.getArticleDislikes();
 
-                        article.DetermineRateStatus(Email);
-                        if(article.getRateStatus().equals("Liked")){
+                        if(article.ArticleAlreadyLiked(Email) && article.ArticleAlreadyDisliked(Email)){
+                            LikeButton.setImageResource(R.drawable.likebw);
+                            DislikeButton.setImageResource(R.drawable.dislikebw);
+                        }
+
+                        else if(article.ArticleAlreadyLiked(Email)){
                             LikeButton.setImageResource(R.drawable.like);
                         }
 
-                        else if(article.getRateStatus().equals("Disliked")){
+                        else if(article.ArticleAlreadyDisliked(Email)){
                             DislikeButton.setImageResource(R.drawable.dislike);
                         }
-
-                        else if(article.getRateStatus().equals("none")){
-                            DislikeButton.setImageResource(R.drawable.dislikebw);
-                            LikeButton.setImageResource(R.drawable.likebw);
-                        }
-
-
-
-
-
-                        //article.DetermineRateStatus(Email);
 
                         Key = key;
                         urlLink = links;
@@ -143,7 +135,7 @@ public class ReadArticleActivity extends AppCompatActivity {
                         CommentButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                AddComment(article,EditComment.getText().toString());
+                                AddComment(article,EditComment.getText().toString().trim());
                             }
                         });
 
@@ -155,14 +147,13 @@ public class ReadArticleActivity extends AppCompatActivity {
                             });
 
 
-                        //if(!article.getRateStatus().equals("Disliked")) {
+
                             DislikeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     DislikeArticle(article, Email);
                                 }
                             });
-                        //}
 
                         new doit().execute();
                     }
@@ -198,6 +189,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         databaseReference5.child("articleLikes").setValue(article.getArticleLikes());
         databaseReference5.child("articleLikedList").setValue(article.getArticleLikedList());
         databaseReference5.child("articleDislikes").setValue(article.getArticleDislikes());
+
     }
 
     public void DislikeArticle(Article article,String User){

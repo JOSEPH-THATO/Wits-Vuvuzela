@@ -199,7 +199,10 @@ public class Article {
         int NumDislikes = Integer.parseInt(ArticleDislikes);
 
         if(ArticleAlreadyLiked(User)){
-            RateStatus = "none";
+            NumLikes-=1;
+            ArticleLikes = String.valueOf(NumLikes);
+            RemoveUserFromLikedArticleList(User);
+
         }
 
         else if(ArticleAlreadyDisliked(User)){
@@ -225,7 +228,9 @@ public class Article {
         int NumDislikes = Integer.parseInt(ArticleDislikes);
 
         if(ArticleAlreadyDisliked(User)){
-            RateStatus = "none";
+            NumDislikes -= 1;
+            ArticleDislikes = String.valueOf(NumDislikes);
+            RemoveUserFromDislikedArticleList(User);
         }
 
         else if(ArticleAlreadyLiked(User)){
@@ -243,21 +248,5 @@ public class Article {
             ArticleDislikes = String.valueOf(NumDislikes);
             AddUserToDislikedList(User);
         }
-    }
-
-    public void DetermineRateStatus(String User){
-
-        if(ArticleAlreadyDisliked(User)){
-            RateStatus = "Disliked";
-        }
-
-        else if(ArticleAlreadyLiked(User)){
-            RateStatus = "Liked";
-        }
-
-        else if(!ArticleAlreadyLiked(User) && !ArticleAlreadyDisliked(User)){
-            RateStatus = "none";
-        }
-
     }
 }
