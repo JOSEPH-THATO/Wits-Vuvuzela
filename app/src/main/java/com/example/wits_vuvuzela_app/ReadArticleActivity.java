@@ -2,6 +2,7 @@ package com.example.wits_vuvuzela_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +54,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     ImageView CommentButton;
     Article article;
     String Email="";
-
+    ProgressBar ArticleBar;
 
     ArrayList<String> CommentsArrayList;
     ArrayList<String> NamesArrayList;
@@ -92,7 +94,24 @@ public class ReadArticleActivity extends AppCompatActivity {
                         String Dislikes = article.getArticleDislikes();
 
                         article.DetermineRateStatus(Email);
-                        //EditComment.setText(article.getArticleLikedList());
+                        if(article.getRateStatus().equals("Liked")){
+                            LikeButton.setImageResource(R.drawable.like);
+                        }
+
+                        else if(article.getRateStatus().equals("Disliked")){
+                            DislikeButton.setImageResource(R.drawable.dislike);
+                        }
+
+                        else if(article.getRateStatus().equals("none")){
+                            DislikeButton.setImageResource(R.drawable.dislikebw);
+                            LikeButton.setImageResource(R.drawable.likebw);
+                        }
+
+
+
+
+
+                        //article.DetermineRateStatus(Email);
 
                         Key = key;
                         urlLink = links;
@@ -128,23 +147,22 @@ public class ReadArticleActivity extends AppCompatActivity {
                             }
                         });
 
-                        if(!article.getRateStatus().equals("Liked")){
                             LikeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     LikeArticle(article, Email);
                                 }
                             });
-                        }
 
-                        if(!article.getRateStatus().equals("Disliked")) {
+
+                        //if(!article.getRateStatus().equals("Disliked")) {
                             DislikeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     DislikeArticle(article, Email);
                                 }
                             });
-                        }
+                        //}
 
                         new doit().execute();
                     }
@@ -178,8 +196,8 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         databaseReference5 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
         databaseReference5.child("articleLikes").setValue(article.getArticleLikes());
-        String List = article.getArticleLikedList();
-        databaseReference5.child("articleLikedList").setValue(List += ("/" + Email));
+        databaseReference5.child("articleLikedList").setValue(article.getArticleLikedList());
+        databaseReference5.child("articleDislikes").setValue(article.getArticleDislikes());
     }
 
     public void DislikeArticle(Article article,String User){
@@ -190,8 +208,8 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         databaseReference6 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
         databaseReference6.child("articleDislikes").setValue(article.getArticleDislikes());
-        String List = article.getArticleDislikedList();
-        databaseReference6.child("articleDislikedList").setValue(List += ("/"+ Email));
+        databaseReference6.child("articleDislikedList").setValue(article.getArticleDislikedList());
+        databaseReference6.child("articleLikes").setValue(article.getArticleLikes());
 
     }
 
@@ -271,6 +289,7 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            ArticleBar.setVisibility(View.GONE);
             ArticleBody.setText(words);
         }
     }
@@ -285,6 +304,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         NumLikes = (TextView)findViewById(R.id.likeNum);
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
+        ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);
     }
 }
 

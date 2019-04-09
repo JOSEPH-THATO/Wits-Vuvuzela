@@ -10,7 +10,7 @@ public class Article {
     private String ArticleImage = "no Image";
     private String ArticleTitle = " No Title";
     private String ArticleAutherName = "No Auther";
-    private String ArticleComments = "User-comment/user2-comment";
+    private String ArticleComments = "User1-comment/User2-Comment";
     private String ArticleDateUploaded = "NoDate";
     private String ArticleLink = "No lInk";
     private String ArticleLikes = "0";
@@ -18,27 +18,6 @@ public class Article {
     private String ArticleLikedList = "User1/User2";
     private String ArticleDislikedList = "User1/User2";
     private String RateStatus = "none";
-
-    public void DetermineRateStatus(String User){
-        if (ArticleAlreadyLiked(User)){
-            RateStatus = "Liked";
-        }
-
-        else if(ArticleAlreadyDisliked(User)){
-            RateStatus = "Disliked";
-        }
-        else{
-            RateStatus = "none";
-        }
-    }
-
-    public String getRateStatus() {
-        return RateStatus;
-    }
-
-    public void setRateStatus(String rateStatus) {
-        RateStatus = rateStatus;
-    }
 
     public String getArticleLikes() {
         return ArticleLikes;
@@ -92,8 +71,32 @@ public class Article {
         return ArticleAutherName;
     }
 
+    public String getRateStatus() {
+        return RateStatus;
+    }
+
+    public void setRateStatus(String rateStatus) {
+        RateStatus = rateStatus;
+    }
+
     public void setArticleAutherName(String articleAutherName) {
         ArticleAutherName = articleAutherName;
+    }
+
+    public String getArticleLikedList() {
+        return ArticleLikedList;
+    }
+
+    public void setArticleLikedList(String articleLikedList) {
+        ArticleLikedList = articleLikedList;
+    }
+
+    public String getArticleDislikedList() {
+        return ArticleDislikedList;
+    }
+
+    public void setArticleDislikedList(String articleDislikedList) {
+        ArticleDislikedList = articleDislikedList;
     }
 
     public String getArticleDateUploaded() {
@@ -173,13 +176,21 @@ public class Article {
 
 
     public void AddUserToLikedList(String User) {
-        ArticleLikedList += ("/" + User);
-
+        if(ArticleLikedList.equals("")){
+            ArticleLikedList+=User;
+        }
+        else {
+            ArticleLikedList += ("/" + User);
+        }
     }
 
     public void AddUserToDislikedList(String User) {
-        ArticleDislikedList += ("/" + User);
-
+        if (ArticleDislikedList.equals("")) {
+            ArticleDislikedList += User;
+        }
+        else {
+            ArticleDislikedList += ("/" + User);
+        }
     }
 
     public void LikeAnArticle(String User) {
@@ -188,7 +199,7 @@ public class Article {
         int NumDislikes = Integer.parseInt(ArticleDislikes);
 
         if(ArticleAlreadyLiked(User)){
-            //DoNothing
+            RateStatus = "none";
         }
 
         else if(ArticleAlreadyDisliked(User)){
@@ -208,29 +219,13 @@ public class Article {
         }
     }
 
-    public String getArticleLikedList() {
-        return ArticleLikedList;
-    }
-
-    public void setArticleLikedList(String articleLikedList) {
-        ArticleLikedList = articleLikedList;
-    }
-
-    public String getArticleDislikedList() {
-        return ArticleDislikedList;
-    }
-
-    public void setArticleDislikedList(String articleDislikedList) {
-        ArticleDislikedList = articleDislikedList;
-    }
-
     public void DislikeAnArticle(String User){
 
         int NumLikes = Integer.parseInt(ArticleLikes);
         int NumDislikes = Integer.parseInt(ArticleDislikes);
 
         if(ArticleAlreadyDisliked(User)){
-            //DoNothing
+            RateStatus = "none";
         }
 
         else if(ArticleAlreadyLiked(User)){
@@ -248,5 +243,21 @@ public class Article {
             ArticleDislikes = String.valueOf(NumDislikes);
             AddUserToDislikedList(User);
         }
+    }
+
+    public void DetermineRateStatus(String User){
+
+        if(ArticleAlreadyDisliked(User)){
+            RateStatus = "Disliked";
+        }
+
+        else if(ArticleAlreadyLiked(User)){
+            RateStatus = "Liked";
+        }
+
+        else if(!ArticleAlreadyLiked(User) && !ArticleAlreadyDisliked(User)){
+            RateStatus = "none";
+        }
+
     }
 }

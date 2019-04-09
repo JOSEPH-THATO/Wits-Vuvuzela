@@ -52,12 +52,15 @@ public class HomePage extends AppCompatActivity {
     ArrayList<String> ArticlesLink;
     String SendArticleHeading;
     String Email="";
+    ProgressBar HomePageBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        HomePageBar = (ProgressBar)findViewById(R.id.HomePageBar);
 
         Bundle bundle = getIntent().getExtras();
         String email = bundle.getString("Email");
@@ -180,6 +183,8 @@ public class HomePage extends AppCompatActivity {
 
             CustomAdapter customAdapter = new CustomAdapter();
 
+            HomePageBar.setVisibility(View.GONE);
+
             listView.setAdapter(customAdapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -233,6 +238,8 @@ public class HomePage extends AppCompatActivity {
 
             }
         });
+
+
 
 
         //EnterLoginPage();

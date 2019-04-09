@@ -18,7 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
     TextView Register;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-    private DatabaseReference databaseReference;
+    DatabaseReference databaseReference;
     private ProgressBar progressBar;
     ArrayList<String> ArticlesHead;
     ArrayList<String> ArticlesAuth;
+    String User="";
+    String Email= "";
 
 
     @Override
@@ -50,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         SetupUserInterface();
 
         progressBar.setVisibility(View.GONE);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                           if(firebaseUser.isEmailVerified()) {
                               progressBar.setVisibility(View.GONE);
                               Login.setVisibility(View.VISIBLE);
+                              //getUserName();
                               EnterHomePage();
                               Username.setText("");
                               Password.setText("");
@@ -127,5 +136,28 @@ public class MainActivity extends AppCompatActivity {
         Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
         progressBar = (ProgressBar)findViewById(R.id.progressBarLog);
 
+    }
+
+    public void getUserName(){
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
+
+                    UserProfile userProfile = artistSnapshot.getValue(UserProfile.class);
+
+                    if (userProfile.getUser_email().equals(Email)) {
+                        User = userProfile.getUser_username();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -456,6 +456,20 @@ public class ArticleTest {
 
         assertEquals(Expected,Actual);
 
+        String User2 = "Cooper";
+
+        Article article2 = new Article();
+
+        article2.setArticleDislikedList("");
+
+        article2.RemoveUserFromDislikedArticleList(User2);
+
+        String Actual2 = "User1/Cooper/Leornard";
+
+        String Expected2 = article2.getArticleDislikedList();
+
+        assertEquals(Expected2,Actual2);
+
     }
 
     @Test
@@ -519,6 +533,87 @@ public class ArticleTest {
         String Expected = article.getArticleComments();
 
         assertEquals(Expected,Actual);
+
+        String NewComment2 = "This Is A new Comment";
+        String User2 = "Abdullah";
+
+        Article article2 = new Article();
+
+        article2.setArticleComments("");
+
+        String Actual2 = article2.getArticleComments()+ User+"-"+NewComment;
+
+        article2.AddComment(NewComment2,User2);
+
+        String Expected2 = article2.getArticleComments();
+
+        assertEquals(Expected2,Actual2);
+
+    }
+
+    @Test
+    public void  AddUserToDislikedList() {
+
+        String User = "Abdullah";
+
+        Article article = new Article();
+
+        article.setArticleDislikedList("Francisc/Mansur");
+
+        article.AddUserToDislikedList(User);
+
+        String Actual = "Francisc/Mansur/Abdullah";
+
+        String Expected = article.getArticleDislikedList();
+
+        assertEquals(Expected,Actual);
+
+        String User2 = "James";
+
+        Article article2 = new Article();
+
+        article2.setArticleDislikedList("");
+
+        article2.AddUserToDislikedList(User2);
+
+        String Actual2 = "James";
+
+        String Expected2 = article2.getArticleDislikedList();
+
+        assertEquals(Expected2,Actual2);
+
+    }
+
+    @Test
+    public void  AddUserToLikedList() {
+
+        String User = "Abdullah";
+
+        Article article = new Article();
+
+        article.setArticleLikedList("Francisc/Mansur");
+
+        article.AddUserToLikedList(User);
+
+        String Actual = "Francisc/Mansur/Abdullah";
+
+        String Expected = article.getArticleLikedList();
+
+        assertEquals(Expected,Actual);
+
+        String User2 = "Gordon";
+
+        Article article2 = new Article();
+
+        article2.setArticleLikedList("");
+
+        article2.AddUserToLikedList(User2);
+
+        String Actual2 = "Gordon";
+
+        String Expected2 = article2.getArticleLikedList();
+
+        assertEquals(Expected2,Actual2);
 
     }
 
