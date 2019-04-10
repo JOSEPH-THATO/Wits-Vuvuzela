@@ -180,7 +180,7 @@ public class Article {
             ArticleLikedList+=User;
         }
         else {
-            ArticleLikedList += ("/" + User);
+            ArticleLikedList = ArticleLikedList + "/" + User;
         }
     }
 
@@ -189,7 +189,7 @@ public class Article {
             ArticleDislikedList += User;
         }
         else {
-            ArticleDislikedList += ("/" + User);
+            ArticleDislikedList = ArticleDislikedList + "/" + User;
         }
     }
 
@@ -198,11 +198,23 @@ public class Article {
         int NumLikes = Integer.parseInt(ArticleLikes);
         int NumDislikes = Integer.parseInt(ArticleDislikes);
 
-        if(ArticleAlreadyLiked(User)){
-            NumLikes-=1;
+        if(!ArticleAlreadyLiked(User) && !ArticleAlreadyDisliked(User)){
+            NumLikes+=1;
+            AddUserToLikedList(User);
             ArticleLikes = String.valueOf(NumLikes);
-            RemoveUserFromLikedArticleList(User);
+        }
 
+        else if(ArticleAlreadyLiked(User)){
+
+            if(ArticleLikes.equals("0")){
+                ArticleLikes = String.valueOf(NumLikes);
+            }
+
+            else {
+                NumLikes -= 1;
+                ArticleLikes = String.valueOf(NumLikes);
+                RemoveUserFromLikedArticleList(User);
+            }
         }
 
         else if(ArticleAlreadyDisliked(User)){
@@ -214,12 +226,6 @@ public class Article {
             AddUserToLikedList(User);
             RemoveUserFromDislikedArticleList(User);
         }
-
-        else if(!ArticleAlreadyLiked(User) && !ArticleAlreadyDisliked(User)){
-            NumLikes+=1;
-            AddUserToLikedList(User);
-            ArticleLikes = String.valueOf(NumLikes);
-        }
     }
 
     public void DislikeAnArticle(String User){
@@ -227,10 +233,22 @@ public class Article {
         int NumLikes = Integer.parseInt(ArticleLikes);
         int NumDislikes = Integer.parseInt(ArticleDislikes);
 
-        if(ArticleAlreadyDisliked(User)){
-            NumDislikes -= 1;
+        if(!ArticleAlreadyLiked(User) && !ArticleAlreadyDisliked(User)){
+            NumDislikes+=1;
             ArticleDislikes = String.valueOf(NumDislikes);
-            RemoveUserFromDislikedArticleList(User);
+            AddUserToDislikedList(User);
+        }
+
+        else if(ArticleAlreadyDisliked(User)){
+
+            if(ArticleDislikes.equals("0")){
+                ArticleDislikes = String.valueOf(NumDislikes);
+            }
+            else {
+                NumDislikes -= 1;
+                ArticleDislikes = String.valueOf(NumDislikes);
+                RemoveUserFromDislikedArticleList(User);
+            }
         }
 
         else if(ArticleAlreadyLiked(User)){
@@ -241,12 +259,6 @@ public class Article {
             ArticleDislikes = String.valueOf(NumDislikes);
             AddUserToDislikedList(User);
             RemoveUserFromLikedArticleList(User);;
-        }
-
-        else if(!ArticleAlreadyLiked(User) && !ArticleAlreadyDisliked(User)){
-            NumDislikes+=1;
-            ArticleDislikes = String.valueOf(NumDislikes);
-            AddUserToDislikedList(User);
         }
     }
 }

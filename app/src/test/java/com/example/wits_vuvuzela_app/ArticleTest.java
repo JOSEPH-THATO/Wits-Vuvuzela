@@ -305,7 +305,7 @@ public class ArticleTest {
 
         article.LikeAnArticle(User);
 
-        String ActualLikes = "1";
+        String ActualLikes = "0";
         String ExpectedLikes = article.getArticleLikes() ;
 
         String ActualDislikes = "2";
@@ -373,7 +373,7 @@ public class ArticleTest {
         String ActualLikes = "1";
         String ExpectedLikes = article.getArticleLikes() ;
 
-        String ActualDislikes = "2";
+        String ActualDislikes = "1";
         String ExpectedDislikes = article.getArticleDislikes();
 
         assertEquals(ExpectedLikes,ActualLikes);

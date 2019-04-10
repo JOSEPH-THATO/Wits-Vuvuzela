@@ -1,15 +1,13 @@
 package com.example.wits_vuvuzela_app;
 
 public class UserProfile {
+
     private String User_fName;
     private String User_lName;
-    private String User_username;
+    private String User_username = "Wizkid";
     private String User_email;
     private String User_password;
 
-    public UserProfile() {
-
-    }
 
     public String getUser_fName() {
         return User_fName;

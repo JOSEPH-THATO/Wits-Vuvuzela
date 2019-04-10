@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Comment;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         SetupUserInterface();
 
         progressBar.setVisibility(View.GONE);
-
+        TextView NumLikes;
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+               // Email = Username.getText().toString().trim();
+                Email = "abdullah";
 
                 progressBar.setVisibility(View.VISIBLE);
                 Login.setVisibility(View.GONE);
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                           if(firebaseUser.isEmailVerified()) {
                               progressBar.setVisibility(View.GONE);
                               Login.setVisibility(View.VISIBLE);
-                              //getUserName();
+                              getUserName();
                               EnterHomePage();
                               Username.setText("");
                               Password.setText("");
@@ -87,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                           else{
                               progressBar.setVisibility(View.GONE);
                               Login.setVisibility(View.VISIBLE);
-                             // Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                               Toast.makeText(MainActivity.this,"Email not yet verified , Please Go To Your Email",Toast.LENGTH_SHORT).show();
                           }
                       }
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private void EnterHomePage() {
 
         Intent intent = new Intent(this,HomePage.class);
-        intent.putExtra("Email",Username.getText().toString().trim());
+        intent.putExtra("Email", User);
         startActivity(intent);
     }
 
@@ -148,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
                     UserProfile userProfile = artistSnapshot.getValue(UserProfile.class);
 
-                    if (userProfile.getUser_email().equals(Email)) {
+                    if (userProfile.getUser_email().equals(Username.getText().toString().trim())) {
                         User = userProfile.getUser_username();
                     }
                 }

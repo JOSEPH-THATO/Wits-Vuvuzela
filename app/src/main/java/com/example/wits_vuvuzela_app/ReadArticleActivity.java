@@ -40,7 +40,6 @@ public class ReadArticleActivity extends AppCompatActivity {
     String urlLink;
     String head;
     String Key;
-    String ArticleComments;
     int likes=0;
     int dislikes=0;
     DatabaseReference databaseReference;
@@ -54,6 +53,11 @@ public class ReadArticleActivity extends AppCompatActivity {
     Article article;
     String Email="";
     ProgressBar ArticleBar;
+    TextView tComment;
+    TextView tDislikes;
+    TextView tLList;
+    TextView tDList;
+    TextView tLikes;
 
     ArrayList<String> CommentsArrayList;
     ArrayList<String> NamesArrayList;
@@ -91,18 +95,29 @@ public class ReadArticleActivity extends AppCompatActivity {
                         String Comments = article.getArticleComments();
                         String Likes = article.getArticleLikes();
                         String Dislikes = article.getArticleDislikes();
+                        String ListLike = article.getArticleLikedList();
+                        String ListDislike = article.getArticleDislikedList();
 
-                        if(article.ArticleAlreadyLiked(Email) && article.ArticleAlreadyDisliked(Email)){
+                       tComment.setText(Comments);
+                       tDislikes.setText(Dislikes);
+                       tLikes.setText(Likes);
+                       tLList.setText(ListLike);
+                       tDList.setText(ListDislike);
+
+                        if(!article.ArticleAlreadyLiked(Email) && !article.ArticleAlreadyDisliked(Email)){
                             LikeButton.setImageResource(R.drawable.likebw);
                             DislikeButton.setImageResource(R.drawable.dislikebw);
                         }
 
+
                         else if(article.ArticleAlreadyLiked(Email)){
                             LikeButton.setImageResource(R.drawable.like);
+                            DislikeButton.setImageResource(R.drawable.dislikebw);
                         }
 
                         else if(article.ArticleAlreadyDisliked(Email)){
                             DislikeButton.setImageResource(R.drawable.dislike);
+                            LikeButton.setImageResource(R.drawable.likebw);
                         }
 
                         Key = key;
@@ -128,6 +143,11 @@ public class ReadArticleActivity extends AppCompatActivity {
                             CommentsArrayList.add(comment);
                             NamesArrayList.add(name);
                         }
+
+                        //CommentsArrayList2 =
+
+
+
                         viewComments = (ListView) findViewById(R.id.viewCommentsID);
                         CustomAdapter customAdapter = new CustomAdapter();
                         viewComments.setAdapter(customAdapter);
@@ -139,22 +159,19 @@ public class ReadArticleActivity extends AppCompatActivity {
                             }
                         });
 
-                            LikeButton.setOnClickListener(new View.OnClickListener() {
+                        LikeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     LikeArticle(article, Email);
                                 }
-                            });
+                        });
 
-
-
-                            DislikeButton.setOnClickListener(new View.OnClickListener() {
+                        DislikeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     DislikeArticle(article, Email);
                                 }
-                            });
-
+                        });
                         new doit().execute();
                     }
                 }
@@ -165,7 +182,6 @@ public class ReadArticleActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void AddComment(Article article,String Comment){
@@ -239,7 +255,6 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArrayList<String> Heading1;
 
         String words = "";
-        String[] AuthorOrDate;
         String Author = "";
 
         @Override
@@ -297,6 +312,12 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
         ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);
+
+        tComment = (TextView) findViewById(R.id.tComment);
+        tDislikes = (TextView) findViewById(R.id.tDislikes);
+        tDList = (TextView) findViewById(R.id.tDList);
+        tLikes = (TextView) findViewById(R.id.tLikes);
+        tLList = (TextView) findViewById(R.id.tLList);
     }
 }
 

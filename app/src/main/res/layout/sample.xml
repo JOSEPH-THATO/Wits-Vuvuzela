@@ -59,14 +59,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="204dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tLikes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Likes " />
+
+                <TextView
+                    android:id="@+id/tDislikes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dislikes" />
+
+                <TextView
+                    android:id="@+id/tLList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LikeList" />
+
+                <TextView
+                    android:id="@+id/tDList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="DislikeList" />
+
+                <TextView
+                    android:id="@+id/tComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comment" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/ReadArticleBody"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="263dp"
+                android:layout_height="35dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="0dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="0dp"
                 android:text="Loading Please Wait ...." />
 
             <LinearLayout
@@ -138,5 +174,10 @@
             android:layout_weight=".2"
             app:srcCompat="@drawable/postcomment" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
 
 </LinearLayout>

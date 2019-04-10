@@ -203,7 +203,6 @@ public class HomePage extends AppCompatActivity {
 
     public void SendArticle(String ArticleHeading, String ArticleLink) {
 
-
         article = new Article();
         SendArticleHeading = ArticleHeading;
 
