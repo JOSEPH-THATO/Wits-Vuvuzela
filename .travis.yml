@@ -64,7 +64,7 @@ script:
   
 after_failure:
   - cat $TRAVIS_BUILD_DIR/app/build/reports/lint-results.xml
-#after_success:
-  #- bash <(curl -s https://codecov.io/bash)
+after_success:
+  -bash <(curl -s https://codecov.io/bash)
 
 
