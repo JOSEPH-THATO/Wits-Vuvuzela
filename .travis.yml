@@ -54,27 +54,14 @@ script:
 # - ./gradlew dependencyCheckAnalyze
   - ./gradlew assembleDebugAndroidTest -PdisablePreDex --continue --stacktrace
   - android-wait-for-emulator
-<<<<<<< HEAD
-#  - adb shell input keyevent 82 &
-  - adb shell setpropdalvik.vm.dexopt-flags v=n,o=v
-  - ./gradlew connectedDebugAndroidTest -PdisablePreDex --continue --stacktrace
-  - ./gradlew connectedCheck
-  - ./gradlew build jacocoTestReport
- # - ./gradlew connectedAndroidTest coveralls
-
-=======
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
 # - adb shell input keyevent 82 &
-  - ./gradlew connectedDebugAndroidTest -PdisablePreDex --continue --stacktrace
   - ./gradlew connectedCheck
   - ./gradlew build jacocoTestReport
   #- ./gradlew connectedAndroidTest coveralls
->>>>>>> 0280ee7c085bc5c88650c0c8d8e619cb1288705e
+  
 after_failure:
   - cat $TRAVIS_BUILD_DIR/app/build/reports/lint-results.xml
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
