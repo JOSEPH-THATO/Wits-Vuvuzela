@@ -53,7 +53,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     Article article;
     String Email="";
     ProgressBar ArticleBar;
-    TextView tComment;
+    TextView tvComment;
     TextView tDislikes;
     TextView tLList;
     TextView tDList;
@@ -98,7 +98,7 @@ public class ReadArticleActivity extends AppCompatActivity {
                         String ListLike = article.getArticleLikedList();
                         String ListDislike = article.getArticleDislikedList();
 
-                       tComment.setText(Comments);
+                       tvComment.setText(Comments);
                        tDislikes.setText(Dislikes);
                        tLikes.setText(Likes);
                        tLList.setText(ListLike);
@@ -313,7 +313,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
         ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);
 
-        tComment = (TextView) findViewById(R.id.tComment);
+        tvComment = (TextView) findViewById(R.id.tComment);
         tDislikes = (TextView) findViewById(R.id.tDislikes);
         tDList = (TextView) findViewById(R.id.tDList);
         tLikes = (TextView) findViewById(R.id.tLikes);
