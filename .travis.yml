@@ -55,11 +55,10 @@ script:
   - android-wait-for-emulator
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
   - ./gradlew connectedCheck
-  - ./gradlew createDebugAndroidTestCoverageReport
-  - ./gradlew createDebugCoverageReport
   - ./gradlew connectedAndroidTest
- 
-  
+  - ./gradlew createDebugCoverageReport 
+   - ./gradlew createDebugAndroidTestCoverageReport
+   
 after_failure:
   - cat $TRAVIS_BUILD_DIR/app/build/reports/lint-results.xml
 after_success:
