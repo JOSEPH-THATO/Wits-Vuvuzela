@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private void EnterHomePage() {
 
         Intent intent = new Intent(this,HomePage.class);
-        intent.putExtra("Email", User);
+        intent.putExtra("Email", Username.getText().toString().trim());
         startActivity(intent);
     }
 

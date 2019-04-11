@@ -258,7 +258,7 @@ public class Article {
             ArticleLikes = String.valueOf(NumLikes);
             ArticleDislikes = String.valueOf(NumDislikes);
             AddUserToDislikedList(User);
-            RemoveUserFromLikedArticleList(User);;
+            RemoveUserFromLikedArticleList(User);
         }
     }
 }
