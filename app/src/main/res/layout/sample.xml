@@ -65,34 +65,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tLikes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Likes " />
-
-                <TextView
-                    android:id="@+id/tDislikes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Dislikes" />
-
-                <TextView
-                    android:id="@+id/tLList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="LikeList" />
-
-                <TextView
-                    android:id="@+id/tDList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="DislikeList" />
-
-                <TextView
                     android:id="@+id/tComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comment" />
+
             </LinearLayout>
 
             <TextView
@@ -108,6 +85,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/likedislikeLayout"
                 android:orientation="horizontal">
 
                 <ImageView

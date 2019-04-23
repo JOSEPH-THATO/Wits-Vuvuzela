@@ -20,6 +20,13 @@ android {
         debug {
             testCoverageEnabled true
         }
+
+       /* project.gradle.taskGraph.whenReady {
+            connectedDebugAndroidTest {
+                ignoreFailures = true
+            }
+        }*/
+
     }
 }
 

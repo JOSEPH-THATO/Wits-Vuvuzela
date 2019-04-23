@@ -464,7 +464,7 @@ public class ArticleTest {
 
         article2.RemoveUserFromDislikedArticleList(User2);
 
-        String Actual2 = "User1/Cooper/Leornard";
+        String Actual2 = "User1/";
 
         String Expected2 = article2.getArticleDislikedList();
 
@@ -521,8 +521,8 @@ public class ArticleTest {
     @Test
     public void AddComent() {
 
-        String NewComment = "This Is A new Comment";
-        String User = "Abdullah";
+        String NewComment = "This is a new Comment";
+        String User = "1758200@students.wits.ac.za";
 
         Article article = new Article();
 
@@ -534,14 +534,14 @@ public class ArticleTest {
 
         assertEquals(Expected,Actual);
 
-        String NewComment2 = "This Is A new Comment";
-        String User2 = "Abdullah";
+        String NewComment2 = "This is a second new Comment";
+        String User2 = "Francisco";
 
         Article article2 = new Article();
 
         article2.setArticleComments("");
 
-        String Actual2 = article2.getArticleComments()+ User+"-"+NewComment;
+        String Actual2 = article2.getArticleComments()+ User2+"-"+NewComment2;
 
         article2.AddComment(NewComment2,User2);
 

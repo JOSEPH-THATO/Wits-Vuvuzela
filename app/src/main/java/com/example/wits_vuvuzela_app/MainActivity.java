@@ -1,14 +1,19 @@
 package com.example.wits_vuvuzela_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> ArticlesAuth;
     String User="";
     String Email= "";
+    ListView list;
+    ArrayList<String> CommentsArrayList;
+    UserProfile userProfile;
 
 
     @Override
@@ -59,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         TextView NumLikes;
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
+        userProfile = new UserProfile();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -66,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               // Email = Username.getText().toString().trim();
-                Email = "abdullah";
+                EnterHomePage();
 
                 progressBar.setVisibility(View.VISIBLE);
                 Login.setVisibility(View.GONE);
@@ -82,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                           if(firebaseUser.isEmailVerified()) {
                               progressBar.setVisibility(View.GONE);
                               Login.setVisibility(View.VISIBLE);
-                              getUserName();
+                            //  getUserName();
                               EnterHomePage();
                               Username.setText("");
                               Password.setText("");
@@ -149,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
                 for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
-                    UserProfile userProfile = artistSnapshot.getValue(UserProfile.class);
+                    userProfile = artistSnapshot.getValue(UserProfile.class);
 
                     if (userProfile.getUser_email().equals(Username.getText().toString().trim())) {
                         User = userProfile.getUser_username();

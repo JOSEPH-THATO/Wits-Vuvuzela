@@ -45,6 +45,7 @@ public class HomePage extends AppCompatActivity {
 
     FirebaseAuth firebaseauth;
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference2;
     Article article;
     ListView listView;
     ArrayList<String> ArticlesHead;
@@ -53,7 +54,8 @@ public class HomePage extends AppCompatActivity {
     String SendArticleHeading;
     String Email="";
     ProgressBar HomePageBar;
-
+    String User;
+    UserProfile userProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class HomePage extends AppCompatActivity {
         Email = email;
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Article");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("UserProfile");
         firebaseauth = FirebaseAuth.getInstance();
         article = new Article();
 
@@ -108,7 +111,7 @@ public class HomePage extends AppCompatActivity {
 
             //imageView.setImageResource(IMAGES[position]);
             textView_heading.setText(ArticlesHead.get(position));
-            textView_author.setText(ArticlesAuth.get(position));
+            textView_author.setText("By " + ArticlesAuth.get(position));
             return convertView1;
 
         }
@@ -137,6 +140,8 @@ public class HomePage extends AppCompatActivity {
                 Elements mElementDataSize = mBlogDocument.select("div[class=el-dbe-blog-extra block_extended]");
                 // Locate the content attribute
                 int mElementSize = mElementDataSize.size();
+
+               //  Toast.makeText(HomePage.this, mElementSize+" sent", Toast.LENGTH_LONG).show();
 
                 for (int i = 0; i < 12; i++) {
 
@@ -180,7 +185,6 @@ public class HomePage extends AppCompatActivity {
             ArticlesLink = Link1;
 
             listView = (ListView) findViewById(R.id.listview);
-
             CustomAdapter customAdapter = new CustomAdapter();
 
             HomePageBar.setVisibility(View.GONE);
@@ -238,11 +242,32 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-
-
-
         //EnterLoginPage();
     }
+
+    public void getUserName(){
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
+
+                     userProfile = artistSnapshot.getValue(UserProfile.class);
+
+                    if (userProfile.getUser_email().equals(Email)) {
+                        User = userProfile.getUser_username();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }
 /*
     private class DownLoadImageTask extends AsyncTask<String,Void, Bitmap>{
