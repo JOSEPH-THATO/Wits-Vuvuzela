@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/white"
     android:layout_height="match_parent"
     tools:context=".ReadArticleActivity"
     android:focusable="true"
@@ -111,7 +112,7 @@ o Navigation properties and Eager, Explicit, and L" />
 
         <ImageView
             android:id="@+id/likebtn"
-            android:layout_width="30dp"
+            android:layout_width="10dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/likebw" />
@@ -120,14 +121,13 @@ o Navigation properties and Eager, Explicit, and L" />
             android:id="@+id/likeNum"
             android:layout_width="5dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="Like"
             android:textSize="15dp" />
 
         <ImageView
             android:id="@+id/dislikebtn"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/dislikebw" />
@@ -141,10 +141,11 @@ o Navigation properties and Eager, Explicit, and L" />
             android:text="Dislike" />
 
         <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="30dp"
-            android:layout_height="40dp"
+            android:id="@+id/commentIconBtn"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
+            android:background="@android:color/white"
             app:srcCompat="@drawable/comments3" />
 
     </LinearLayout>
