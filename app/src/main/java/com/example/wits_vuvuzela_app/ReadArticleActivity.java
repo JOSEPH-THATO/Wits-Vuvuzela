@@ -264,7 +264,6 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
         ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);
-        //SampleComments = (TextView) findViewById(R.id.samplecomment);
         ArticleImg = (ImageView) findViewById(R.id.ArticleImageView);
 
     }
