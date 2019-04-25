@@ -36,7 +36,7 @@ public class CommentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_comments);
+        setContentView(R.layout.activity_comments);
 
         Bundle bundle = getIntent().getExtras();
         String ArticleComments = bundle.getString("ArticleComments");
@@ -70,7 +70,7 @@ public class CommentsActivity extends AppCompatActivity {
         EditComment = (EditText) findViewById(R.id.editComment);
         CommentButton = (ImageView) findViewById(R.id.commentBtn);
 
-        //CommentsView = (ListView) findViewById(R.id.commentListView);
+        CommentsView = (ListView) findViewById(R.id.commentListView);
         CustomAdapter customAdapter1 = new CustomAdapter();
         CommentsView.setAdapter(customAdapter1);
 
