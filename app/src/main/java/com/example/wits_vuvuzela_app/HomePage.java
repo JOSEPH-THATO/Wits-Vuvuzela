@@ -140,7 +140,7 @@ public class HomePage extends AppCompatActivity {
                 Link1 = new ArrayList<>();
                 ImgSrc1 = new ArrayList<>();
 
-                Document mBlogDocument = Jsoup.connect("https://witsvuvuzela.com/category/news/").get();
+                Document mBlogDocument = Jsoup.connect("https://witsvuvuzela.com").get();
                 Elements mElementDataSize = mBlogDocument.select("div[class=el-dbe-blog-extra block_extended]");
                 // Locate the content attribute
                 int mElementSize = mElementDataSize.size();
