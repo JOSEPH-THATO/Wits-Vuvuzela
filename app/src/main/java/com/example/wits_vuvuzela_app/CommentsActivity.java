@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 public class CommentsActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class CommentsActivity extends AppCompatActivity {
     Article article;
     ArrayList<String> CommentsArrayList;
     ArrayList<String> NamesArrayList;
+    private String Email;
 
 
     @Override
@@ -77,7 +79,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         article.AddComment(Comment,Email);
 
-        databaseReference4 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
+        databaseReference4 = FirebaseDatabase.getInstance().getReference("Article").child(key);
         databaseReference4.child("articleComments").setValue(article.getArticleComments());
 
     }

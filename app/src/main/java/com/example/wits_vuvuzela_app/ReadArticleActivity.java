@@ -280,7 +280,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
         ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);
-        likedislikeLayout = (LinearLayout)findViewById(R.id.likedislikeLayout);
+        //likedislikeLayout = (LinearLayout)findViewById(R.id.likedislikeLayout);
     }
 }
 
