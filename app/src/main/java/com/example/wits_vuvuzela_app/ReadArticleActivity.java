@@ -55,7 +55,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     Rating rating;
     String Email="";
     ProgressBar ArticleBar;
-<<<<<<< HEAD
+
     TextView tvComment;
     TextView tDislikes;
     TextView tLList;
@@ -63,13 +63,11 @@ public class ReadArticleActivity extends AppCompatActivity {
     TextView tLikes;
     ImageView backbtn;
 
-=======
     CommentSection commentSection;
     TextView SampleComments;
     EditText EditComment;
     ImageView CommentButton;
     ImageView ArticleImg;
->>>>>>> bf75aa562721b88b0a381acc9dd10643ea1c7649
 
 
     @Override
@@ -264,16 +262,14 @@ public class ReadArticleActivity extends AppCompatActivity {
         }
     }
 
-<<<<<<< HEAD
+
     public void Goback(){
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
 
-    public void SetUpUI(){
-=======
     private void SetUpUI(){
->>>>>>> bf75aa562721b88b0a381acc9dd10643ea1c7649
+
 
         CommentIconButton = (ImageView)findViewById(R.id.commentIconBtn);
         LikeButton = (ImageView)findViewById(R.id.likebtn);
