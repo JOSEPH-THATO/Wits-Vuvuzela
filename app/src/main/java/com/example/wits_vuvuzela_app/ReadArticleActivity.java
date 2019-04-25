@@ -2,24 +2,22 @@ package com.example.wits_vuvuzela_app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EdgeEffect;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,28 +29,33 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ReadArticleActivity extends AppCompatActivity {
 
     TextView ArticleBody;
     TextView ArticleHeading;
-    String urlLink;
+    String UrlLink;
     String head;
     String Key;
     int likes=0;
     int dislikes=0;
+    String CommentS = "";
+    String LikedListS="";
+    String DislikedListS="";
     DatabaseReference databaseReference;
-    ListView viewComments;
     ImageView LikeButton;
     ImageView DislikeButton;
     TextView NumLikes;
     TextView NumDislikes;
-    EditText EditComment;
-    ImageView CommentButton;
+    ImageView CommentIconButton;
     Article article;
+    Rating rating;
     String Email="";
     ProgressBar ArticleBar;
+<<<<<<< HEAD
     TextView tvComment;
     TextView tDislikes;
     TextView tLList;
@@ -60,18 +63,19 @@ public class ReadArticleActivity extends AppCompatActivity {
     TextView tLikes;
     ImageView backbtn;
 
+=======
+    CommentSection commentSection;
+    TextView SampleComments;
+    EditText EditComment;
+    ImageView CommentButton;
+    ImageView ArticleImg;
+>>>>>>> bf75aa562721b88b0a381acc9dd10643ea1c7649
 
-    ArrayList<String> CommentsArrayList;
-    ArrayList<String> NamesArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sample);
-
-        SetUpUI();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Article");
+        setContentView(R.layout.activity_read_article);
 
         Bundle bundle = getIntent().getExtras();
         String heading = bundle.getString("Heading");
@@ -79,8 +83,13 @@ public class ReadArticleActivity extends AppCompatActivity {
         Email = email;
         head = heading;
 
+        SetUpUI();
+
+      //  databaseReference = FirebaseDatabase.getInstance().getReference().child("Comments");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Article");
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
+
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -97,67 +106,50 @@ public class ReadArticleActivity extends AppCompatActivity {
                         String Comments = article.getArticleComments();
                         String Likes = article.getArticleLikes();
                         String Dislikes = article.getArticleDislikes();
-                        String ListLike = article.getArticleLikedList();
-                        String ListDislike = article.getArticleDislikedList();
+                        String LikedList = article.getArticleLikedList();
+                        String DislikedList = article.getArticleDislikedList();
+                        String Img = article.getArticleImage();
 
-                       tvComment.setText(Comments);
-                       tDislikes.setText(Dislikes);
-                       tLikes.setText(Likes);
-                       tLList.setText(ListLike);
-                       tDList.setText(ListDislike);
+                        new DownLoadImageTask(ArticleImg).execute(Img);
 
-                        if(!article.ArticleAlreadyLiked(Email) && !article.ArticleAlreadyDisliked(Email)){
+
+                        if(!article.ArticleAlreadyLiked(Email,LikedList) && !article.ArticleAlreadyDisliked(Email,DislikedList)){
                             LikeButton.setImageResource(R.drawable.likebw);
                             DislikeButton.setImageResource(R.drawable.dislikebw);
                         }
 
 
-                        else if(article.ArticleAlreadyLiked(Email)){
+                        else if(article.ArticleAlreadyLiked(Email,LikedList)){
                             LikeButton.setImageResource(R.drawable.like);
                             DislikeButton.setImageResource(R.drawable.dislikebw);
                         }
 
-                        else if(article.ArticleAlreadyDisliked(Email)){
+                        else if(article.ArticleAlreadyDisliked(Email,DislikedList)){
                             DislikeButton.setImageResource(R.drawable.dislike);
                             LikeButton.setImageResource(R.drawable.likebw);
                         }
 
                         Key = key;
-                        urlLink = links;
+                        UrlLink = links;
                         dislikes = Integer.parseInt(Dislikes);
                         likes = Integer.parseInt(Likes);
+                        LikedListS = LikedList;
+                        DislikedListS = DislikedList;
+                        CommentS = Comments;
 
                         NumLikes.setText(likes + " Likes");
                         NumDislikes.setText(dislikes + " Dislikes");
 
-                        CommentsArrayList = new ArrayList<>();
-                        NamesArrayList = new ArrayList<>();
-
-                        String[] CommentsArray = Comments.split("/");
-
-                        for(int i = 0;i < CommentsArray.length;++i){
-
-                            String[] NamesArray = CommentsArray[i].split("-");
-
-                            String name = NamesArray[0];
-                            String comment = NamesArray[1];
-
-                            CommentsArrayList.add(comment);
-                            NamesArrayList.add(name);
-                        }
-
-                        //CommentsArrayList2 =
-
-
-
-                        viewComments = (ListView) findViewById(R.id.viewCommentsID);
-                        CustomAdapter customAdapter = new CustomAdapter();
-                        viewComments.setAdapter(customAdapter);
-
-                        CommentButton.setOnClickListener(new View.OnClickListener() {
+                        CommentIconButton.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
-                                AddComment(article,EditComment.getText().toString().trim());
+                            public void onClick(View v) {
+
+                                // if(!NewComment.equals("")) {
+                                //     AddComment(article, NewComment);
+                                // }
+                                //SendComments(CommentS);
+
+                                SendComments(CommentS);
                             }
                         });
 
@@ -186,14 +178,11 @@ public class ReadArticleActivity extends AppCompatActivity {
         });
     }
 
-    public void AddComment(Article article,String Comment){
+    private void SendComments(String Comments) {
 
-        DatabaseReference databaseReference4;
-
-        article.AddComment(Comment,Email);
-
-        databaseReference4 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
-        databaseReference4.child("articleComments").setValue(article.getArticleComments());
+        Intent intent = new Intent(ReadArticleActivity.this, CommentsActivity.class);
+        intent.putExtra("ArticleComments", Comments);
+        startActivity(intent);
 
     }
 
@@ -201,55 +190,29 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         DatabaseReference databaseReference5;
 
-        article.LikeAnArticle(User);
+        article.LikeAnArticle(User,likes,dislikes,LikedListS,DislikedListS);
 
         databaseReference5 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
         databaseReference5.child("articleLikes").setValue(article.getArticleLikes());
         databaseReference5.child("articleLikedList").setValue(article.getArticleLikedList());
+        databaseReference5.child("articleDislikedList").setValue(article.getArticleDislikedList());
         databaseReference5.child("articleDislikes").setValue(article.getArticleDislikes());
 
     }
+
 
     public void DislikeArticle(Article article,String User){
 
         DatabaseReference databaseReference6;
 
-        article.DislikeAnArticle(User);
+        article.DislikeAnArticle(User,likes,dislikes,LikedListS,DislikedListS);
 
         databaseReference6 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
         databaseReference6.child("articleDislikes").setValue(article.getArticleDislikes());
         databaseReference6.child("articleDislikedList").setValue(article.getArticleDislikedList());
+        databaseReference6.child("articleLikedList").setValue(article.getArticleLikedList());
         databaseReference6.child("articleLikes").setValue(article.getArticleLikes());
 
-    }
-
-    class CustomAdapter extends BaseAdapter {
-        @Override
-        public int getCount() {
-            return CommentsArrayList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View convertView2 = layoutInflater.inflate(R.layout.commentlayout, parent, false);
-            TextView txtUserName = convertView2.findViewById(R.id.userEmail);
-            TextView txtComment = convertView2.findViewById(R.id.TxtComment);
-
-            txtUserName.setText(NamesArrayList.get(position));
-            txtComment.setText(CommentsArrayList.get(position));
-            return convertView2;
-        }
     }
 
     public class doit extends AsyncTask<Void, Void, Void> {
@@ -266,9 +229,7 @@ public class ReadArticleActivity extends AppCompatActivity {
 
                 Heading1 = new ArrayList<>();
 
-                // String imgURL  = "https://www.google.com/images/srpr/logo11w.png";
-                // new DownLoadImageTask(iv).execute(imgURL);
-                Document mBlogDocument = Jsoup.connect(urlLink).get();
+                Document mBlogDocument = Jsoup.connect(UrlLink).get();
                 Elements mElementDataSize = mBlogDocument.select("div[class=entry-content]");
                 int mElementSize = mElementDataSize.size();
 
@@ -303,15 +264,18 @@ public class ReadArticleActivity extends AppCompatActivity {
         }
     }
 
+<<<<<<< HEAD
     public void Goback(){
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
 
     public void SetUpUI(){
+=======
+    private void SetUpUI(){
+>>>>>>> bf75aa562721b88b0a381acc9dd10643ea1c7649
 
-        EditComment = (EditText)findViewById(R.id.editComment);
-        CommentButton = (ImageView)findViewById(R.id.commentBtn);
+        CommentIconButton = (ImageView)findViewById(R.id.commentIconBtn);
         LikeButton = (ImageView)findViewById(R.id.likebtn);
         DislikeButton = (ImageView)findViewById(R.id.dislikebtn);
         NumDislikes = (TextView)findViewById(R.id.dislikeNum);
@@ -319,12 +283,33 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
         ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);
+        ArticleImg = (ImageView) findViewById(R.id.ArticleImageView);
 
-        tvComment = (TextView) findViewById(R.id.tComment);
-        tDislikes = (TextView) findViewById(R.id.tDislikes);
-        tDList = (TextView) findViewById(R.id.tDList);
-        tLikes = (TextView) findViewById(R.id.tLikes);
-        tLList = (TextView) findViewById(R.id.tLList);
+    }
+
+    private class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public DownLoadImageTask(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urlOfImage = urls[0];
+            Bitmap logo = null;
+            try {
+                InputStream is = new URL(urlOfImage).openStream();
+
+                logo = BitmapFactory.decodeStream(is);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return logo;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
 }
 
