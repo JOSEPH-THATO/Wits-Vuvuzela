@@ -77,6 +77,7 @@ public class Register extends AppCompatActivity {
                 EnterLoginPage();
             }
         });
+
     }
 
     private void registerUser(){

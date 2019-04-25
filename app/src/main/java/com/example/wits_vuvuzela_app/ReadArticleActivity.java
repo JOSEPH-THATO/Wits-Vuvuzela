@@ -58,6 +58,8 @@ public class ReadArticleActivity extends AppCompatActivity {
     TextView tLList;
     TextView tDList;
     TextView tLikes;
+    ImageView backbtn;
+
 
     ArrayList<String> CommentsArrayList;
     ArrayList<String> NamesArrayList;
@@ -299,6 +301,11 @@ public class ReadArticleActivity extends AppCompatActivity {
             ArticleBar.setVisibility(View.GONE);
             ArticleBody.setText(words);
         }
+    }
+
+    public void Goback(){
+        Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
     }
 
     public void SetUpUI(){
