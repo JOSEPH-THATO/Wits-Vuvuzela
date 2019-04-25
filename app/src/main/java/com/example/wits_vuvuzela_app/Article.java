@@ -110,11 +110,13 @@ public class Article {
 
     public void AddComment(String NewComment, String User,String Comments) {
 
-        if (ArticleComments.equals("")) {
-            ArticleComments = User + "-" + NewComment;
+        if (Comments.equals("")) {
+            Comments = User + "-" + NewComment;
         } else {
-            ArticleComments = ArticleComments + "/" + User + "-" + NewComment;
+            Comments = Comments + "/" + User + "-" + NewComment;
         }
+
+        ArticleComments = Comments;
     }
 
     public boolean ArticleAlreadyLiked(String User,String LikedList) {

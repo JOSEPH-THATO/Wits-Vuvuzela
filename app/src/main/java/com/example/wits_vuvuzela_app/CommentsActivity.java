@@ -12,19 +12,26 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 public class CommentsActivity extends AppCompatActivity {
 
     EditText EditComment;
+    FirebaseAuth firebaseauth;
     ImageView CommentButton;
-    ListView viewComments;
+    ListView CommentsView;
     Article article;
+    DatabaseReference databaseReferenceComments;
     ArrayList<String> CommentsArrayList;
     ArrayList<String> NamesArrayList;
+    CommentSection commentSection;
+    String Key = "huhu";
+    String Email = "huhu";
 
 
     @Override
@@ -34,6 +41,16 @@ public class CommentsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String ArticleComments = bundle.getString("ArticleComments");
+        String email = bundle.getString("Email");
+        String key = bundle.getString("Key");
+        Key = key;
+        Email = email;
+
+        databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
+        firebaseauth = FirebaseAuth.getInstance();
+
+        // databaseReference.push().setValue(userProfile);
+
 
         CommentsArrayList = new ArrayList<>();
         NamesArrayList = new ArrayList<>();
@@ -53,9 +70,10 @@ public class CommentsActivity extends AppCompatActivity {
 
         EditComment = (EditText) findViewById(R.id.editComment);
         CommentButton = (ImageView) findViewById(R.id.commentBtn);
-        viewComments = (ListView) findViewById(R.id.viewCommentsID);
-        CustomAdapter customAdapter = new CustomAdapter();
-        viewComments.setAdapter(customAdapter);
+
+        CommentsView = (ListView) findViewById(R.id.commentListView);
+        CustomAdapter customAdapter1 = new CustomAdapter();
+        CommentsView.setAdapter(customAdapter1);
 
         CommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +82,10 @@ public class CommentsActivity extends AppCompatActivity {
                 String NewComment = EditComment.getText().toString().trim();
 
                 if (!NewComment.equals("")) {
-                    AddComment(article, NewComment);
+
+                    commentSection.setComment(NewComment);
+                    databaseReferenceComments.push().setValue(commentSection);
+                    //AddComment(article, NewComment);
                 }
             }
         });
@@ -75,10 +96,10 @@ public class CommentsActivity extends AppCompatActivity {
 
         DatabaseReference databaseReference4;
 
-        article.AddComment(Comment,Email);
+        //article.AddComment(Comment,Email);
 
-        databaseReference4 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
-        databaseReference4.child("articleComments").setValue(article.getArticleComments());
+        //databaseReference4 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
+        //databaseReference4.child("articleComments").setValue(article.getArticleComments());
 
     }
 
@@ -86,7 +107,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 0;
+            return CommentsArrayList.size();
         }
 
         @Override
@@ -111,9 +132,9 @@ public class CommentsActivity extends AppCompatActivity {
             TextView textView_author = convertView1.findViewById(R.id.ArticleAuthor);
 
             //imageView.setImageResource(IMAGES[position]);
-            //  textView_heading.setText(ArticlesHead.get(position));
-            // textView_author.setText("By " + ArticlesAuth.get(position));
-            return convertView1;
+             textView_heading.setText(NamesArrayList.get(position));
+             textView_author.setText(CommentsArrayList.get(position));
+             return convertView1;
 
         }
     }

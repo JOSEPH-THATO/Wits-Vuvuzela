@@ -9,6 +9,7 @@
     tools:context=".ReadArticleActivity"
     android:focusable="true"
     android:focusableInTouchMode="true" >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -21,7 +22,7 @@
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="570dp">
+        android:layout_height="470dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +47,15 @@
                     android:layout_gravity="center"
                     android:text="Article Heading"
                     android:textSize="20dp" />
+
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ArticleImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/comments1" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

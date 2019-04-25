@@ -2,6 +2,8 @@ package com.example.wits_vuvuzela_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +29,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ReadArticleActivity extends AppCompatActivity {
@@ -38,6 +42,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     String Key;
     int likes=0;
     int dislikes=0;
+    String CommentS = "";
     String LikedListS="";
     String DislikedListS="";
     DatabaseReference databaseReference;
@@ -50,11 +55,17 @@ public class ReadArticleActivity extends AppCompatActivity {
     Rating rating;
     String Email="";
     ProgressBar ArticleBar;
+    CommentSection commentSection;
+    TextView SampleComments;
+    EditText EditComment;
+    ImageView CommentButton;
+    ImageView ArticleImg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sample3);
+        setContentView(R.layout.activity_read_article);
 
         Bundle bundle = getIntent().getExtras();
         String heading = bundle.getString("Heading");
@@ -64,9 +75,11 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         SetUpUI();
 
+      //  databaseReference = FirebaseDatabase.getInstance().getReference().child("Comments");
         databaseReference = FirebaseDatabase.getInstance().getReference("Article");
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
+
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,11 +93,15 @@ public class ReadArticleActivity extends AppCompatActivity {
 
                         String links = article.getArticleLink();
                         String key = artistSnapshot.getKey();
-                        final String Comments = article.getArticleComments();
+                        String Comments = article.getArticleComments();
                         String Likes = article.getArticleLikes();
                         String Dislikes = article.getArticleDislikes();
                         String LikedList = article.getArticleLikedList();
                         String DislikedList = article.getArticleDislikedList();
+                        String Img = article.getArticleImage();
+
+                        new DownLoadImageTask(ArticleImg).execute(Img);
+
 
                         if(!article.ArticleAlreadyLiked(Email,LikedList) && !article.ArticleAlreadyDisliked(Email,DislikedList)){
                             LikeButton.setImageResource(R.drawable.likebw);
@@ -108,6 +125,7 @@ public class ReadArticleActivity extends AppCompatActivity {
                         likes = Integer.parseInt(Likes);
                         LikedListS = LikedList;
                         DislikedListS = DislikedList;
+                        CommentS = Comments;
 
                         NumLikes.setText(likes + " Likes");
                         NumDislikes.setText(dislikes + " Dislikes");
@@ -116,7 +134,12 @@ public class ReadArticleActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                SendComments(Comments);
+                                // if(!NewComment.equals("")) {
+                                //     AddComment(article, NewComment);
+                                // }
+                                //SendComments(CommentS);
+
+                                SendComments(CommentS);
                             }
                         });
 
@@ -152,43 +175,6 @@ public class ReadArticleActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-
-    public void setLikeDislike(){
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
-
-                    rating = artistSnapshot.getValue(Rating.class);
-                    String key = artistSnapshot.getKey();
-
-                    if(rating.getArticleID().equals(key)){
-                        if(rating.getLike().equals("Yes")){
-                            LikeButton.setImageResource(R.drawable.like);
-                        }
-                        if(rating.getLike().equals("No")){
-                            LikeButton.setImageResource(R.drawable.likebw);
-                        }
-                        if(rating.getDislike().equals("Yes")){
-                            DislikeButton.setImageResource(R.drawable.dislike);
-                        }
-                        if(rating.getDislike().equals("No")){
-                            DislikeButton.setImageResource(R.drawable.dislikebw);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
 
     public void LikeArticle(Article article,String User){
 
@@ -233,8 +219,6 @@ public class ReadArticleActivity extends AppCompatActivity {
 
                 Heading1 = new ArrayList<>();
 
-                // String imgURL  = "https://www.google.com/images/srpr/logo11w.png";
-                // new DownLoadImageTask(iv).execute(imgURL);
                 Document mBlogDocument = Jsoup.connect(UrlLink).get();
                 Elements mElementDataSize = mBlogDocument.select("div[class=entry-content]");
                 int mElementSize = mElementDataSize.size();
@@ -280,7 +264,34 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
         ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);
-        likedislikeLayout = (LinearLayout)findViewById(R.id.likedislikeLayout);
+        //SampleComments = (TextView) findViewById(R.id.samplecomment);
+        ArticleImg = (ImageView) findViewById(R.id.ArticleImageView);
+
+    }
+
+    private class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public DownLoadImageTask(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urlOfImage = urls[0];
+            Bitmap logo = null;
+            try {
+                InputStream is = new URL(urlOfImage).openStream();
+
+                logo = BitmapFactory.decodeStream(is);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return logo;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
 }
 
