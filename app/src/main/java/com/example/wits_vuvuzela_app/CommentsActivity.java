@@ -85,7 +85,7 @@ public class CommentsActivity extends AppCompatActivity {
         CommentTitle1 = (TextView) findViewById(R.id.CommentTitle);
 
         CommentTitle1.setText(commentTitle);
-        Article1.setText(Key);
+ //       Article1.setText(Key);
 
         if(Key.equals("")){
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
