@@ -50,12 +50,13 @@ public class HomePage extends AppCompatActivity {
     ListView listView;
     ArrayList<String> ArticlesHead;
     ArrayList<String> ArticlesAuth;
+    ArrayList<String> ArticlesBit;
     ArrayList<String> ArticlesLink;
     ArrayList<String> ArticlesImgSrc;
     String SendArticleHeading;
     String Email="";
     ProgressBar HomePageBar;
-    String User;
+    String User = "abc";
     UserProfile userProfile;
 
     @Override
@@ -69,6 +70,7 @@ public class HomePage extends AppCompatActivity {
         String email = bundle.getString("Email");
         Email = email;
 
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Article");
         databaseReference2 = FirebaseDatabase.getInstance().getReference().child("UserProfile");
         firebaseauth = FirebaseAuth.getInstance();
@@ -78,8 +80,32 @@ public class HomePage extends AppCompatActivity {
         ArticlesAuth = new ArrayList<>();
         ArticlesLink = new ArrayList<>();
         ArticlesImgSrc = new ArrayList<>();
+        ArticlesBit = new ArrayList<>();
 
-        new doit().execute();
+
+        databaseReference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
+
+                    userProfile = artistSnapshot.getValue(UserProfile.class);
+
+                    if (userProfile.getUser_email().equals(Email)) {
+                        User = userProfile.getUser_username();
+                        break;
+                    }
+                }
+
+                Toast.makeText(HomePage.this, "Blessings " + User, Toast.LENGTH_LONG).show();
+
+                new doit().execute();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -127,6 +153,8 @@ public class HomePage extends AppCompatActivity {
         ArrayList<String> Author1;
         ArrayList<String> Link1;
         ArrayList<String> ImgSrc1;
+        ArrayList<String> Bit1;
+
 
         String words = "";
 
@@ -135,14 +163,17 @@ public class HomePage extends AppCompatActivity {
 
             try {
 
+                //Toast.makeText(HomePage.this, "Blessings ", Toast.LENGTH_LONG).show();
+
+
                 Heading1 = new ArrayList<>();
                 Author1 = new ArrayList<>();
                 Link1 = new ArrayList<>();
                 ImgSrc1 = new ArrayList<>();
+                Bit1 = new ArrayList<>();
 
                 Document mBlogDocument = Jsoup.connect("https://witsvuvuzela.com").get();
                 Elements mElementDataSize = mBlogDocument.select("div[class=el-dbe-blog-extra block_extended]");
-                // Locate the content attribute
                 int mElementSize = mElementDataSize.size();
 
                //  Toast.makeText(HomePage.this, mElementSize+" sent", Toast.LENGTH_LONG).show();
@@ -158,9 +189,6 @@ public class HomePage extends AppCompatActivity {
                     Elements mElementAuthorName = mBlogDocument.select("span[class=author vcard]").select("a").eq(i);
                     String mAuthorName = mElementAuthorName.text();
 
-                   // Elements mElementAuthorName = mBlogDocument.select("div[post-media]").select("a[entry-featured-image-url]").select("img").eq(i);
-                   // String mAuthorName = mElementAuthorName.attr("src");
-
                     Author1.add(mAuthorName);
                     words += mAuthorName;
 
@@ -171,15 +199,7 @@ public class HomePage extends AppCompatActivity {
                     String ImgSrc = img.attr("src");
                     ImgSrc1.add(ImgSrc);
 
-
-
-                    //  Elements mElementAuthorName1 = mBlogDocument.select("class=[entry-featured-image-url]").select("img").eq(i);
-                    //  String mAuthorName1 = mElementAuthorName1.attr("src");
-
-                    //  words+= mAuthorName1;
-
                     //  words+="\n";
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -190,6 +210,9 @@ public class HomePage extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            //Toast.makeText(HomePage.this, "Blessings ", Toast.LENGTH_LONG).show();
+
             ArticlesAuth = Author1;
             ArticlesHead = Heading1;
             ArticlesLink = Link1;
@@ -253,28 +276,7 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
-    public void getUserName(){
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
-
-                     userProfile = artistSnapshot.getValue(UserProfile.class);
-
-                    if (userProfile.getUser_email().equals(Email)) {
-                        User = userProfile.getUser_username();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     private class DownLoadImageTask extends AsyncTask<String,Void, Bitmap>{
         ImageView imageView;
@@ -282,6 +284,7 @@ public class HomePage extends AppCompatActivity {
         public DownLoadImageTask(ImageView imageView){
             this.imageView = imageView;
         }
+
         protected Bitmap doInBackground(String...urls){
             String urlOfImage = urls[0];
             Bitmap logo = null;
@@ -294,9 +297,17 @@ public class HomePage extends AppCompatActivity {
             }
             return logo;
         }
-
         protected void onPostExecute(Bitmap result){
             imageView.setImageBitmap(result);
+
         }
     }
+
+    @Override
+    public void onBackPressed(){
+
+        Intent intent = new Intent(HomePage.this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }

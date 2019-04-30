@@ -48,7 +48,6 @@
                  android:layout_gravity="center"
                  android:textSize="20dp"
                  android:textStyle="bold"
-                 android:textColor="#080b45"
                  android:layout_marginBottom="30dp"
                  android:padding="10dp"/>
 

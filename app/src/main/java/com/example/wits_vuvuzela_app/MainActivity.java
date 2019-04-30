@@ -46,15 +46,9 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
-    private ProgressBar progressBar;
-    ArrayList<String> ArticlesHead;
-    ArrayList<String> ArticlesAuth;
+    ProgressBar progressBar;
     String User="";
-    String Email= "";
-    ListView list;
-    ArrayList<String> CommentsArrayList;
     UserProfile userProfile;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         SetupUserInterface();
 
         progressBar.setVisibility(View.GONE);
-        TextView NumLikes;
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserProfile");
         userProfile = new UserProfile();
 
@@ -74,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                EnterHomePage();
 
                 progressBar.setVisibility(View.VISIBLE);
                 Login.setVisibility(View.GONE);
@@ -108,14 +99,11 @@ public class MainActivity extends AppCompatActivity {
                           Login.setVisibility(View.VISIBLE);
                           Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
                           Username.setError("Wrong Email of password");
-
                       }
                     }
                 });
-
             }
         });
-
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
                     userProfile = artistSnapshot.getValue(UserProfile.class);
 
-                    if (userProfile.getUser_email().equals(Username.getText().toString().trim())) {
+                    if (userProfile.getUser_email().equals(Username.getText().toString())) {
                         User = userProfile.getUser_username();
                     }
                 }
@@ -171,4 +159,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

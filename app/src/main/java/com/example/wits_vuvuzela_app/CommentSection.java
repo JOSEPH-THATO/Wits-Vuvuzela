@@ -5,12 +5,21 @@ public class CommentSection {
     private String ArticleID = "";
     private String CommentID = "";
     private String Comment = "";
+    private String UserName = "Abdullah";
     private String Replys = "User1-comment/User2-Comment";
     private String CommentTime = "NoDate";
     private String CommmentLikes = "0";
     private String CommentDislikes = "0";
     private String CommentLikedList = "User1/User2";
     private String CommentDislikedList = "User1/User2";
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
 
     public String getComment() {
         return Comment;
