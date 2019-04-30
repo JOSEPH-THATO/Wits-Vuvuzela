@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.security.Key;
 import java.util.ArrayList;
 
 public class CommentsActivity extends AppCompatActivity {
@@ -209,7 +209,8 @@ public class CommentsActivity extends AppCompatActivity {
             ImageView thumbsdownImg= convertView1.findViewById(R.id.dislikeCommentbtn);
             ImageView commentsImage= convertView1.findViewById(R.id.commentCommentIconBtn);
             TextView textView_heading = convertView1.findViewById(R.id.CommentUser);
-            TextView textView_author = convertView1.findViewById(R.id.ArticleComment);
+            TextView textView_author = convertView1.findViewById(R.id.commentID);
+            //ImageView imageView = convertView1.findViewById(R.id.ArticleImage);
 
             textView_heading.setText(NamesArrayList.get(position));
             textView_author.setText(CommentsArrayList.get(position));

@@ -16,7 +16,6 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:padding="10dp"
-        android:weightSum="1"
         android:background="@drawable/comment_border"
         android:orientation="vertical">
 
@@ -28,12 +27,11 @@
             android:layout_gravity="end"
             android:textColor="#ffff"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4"
             android:text="User Name" />
 
         <TextView
+            android:id="@+id/commentID"
             android:layout_width="wrap_content"
-            android:id="@+id/ArticleComment"
             android:layout_weight="0.6"
             android:textColor="#ffff"
             android:layout_height="wrap_content"
@@ -54,31 +52,27 @@
 
         <ImageView
             android:id="@+id/likeCommentbtn"
-            android:layout_width="10dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
-            android:layout_weight=".2"
             app:srcCompat="@drawable/likebw" />
 
         <TextView
             android:id="@+id/likeNum"
-            android:layout_width="5dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".4"
             android:text="Like"
             android:textSize="15dp" />
 
         <ImageView
             android:id="@+id/dislikeCommentbtn"
-            android:layout_width="10dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
-            android:layout_weight=".3"
             app:srcCompat="@drawable/dislikebw" />
 
         <TextView
             android:id="@+id/dislikeNum"
-            android:layout_width="5dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".5"
             android:textSize="15dp"
             android:text="Dislike" />
 
@@ -86,7 +80,6 @@
             android:id="@+id/commentCommentIconBtn"
             android:layout_width="20dp"
             android:layout_height="30dp"
-            android:layout_weight=".3"
             android:background="@android:color/white"
             app:srcCompat="@drawable/comments3" />
 
