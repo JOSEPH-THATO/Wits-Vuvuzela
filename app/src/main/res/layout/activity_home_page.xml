@@ -33,10 +33,10 @@
             android:id="@+id/newsfeed"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="#080b45"
+            android:background="#354EA6"
             android:text="NEWSFEED"
             android:textAlignment="center"
-            android:textColor="#e2ac19"
+            android:textColor="	#DFB735"
             android:textSize="20dp" />
 
         <ProgressBar
@@ -47,12 +47,11 @@
 
     </LinearLayout>
 
+
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         tools:listitem="@layout/articlelayout" />
-
-
 </LinearLayout>

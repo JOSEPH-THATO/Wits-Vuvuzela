@@ -3,12 +3,12 @@
 
 
     <solid
-        android:color="@color/backColor" >
+        android:color="@color/backColor">
     </solid>
 
     <!-- View border color and width -->
     <stroke
-        android:width="5dp"
+        android:width="2dp"
         android:color="@android:color/background_dark" >
     </stroke>
 

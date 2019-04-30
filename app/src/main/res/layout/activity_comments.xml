@@ -19,24 +19,43 @@
             android:layout_height="55dp"
             android:layout_weight="4"
             android:padding="7dp"
-            android:src="@drawable/back_comments"
+            android:src="@drawable/exit_comments1"
 
             />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Comments"
+            android:layout_marginTop="10dp"
             android:textColor="@android:color/black"
             android:textSize="25dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
-    <ListView
-        android:id="@+id/commentListView"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        tools:listitem="@layout/articlelayout"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:weightSum="5">
+
+    <TextView
+        android:id="@+id/CommentTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comment Titles"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
+
+    <ListView
+        android:id="@+id/commentsListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/commentlayout"
         android:layout_margin="5dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,16 +64,17 @@
         android:weightSum="5">
 
         <EditText
-            android:id="@+id/editComment"
+            android:id="@+id/editComments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textMultiLine"
             android:hint="type a comment"/>
         <ImageView
-            android:id="@+id/commentBtn"
+            android:id="@+id/commentBtns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/post_comment"

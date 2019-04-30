@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,7 @@ import org.jsoup.select.Elements;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+
 
 public class ReadArticleActivity extends AppCompatActivity {
 
@@ -60,26 +62,32 @@ public class ReadArticleActivity extends AppCompatActivity {
     EditText EditComment;
     ImageView CommentButton;
     ImageView ArticleImg;
-
+    ArrayList<String> Keys;
+    ArrayList<String> CommentsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_article);
 
+        ArrayList<String> keys = new ArrayList<>();
+
         Bundle bundle = getIntent().getExtras();
         String heading = bundle.getString("Heading");
         String email = bundle.getString("Email");
         Email = email;
         head = heading;
+        Keys = new ArrayList<>();
+        CommentsTracker = new ArrayList<>();
 
         SetUpUI();
+
+        ArticleImg.setVisibility(View.GONE);
 
       //  databaseReference = FirebaseDatabase.getInstance().getReference().child("Comments");
         databaseReference = FirebaseDatabase.getInstance().getReference("Article");
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
-
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,12 +110,10 @@ public class ReadArticleActivity extends AppCompatActivity {
 
                         new DownLoadImageTask(ArticleImg).execute(Img);
 
-
                         if(!article.ArticleAlreadyLiked(Email,LikedList) && !article.ArticleAlreadyDisliked(Email,DislikedList)){
                             LikeButton.setImageResource(R.drawable.likebw);
                             DislikeButton.setImageResource(R.drawable.dislikebw);
                         }
-
 
                         else if(article.ArticleAlreadyLiked(Email,LikedList)){
                             LikeButton.setImageResource(R.drawable.like);
@@ -170,8 +176,16 @@ public class ReadArticleActivity extends AppCompatActivity {
 
     private void SendComments(String Comments) {
 
+        Keys.add(Key);
+        CommentsTracker.add(head);
+
         Intent intent = new Intent(ReadArticleActivity.this, CommentsActivity.class);
+        intent.putExtra("Key", Key);
+        intent.putExtra("Email", Email);
         intent.putExtra("ArticleComments", Comments);
+        intent.putExtra("CommentsTitle", head);
+        intent.putExtra("Keys", Keys);
+        intent.putExtra("CommentsTracker", CommentsTracker);
         startActivity(intent);
 
     }
@@ -290,7 +304,16 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
+            ArticleImg.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+
+            Intent intent = new Intent(ReadArticleActivity.this, HomePage.class);
+            intent.putExtra("Email", Email);
+            startActivity(intent);
     }
 }
 
