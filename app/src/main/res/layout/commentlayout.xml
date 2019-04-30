@@ -46,7 +46,7 @@
             android:id="@+id/likebtn"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            app:srcCompat="@drawable/likebw" />
+            android:src="@drawable/likebw" />
 
         <TextView
             android:id="@+id/likeNum"
@@ -59,7 +59,7 @@
             android:id="@+id/dislikebtn"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            app:srcCompat="@drawable/dislikebw" />
+            android:src="@drawable/dislikebw" />
 
         <TextView
             android:id="@+id/dislikeNum"
@@ -73,7 +73,7 @@
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:background="@android:color/white"
-            app:srcCompat="@drawable/comments3" />
+            android:src="@drawable/comments3" />
 
     </LinearLayout>
 
