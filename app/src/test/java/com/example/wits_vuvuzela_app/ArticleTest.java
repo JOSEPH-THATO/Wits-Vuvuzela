@@ -261,7 +261,7 @@ public class ArticleTest {
 
     }
 
-    @Test
+    /*@Test
     public void addComment() {
 
         Article article = new Article();
@@ -289,9 +289,9 @@ public class ArticleTest {
         String Actual2 = article2.getArticleComments();
 
         assertEquals(Expected2,Actual2);
-    }
+    }*/
 
-    @Test
+   /* @Test
     public void LikeAnArticle() {
 
         Article article = new Article();
@@ -354,9 +354,9 @@ public class ArticleTest {
 
         assertEquals(ExpectedLikes3,ActualLikes3);
         assertEquals(ExpectedDislikes3,ActualDislikes3);
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void DislikeAnArticle() {
 
         Article article = new Article();
@@ -419,9 +419,9 @@ public class ArticleTest {
 
         assertEquals(ExpectedLikes3,ActualLikes3);
         assertEquals(ExpectedDislikes3,ActualDislikes3);
-    }
+    }*/
 
-    @Test
+  /*  @Test
     public void RemoveUserFromLikedArticleList() {
 
         String User = "Sheldon";
@@ -438,7 +438,8 @@ public class ArticleTest {
 
         assertEquals(Expected,Actual);
 
-    }
+    }*/
+  /*
     @Test
     public void RemoveUserFromDislikedArticleList() {
 
@@ -616,5 +617,5 @@ public class ArticleTest {
         assertEquals(Expected2,Actual2);
 
     }
-
+*/
 }

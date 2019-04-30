@@ -35,7 +35,7 @@
         android:id="@+id/commentListView"
         android:layout_width="match_parent"
         android:layout_height="600dp"
-        tools:listitem="@layout/articlelayout"
+        tools:listitem="@layout/commentlayout"
         android:layout_margin="5dp" />
 
     <LinearLayout
