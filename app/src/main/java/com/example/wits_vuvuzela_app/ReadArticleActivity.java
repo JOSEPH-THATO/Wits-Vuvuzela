@@ -55,6 +55,14 @@ public class ReadArticleActivity extends AppCompatActivity {
     Rating rating;
     String Email="";
     ProgressBar ArticleBar;
+
+    TextView tvComment;
+    TextView tDislikes;
+    TextView tLList;
+    TextView tDList;
+    TextView tLikes;
+    ImageView backbtn;
+
     CommentSection commentSection;
     TextView SampleComments;
     EditText EditComment;
@@ -254,7 +262,14 @@ public class ReadArticleActivity extends AppCompatActivity {
         }
     }
 
+
+    public void Goback(){
+        Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
+    }
+
     private void SetUpUI(){
+
 
         CommentIconButton = (ImageView)findViewById(R.id.commentIconBtn);
         LikeButton = (ImageView)findViewById(R.id.likebtn);
