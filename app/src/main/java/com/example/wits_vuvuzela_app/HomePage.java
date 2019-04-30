@@ -64,7 +64,6 @@ public class HomePage extends AppCompatActivity {
         String email = bundle.getString("Email");
         Email = email;
 
-
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Article");
         databaseReference2 = FirebaseDatabase.getInstance().getReference().child("UserProfile");
         firebaseauth = FirebaseAuth.getInstance();
@@ -91,7 +90,7 @@ public class HomePage extends AppCompatActivity {
                     }
                 }
 
-                Toast.makeText(HomePage.this, "Blessings " + User, Toast.LENGTH_LONG).show();
+                Toast.makeText(HomePage.this, "Welcome " + User, Toast.LENGTH_LONG).show();
 
                 new doit().execute();
             }
@@ -224,7 +223,7 @@ public class HomePage extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(HomePage.this, ReadArticleActivity.class);
                     intent.putExtra("Heading", ArticlesHead.get(position));
-                    intent.putExtra("Email", User);
+                    intent.putExtra("Email", Email);
                     SendArticle(ArticlesHead.get(position), ArticlesLink.get(position),ArticlesImgSrc.get(position));
                     startActivity(intent);
                 }
