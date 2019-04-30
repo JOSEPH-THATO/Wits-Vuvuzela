@@ -2,31 +2,25 @@ package com.example.wits_vuvuzela_app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
@@ -215,7 +209,7 @@ public class CommentsActivity extends AppCompatActivity {
             textView_heading.setText(NamesArrayList.get(position));
             textView_author.setText(CommentsArrayList.get(position));
 
-            textView_heading.setOnClickListener(new View.OnClickListener() {
+            commentsImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -231,7 +225,6 @@ public class CommentsActivity extends AppCompatActivity {
                                 if (commentSection1.getComment().equals(CommentsArrayList.get(position)) && commentSection1.getUserName().equals(NamesArrayList.get(position)) && commentSection1.getCommentID().equals(Key)) {
                                     KeyKey = artistSnapshot.getKey();
                                     //Toast.makeText(CommentsActivity.this, KeyKey + Position1, Toast.LENGTH_LONG).show();
-
                                 }
                             }
                         }

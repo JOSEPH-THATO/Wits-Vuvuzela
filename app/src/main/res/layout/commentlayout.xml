@@ -74,11 +74,12 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:textSize="15dp"
+            android:layout_marginRight="10dp"
             android:text="Dislike" />
 
         <ImageButton
             android:id="@+id/commentCommentIconBtn"
-            android:layout_width="20dp"
+            android:layout_width="40dp"
             android:layout_height="30dp"
             android:background="@android:color/white"
             android:src="@drawable/comments3" />

@@ -22,13 +22,8 @@
 
         <TextView
             android:id="@+id/title"
-<<<<<<< HEAD
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-=======
             android:layout_width="match_parent"
             android:layout_height="match_parent"
->>>>>>> 7ad73d73245b7843126ef3c0b568dd7c1d6edbbe
             android:text="Comments"
             android:layout_marginTop="10dp"
             android:textColor="@android:color/black"
@@ -53,11 +48,7 @@
     <ListView
         android:id="@+id/commentsListView"
         android:layout_width="match_parent"
-<<<<<<< HEAD
-        android:layout_height="match_parent"
-=======
         android:layout_height="600dp"
->>>>>>> f3e0a8bf15023d4489f7e51003cb070cab6f6a25
         tools:listitem="@layout/commentlayout"
         android:layout_margin="5dp" />
 
