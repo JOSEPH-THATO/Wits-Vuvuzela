@@ -37,14 +37,12 @@ import java.util.ArrayList;
 
 public class HomePage extends AppCompatActivity {
 
-    FirebaseAuth firebaseauth;
     DatabaseReference databaseReference;
     DatabaseReference databaseReference2;
     Article article;
     ListView listView;
     ArrayList<String> ArticlesHead;
     ArrayList<String> ArticlesAuth;
-    ArrayList<String> ArticlesBit;
     ArrayList<String> ArticlesLink;
     ArrayList<String> ArticlesImgSrc;
     String SendArticleHeading;
@@ -52,6 +50,8 @@ public class HomePage extends AppCompatActivity {
     ProgressBar HomePageBar;
     String User = "abc";
     UserProfile userProfile;
+    ArrayList<Bitmap> ArticlesBitmap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +66,13 @@ public class HomePage extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Article");
         databaseReference2 = FirebaseDatabase.getInstance().getReference().child("UserProfile");
-        firebaseauth = FirebaseAuth.getInstance();
         article = new Article();
 
         ArticlesHead = new ArrayList<>();
         ArticlesAuth = new ArrayList<>();
         ArticlesLink = new ArrayList<>();
         ArticlesImgSrc = new ArrayList<>();
-        ArticlesBit = new ArrayList<>();
-
+        ArticlesBitmap = new ArrayList<>();
 
         databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -99,7 +97,6 @@ public class HomePage extends AppCompatActivity {
 
             }
         });
-
     }
 
     class CustomAdapter extends BaseAdapter {
@@ -130,13 +127,10 @@ public class HomePage extends AppCompatActivity {
             TextView textView_heading = convertView1.findViewById(R.id.ArticleHeading);
             TextView textView_author = convertView1.findViewById(R.id.ArticleAuthor);
 
-            new DownLoadImageTask(imageView).execute(ArticlesImgSrc.get(position));
-
-            //imageView.setImageResource(IMAGES[position]);
+            imageView.setImageBitmap(ArticlesBitmap.get(position));
             textView_heading.setText(ArticlesHead.get(position));
             textView_author.setText("By " + ArticlesAuth.get(position));
             return convertView1;
-
         }
     }
 
@@ -146,8 +140,6 @@ public class HomePage extends AppCompatActivity {
         ArrayList<String> Author1;
         ArrayList<String> Link1;
         ArrayList<String> ImgSrc1;
-        ArrayList<String> Bit1;
-
 
         String words = "";
 
@@ -156,14 +148,10 @@ public class HomePage extends AppCompatActivity {
 
             try {
 
-                //Toast.makeText(HomePage.this, "Blessings ", Toast.LENGTH_LONG).show();
-
-
                 Heading1 = new ArrayList<>();
                 Author1 = new ArrayList<>();
                 Link1 = new ArrayList<>();
                 ImgSrc1 = new ArrayList<>();
-                Bit1 = new ArrayList<>();
 
                 Document mBlogDocument = Jsoup.connect("https://witsvuvuzela.com").get();
                 Elements mElementDataSize = mBlogDocument.select("div[class=el-dbe-blog-extra block_extended]");
@@ -192,7 +180,6 @@ public class HomePage extends AppCompatActivity {
                     String ImgSrc = img.attr("src");
                     ImgSrc1.add(ImgSrc);
 
-                    //  words+="\n";
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -204,30 +191,12 @@ public class HomePage extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            //Toast.makeText(HomePage.this, "Blessings ", Toast.LENGTH_LONG).show();
-
             ArticlesAuth = Author1;
             ArticlesHead = Heading1;
             ArticlesLink = Link1;
             ArticlesImgSrc = ImgSrc1;
 
-            listView = (ListView) findViewById(R.id.listview);
-            CustomAdapter customAdapter = new CustomAdapter();
-
-            HomePageBar.setVisibility(View.GONE);
-
-            listView.setAdapter(customAdapter);
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(HomePage.this, ReadArticleActivity.class);
-                    intent.putExtra("Heading", ArticlesHead.get(position));
-                    intent.putExtra("Email", Email);
-                    SendArticle(ArticlesHead.get(position), ArticlesLink.get(position),ArticlesImgSrc.get(position));
-                    startActivity(intent);
-                }
-            });
+            new GetArticleImage(ArticlesImgSrc).execute();
         }
     }
 
@@ -269,30 +238,57 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
+    public class GetArticleImage extends AsyncTask<Void, Void, Void> {
 
+        ArrayList<String> Pictures;
+        ArrayList<Bitmap> Bit;
 
-    private class DownLoadImageTask extends AsyncTask<String,Void, Bitmap>{
-        ImageView imageView;
+        Bitmap logo = null;
 
-        public DownLoadImageTask(ImageView imageView){
-            this.imageView = imageView;
+        public GetArticleImage(ArrayList<String> pics) {
+            Pictures = pics;
         }
 
-        protected Bitmap doInBackground(String...urls){
-            String urlOfImage = urls[0];
-            Bitmap logo = null;
-            try{
-                InputStream is = new URL(urlOfImage).openStream();
+        @Override
+        protected Void doInBackground(Void... voids) {
 
-                logo = BitmapFactory.decodeStream(is);
-            }catch(Exception e){
+            Bit = new ArrayList<>();
+
+            try {
+
+                for (int i = 0; i < Pictures.size(); ++i) {
+                    URL url = new URL(Pictures.get(i));
+                    logo = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    Bit.add(logo);
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            return logo;
+            return null;
         }
-        protected void onPostExecute(Bitmap result){
-            imageView.setImageBitmap(result);
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            ArticlesBitmap = Bit;
+
+            listView = (ListView) findViewById(R.id.listview);
+            CustomAdapter customAdapter = new CustomAdapter();
+
+            HomePageBar.setVisibility(View.GONE);
+
+            listView.setAdapter(customAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(HomePage.this, ReadArticleActivity.class);
+                    intent.putExtra("Heading", ArticlesHead.get(position));
+                    intent.putExtra("Email", Email);
+                    SendArticle(ArticlesHead.get(position), ArticlesLink.get(position),ArticlesImgSrc.get(position));
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -302,5 +298,4 @@ public class HomePage extends AppCompatActivity {
         Intent intent = new Intent(HomePage.this, MainActivity.class);
         startActivity(intent);
     }
-
 }

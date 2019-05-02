@@ -18,7 +18,6 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
             app:srcCompat="@drawable/kudu_logo" />
     </LinearLayout>
     <ScrollView
@@ -53,13 +52,12 @@
 
             <ImageView
                 android:id="@+id/ArticleImageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitXY"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
+                android:layout_width="400dp"
+                android:layout_height="250dp"
                 android:background="@android:color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="40dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/bronzeimage" />
 
             <LinearLayout
