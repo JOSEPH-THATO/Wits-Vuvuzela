@@ -37,6 +37,8 @@ public class CommentsActivity extends AppCompatActivity {
     ArrayList<Integer> NoLikesArrayList;
     ArrayList<Integer> NoDislikesArrayList;
     ArrayList<Integer> NoRepliesArrayList;
+    String UserLikeList = "";
+    String UserDislikedList = "";
     String Key = "huhu";
     String Email = "huhu";
     TextView Article1;
@@ -44,6 +46,8 @@ public class CommentsActivity extends AppCompatActivity {
     CommentSection commentSection;
     ArrayList<String> Keys;
     ArrayList<String> CommentsTracker;
+    int NumReplies = 0;
+    String CommentType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +64,15 @@ public class CommentsActivity extends AppCompatActivity {
         String email = bundle.getString("Email");
         String key = bundle.getString("Key");
         String commentTitle = bundle.getString("CommentsTitle");
+        String commentType = bundle.getString("CommentType");
+        int NumberReplies = bundle.getInt("NumberReplies");
         keys = bundle.getStringArrayList("Keys");
         commentTracker = bundle.getStringArrayList("CommentsTracker");
 
         Keys = keys;
         CommentsTracker = commentTracker;
+        NumReplies = NumberReplies;
+        CommentType = commentType;
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
 
@@ -89,7 +97,7 @@ public class CommentsActivity extends AppCompatActivity {
         CommentTitle1 = (TextView) findViewById(R.id.CommentTitle);
 
         CommentTitle1.setText(commentTitle);
-        //Article1.setText(Key);
+        Article1.setText(Key);
 
         if(Key.equals("")){
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
@@ -122,13 +130,16 @@ public class CommentsActivity extends AppCompatActivity {
                         commentSection = artistSnapshot.getValue(CommentSection.class);
 
                         if (commentSection.getCommentID().equals(Key)) {
+
                              CommentsArrayList.add(commentSection.getComment());
                              NamesArrayList.add(commentSection.getUserName());
                              RatesArrayList.add(commentSection.getCommentRate());
                              KeysArrayList.add(artistSnapshot.getKey());
                              NoLikesArrayList.add(Integer.parseInt(commentSection.getNoCommentLikes()));
                              NoDislikesArrayList.add(Integer.parseInt(commentSection.getNoCommentDislikes()));
-                             //NoRepliesArrayList.add(Integer.parseInt(commentSection.getNoReplies()));
+                             NoRepliesArrayList.add(Integer.parseInt(commentSection.getNoReplies()));
+                             UserLikeList = commentSection.getCommentLikedList();
+                             UserDislikedList = commentSection.getCommentDislikedList();
                         }
                     }
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
@@ -140,7 +151,6 @@ public class CommentsActivity extends AppCompatActivity {
 
                 }
             });
-
         }
 
         CommentButton.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +169,19 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReferenceComments.push().setValue(commentSection);
                     CommentsArrayList.add(NewComment);
                     NamesArrayList.add(Email);
+
+                    DatabaseReference databaseReference99;
+                    if(CommentType.equals("Article")){
+                        databaseReference99 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
+                        databaseReference99.child("noArticleReplies").setValue(String.valueOf(NumReplies+=1));
+                    }
+
+                    else if(CommentType.equals("Comment")){
+                        databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(Key);
+                        databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies+=1));
+
+                    }
+
                     RatesArrayList.add("None");
                     NoLikesArrayList.add(0);
                     NoDislikesArrayList.add(0);
@@ -193,6 +216,7 @@ public class CommentsActivity extends AppCompatActivity {
             intent.putExtra("CommentsTitle", CommentsTracker.get(CommentsTracker.size()-1));
             intent.putExtra("Keys", Keys);
             intent.putExtra("CommentsTracker", CommentsTracker);
+            intent.putExtra("CommentType", "Comment" );
             startActivity(intent);
         }
     }
@@ -223,7 +247,7 @@ public class CommentsActivity extends AppCompatActivity {
 
             TextView textView_NumLikes = convertView1.findViewById(R.id.likeNum);
             TextView textView_NumDislikes = convertView1.findViewById(R.id.dislikeNum);
-            //TextView textView_NumComments = convertView1.findViewById(R.id.commentNum);
+            TextView textView_NumComments = convertView1.findViewById(R.id.commentNum);
             ImageView thumbsupImg= convertView1.findViewById(R.id.likeCommentbtn);
             ImageView thumbsdownImg= convertView1.findViewById(R.id.dislikeCommentbtn);
             ImageView commentsImage= convertView1.findViewById(R.id.commentCommentIconBtn);
@@ -235,13 +259,14 @@ public class CommentsActivity extends AppCompatActivity {
 
             textView_NumLikes.setText(String.valueOf(NoLikesArrayList.get(position)));
             textView_NumDislikes.setText(String.valueOf(NoDislikesArrayList.get(position)));
+            textView_NumComments.setText(String.valueOf(NoRepliesArrayList.get(position)));
 
-            if(RatesArrayList.get(position).equals("Like")){
+            if(UserLikeList.contains(Email)){
                 thumbsupImg.setImageResource(R.drawable.like);
                 thumbsdownImg.setImageResource(R.drawable.dislikebw);
             }
 
-            else if(RatesArrayList.get(position).equals("Dislike")){
+            else if(UserDislikedList.contains(Email)){
                 thumbsupImg.setImageResource(R.drawable.likebw);
                 thumbsdownImg.setImageResource(R.drawable.dislike);
             }
@@ -266,7 +291,11 @@ public class CommentsActivity extends AppCompatActivity {
                         intent.putExtra("CommentsTitle", CommentsArrayList.get(position));
                         intent.putExtra("Keys", Keys);
                         intent.putExtra("CommentsTracker", CommentsTracker);
-                        startActivity(intent);
+                        intent.putExtra("NumberReplies", NoRepliesArrayList.get(position) );
+                        intent.putExtra("CommentType", "Comment" );
+
+
+                    startActivity(intent);
 
                 }
             });
@@ -279,20 +308,24 @@ public class CommentsActivity extends AppCompatActivity {
                     int NoLikes = NoLikesArrayList.get(position);
                     int NoDislikes = NoDislikesArrayList.get(position);
 
-                    if(RatesArrayList.get(position).equals("Like")){
+                    if(UserLikeList.contains(Email)){
                         NoLikes-=1;
                         Rating = "None";
+                        UserLikeList = RemoveUserFromLikedCommentList(Email,UserLikeList);
                     }
 
-                    else if(RatesArrayList.get(position).equals("Dislike")){
+                    else if(UserDislikedList.contains(Email)){
                         NoDislikes -= 1;
                         NoLikes+=1;
                         Rating = "Like";
+                        UserDislikedList = RemoveUserFromDislikedCommentList(Email,UserDislikedList);
+                        UserLikeList = AddUserToLikedList(Email,UserLikeList);
                     }
 
-                    else if(RatesArrayList.get(position).equals("None")){
+                    else{
                         NoLikes+=1;
                         Rating = "Like";
+                        UserLikeList = AddUserToLikedList(Email,UserLikeList);
                     }
 
                     DatabaseReference databaseReference8;
@@ -300,6 +333,8 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference8.child("commentRate").setValue(Rating);
                     databaseReference8.child("noCommentLikes").setValue(String.valueOf(NoLikes));
                     databaseReference8.child("noCommentDislikes").setValue(String.valueOf(NoDislikes));
+                    databaseReference8.child("commentLikedList").setValue(String.valueOf(UserLikeList));
+                    databaseReference8.child("commentDislikedList").setValue(String.valueOf(UserDislikedList));
 
                 }
             });
@@ -312,20 +347,24 @@ public class CommentsActivity extends AppCompatActivity {
                     int NoLikes = NoLikesArrayList.get(position);
                     int NoDislikes = NoDislikesArrayList.get(position);
 
-                    if(RatesArrayList.get(position).equals("Dislike")){
+                    if(UserDislikedList.contains(Email)){
                         NoDislikes-=1;
                         Rating = "None";
+                        UserDislikedList = RemoveUserFromDislikedCommentList(Email,UserDislikedList);
                     }
 
-                    else if(RatesArrayList.get(position).equals("Like")){
+                    else if(UserLikeList.contains(Email)){
                         NoDislikes += 1;
                         NoLikes -=1;
                         Rating = "Dislike";
+                        UserDislikedList = AddUserToDislikedList(Email,UserDislikedList);
+                        UserLikeList = RemoveUserFromLikedCommentList(Email,UserLikeList);
                     }
 
-                    else if(RatesArrayList.get(position).equals("None")){
+                    else{
                         NoDislikes+=1;
                         Rating = "Dislike";
+                        UserDislikedList = AddUserToDislikedList(Email,UserDislikedList);
                     }
 
                     DatabaseReference databaseReference7;
@@ -333,9 +372,90 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference7.child("commentRate").setValue(Rating);
                     databaseReference7.child("noCommentDislikes").setValue(String.valueOf(NoDislikes));
                     databaseReference7.child("noCommentLikes").setValue(String.valueOf(NoLikes));
+                    databaseReference7.child("commentLikedList").setValue(UserLikeList);
+                    databaseReference7.child("commentDislikedList").setValue(UserDislikedList);
+
                 }
             });
             return convertView1;
         }
     }
+
+    public String AddUserToLikedList(String User,String LikedList) {
+
+        if(LikedList.equals("")){
+            LikedList+=User;
+        }
+        else {
+            LikedList += ( "/" + User);
+        }
+
+        return LikedList;
+    }
+
+    public String AddUserToDislikedList(String User,String DislikedList) {
+        if (DislikedList.equals("")) {
+            DislikedList += User;
+        }
+        else {
+            DislikedList += ( "/" + User);
+        }
+        return DislikedList;
+    }
+
+    public String RemoveUserFromLikedCommentList(String User,String LikedList) {
+
+        String[] LikedArticle = LikedList.split("/");
+
+        String NewList = "User";
+
+        for (int i = 0; i < LikedArticle.length; ++i) {
+            if (User.equals(LikedArticle[i])) {
+                continue;
+            }
+
+            NewList += ("/" + LikedArticle[i]);
+        }
+
+        return NewList;
+    }
+
+    public String RemoveUserFromDislikedCommentList(String User,String DislikedList) {
+
+        String[] DislikedComment = DislikedList.split("/");
+
+        String NewList = "User1";
+
+        for (int i = 0; i < DislikedComment.length; ++i) {
+            if (User.equals(DislikedComment[i])) {
+                continue;
+            }
+
+            NewList += ("/" + DislikedComment[i]);
+        }
+
+        return NewList;
+    }
+
 }
+/*
+ if(RatesArrayList.get(position).equals("Like")){
+         NoLikes-=1;
+         Rating = "None";
+         RemoveUserFromLikedCommentList(Email,UserLikeList);
+         }
+
+         else if(RatesArrayList.get(position).equals("Dislike")){
+         NoDislikes -= 1;
+         NoLikes+=1;
+         Rating = "Like";
+         RemoveUserFromDislikedCommentList(Email,UserDislikedList);
+         AddUserToLikedList(Email,UserLikeList);
+         }
+
+         else if(RatesArrayList.get(position).equals("None")){
+         NoLikes+=1;
+         Rating = "Like";
+         AddUserToLikedList(Email,UserLikeList);
+         }
+*/

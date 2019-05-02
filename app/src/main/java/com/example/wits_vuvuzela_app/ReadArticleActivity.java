@@ -44,6 +44,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     String Key;
     int likes=0;
     int dislikes=0;
+    int NoReplies = 0;
     String CommentS = "";
     String LikedListS="";
     String DislikedListS="";
@@ -52,6 +53,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     ImageView DislikeButton;
     TextView NumLikes;
     TextView NumDislikes;
+    TextView NumComments;
     ImageView CommentIconButton;
     Article article;
     Rating rating;
@@ -116,6 +118,9 @@ public class ReadArticleActivity extends AppCompatActivity {
                         String DislikedList = article.getArticleDislikedList();
                         String Img = article.getArticleImage();
 
+                        int NumReplies = Integer.parseInt(article.getNoArticleReplies());
+                        NoReplies = NumReplies;
+
                         new DownLoadImageTask(ArticleImg).execute(Img);
 
                         if(!article.ArticleAlreadyLiked(Email,LikedList) && !article.ArticleAlreadyDisliked(Email,DislikedList)){
@@ -143,6 +148,7 @@ public class ReadArticleActivity extends AppCompatActivity {
 
                         NumLikes.setText(likes + " Likes");
                         NumDislikes.setText(dislikes + " Dislikes");
+                        NumComments.setText(String.valueOf(NumReplies));
 
                         CommentIconButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -194,6 +200,8 @@ public class ReadArticleActivity extends AppCompatActivity {
         intent.putExtra("CommentsTitle", head);
         intent.putExtra("Keys", Keys);
         intent.putExtra("CommentsTracker", CommentsTracker);
+        intent.putExtra("NumberReplies", NoReplies );
+        intent.putExtra("CommentType", "Article" );
         startActivity(intent);
 
     }
@@ -290,6 +298,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         DislikeButton = (ImageView)findViewById(R.id.dislikebtn);
         NumDislikes = (TextView)findViewById(R.id.dislikeNum);
         NumLikes = (TextView)findViewById(R.id.likeNum);
+        NumComments = (TextView)findViewById(R.id.commentANum);
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
         ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);

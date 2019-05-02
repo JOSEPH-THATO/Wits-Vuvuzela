@@ -19,6 +19,15 @@ public class Article {
     private String ArticleLikedList = "User1/User2";
     private String ArticleDislikedList = "User1/User2";
     private String RateStatus = "none";
+    private String NoArticleReplies = "0";
+
+    public String getNoArticleReplies() {
+        return NoArticleReplies;
+    }
+
+    public void setNoArticleReplies(String noArticleReplies) {
+        NoArticleReplies = noArticleReplies;
+    }
 
     public String getArticleLikes() {
         return ArticleLikes;

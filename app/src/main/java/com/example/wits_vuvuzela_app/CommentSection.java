@@ -10,7 +10,24 @@ public class CommentSection {
     private String NoCommentLikes = "0";
     private String NoCommentDislikes = "0";
     private String NoReplies = "0";
+    private String CommentLikedList =  "User1/User2";
+    private String CommentDislikedList =  "User1/User2";
 
+    public String getCommentLikedList() {
+        return CommentLikedList;
+    }
+
+    public void setCommentLikedList(String commentLikedList) {
+        CommentLikedList = commentLikedList;
+    }
+
+    public String getCommentDislikedList() {
+        return CommentDislikedList;
+    }
+
+    public void setCommentDislikedList(String commentDislikedList) {
+        CommentDislikedList = commentDislikedList;
+    }
 
     public String getNoCommentLikes() {
         return NoCommentLikes;

@@ -29,4 +29,8 @@ public class Rating {
     public void setArticleID(String articleID) {
         ArticleID = articleID;
     }
+
+    public void LikeComment(){
+
+    }
 }
