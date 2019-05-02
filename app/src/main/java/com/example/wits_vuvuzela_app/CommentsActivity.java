@@ -32,7 +32,10 @@ public class CommentsActivity extends AppCompatActivity {
     private ListView CommentsView;
     DatabaseReference databaseReferenceComments;
     DatabaseReference databaseReferenceKey;
+    DatabaseReference databaseReferenceRate1;
+    DatabaseReference databaseReferenceRate2;
     ArrayList<String> CommentsArrayList;
+    ArrayList<String> RatesArrayList;
     ArrayList<String> NamesArrayList;
     ArrayList<Integer> KeysArrayList;
     String Key = "huhu";
@@ -42,6 +45,7 @@ public class CommentsActivity extends AppCompatActivity {
     String KeyKey = "";
     CommentSection commentSection;
     CommentSection commentSection1;
+    CommentSection commentSection2;
     ArrayList<String> Keys;
     ArrayList<String> CommentsTracker;
 
@@ -67,10 +71,15 @@ public class CommentsActivity extends AppCompatActivity {
         CommentsTracker = commentTracker;
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
+        databaseReferenceRate2 = FirebaseDatabase.getInstance().getReference().child("CommentSection");
+
+        databaseReferenceRate1 = FirebaseDatabase.getInstance().getReference().child("CommentSection");
+
 
         CommentsArrayList = new ArrayList<>();
         NamesArrayList = new ArrayList<>();
         KeysArrayList = new ArrayList<>();
+        RatesArrayList = new ArrayList<>();
 
         CommentsView = (ListView) findViewById(R.id.commentsListView);
         CustomAdapter customAdapter1 = new CustomAdapter();
@@ -85,7 +94,7 @@ public class CommentsActivity extends AppCompatActivity {
         CommentTitle1 = (TextView) findViewById(R.id.CommentTitle);
 
         CommentTitle1.setText(commentTitle);
- //       Article1.setText(Key);
+        Article1.setText(Key);
 
         if(Key.equals("")){
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
@@ -95,6 +104,7 @@ public class CommentsActivity extends AppCompatActivity {
 
             CommentsArrayList = new ArrayList<>();
             NamesArrayList = new ArrayList<>();
+            RatesArrayList = new ArrayList<>();
 
             databaseReferenceComments.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -102,6 +112,7 @@ public class CommentsActivity extends AppCompatActivity {
 
                     CommentsArrayList = new ArrayList<>();
                     NamesArrayList = new ArrayList<>();
+                    RatesArrayList = new ArrayList<>();
 
                     for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
@@ -110,6 +121,7 @@ public class CommentsActivity extends AppCompatActivity {
                         if (commentSection.getCommentID().equals(Key)) {
                             CommentsArrayList.add(commentSection.getComment());
                             NamesArrayList.add(commentSection.getUserName());
+                            RatesArrayList.add(commentSection.getCommentRate());
                         }
                     }
 
@@ -204,10 +216,25 @@ public class CommentsActivity extends AppCompatActivity {
             ImageView commentsImage= convertView1.findViewById(R.id.commentCommentIconBtn);
             TextView textView_heading = convertView1.findViewById(R.id.CommentUser);
             TextView textView_author = convertView1.findViewById(R.id.commentID);
-            //ImageView imageView = convertView1.findViewById(R.id.ArticleImage);
 
             textView_heading.setText(NamesArrayList.get(position));
             textView_author.setText(CommentsArrayList.get(position));
+
+            if(RatesArrayList.get(position).equals("Like")){
+                thumbsupImg.setImageResource(R.drawable.like);
+                thumbsdownImg.setImageResource(R.drawable.dislikebw);
+            }
+
+            else if(RatesArrayList.get(position).equals("Dislike")){
+                thumbsupImg.setImageResource(R.drawable.likebw);
+                thumbsdownImg.setImageResource(R.drawable.dislike);
+            }
+
+            else{
+                thumbsupImg.setImageResource(R.drawable.likebw);
+                thumbsdownImg.setImageResource(R.drawable.dislikebw);
+            }
+
 
             commentsImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -224,7 +251,6 @@ public class CommentsActivity extends AppCompatActivity {
 
                                 if (commentSection1.getComment().equals(CommentsArrayList.get(position)) && commentSection1.getUserName().equals(NamesArrayList.get(position)) && commentSection1.getCommentID().equals(Key)) {
                                     KeyKey = artistSnapshot.getKey();
-                                    //Toast.makeText(CommentsActivity.this, KeyKey + Position1, Toast.LENGTH_LONG).show();
                                 }
                             }
                         }
@@ -250,8 +276,72 @@ public class CommentsActivity extends AppCompatActivity {
                     }
                 }
             });
+            thumbsupImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                   databaseReferenceRate2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot  dataSnapshot) {
+
+                            String KeyKey1="";
+
+                            for (DataSnapshot Snapshot1 : dataSnapshot.getChildren()) {
+
+                                CommentSection commentSection3 = Snapshot1.getValue(CommentSection.class);
+
+                                if (commentSection3.getComment().equals(CommentsArrayList.get(position)) && commentSection3.getUserName().equals(NamesArrayList.get(position)) && commentSection3.getCommentID().equals(Key)) {
+                                    KeyKey1 = Snapshot1.getKey();
+                                }
+                            }
+
+                            DatabaseReference databaseReference8;
+
+                            databaseReference8 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeyKey1);
+                            databaseReference8.child("commentRate").setValue("Like");
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
+
+            thumbsdownImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    databaseReferenceRate1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot  dataSnapshot) {
+
+                            String KeyKey2="";
+
+                            for (DataSnapshot Snapshot3  : dataSnapshot.getChildren()) {
+
+                                commentSection2 = Snapshot3.getValue(CommentSection.class);
+
+                                if (commentSection2.getComment().equals(CommentsArrayList.get(position)) && commentSection2.getUserName().equals(NamesArrayList.get(position)) && commentSection2.getCommentID().equals(Key)) {
+                                    KeyKey2 = Snapshot3.getKey();
+                                }
+                            }
+
+                            DatabaseReference databaseReference7;
+                            databaseReference7 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeyKey2);
+                            databaseReference7.child("commentRate").setValue("Dislike");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
+            });
             return convertView1;
         }
-
     }
 }
