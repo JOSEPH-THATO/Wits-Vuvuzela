@@ -51,7 +51,7 @@
     <ListView
         android:id="@+id/commentsListView"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="580dp"
         tools:listitem="@layout/commentlayout"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
