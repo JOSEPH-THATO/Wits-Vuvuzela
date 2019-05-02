@@ -46,7 +46,7 @@ public class CommentSection {
 
     public String getUserName() {
         return UserName;
-    }
+    }   
 
     public void setUserName(String userName) {
         UserName = userName;
