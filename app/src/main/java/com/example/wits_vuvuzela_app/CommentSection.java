@@ -6,7 +6,35 @@ public class CommentSection {
     private String Comment = "";
     private String UserName = "Abdullah";
     private String CommentTime = "NoDate";
-    private String CommentRate = "Like";
+    private String CommentRate = "None";
+    private String NoCommentLikes = "0";
+    private String NoCommentDislikes = "0";
+    private String NoReplies = "0";
+
+
+    public String getNoCommentLikes() {
+        return NoCommentLikes;
+    }
+
+    public void setNoCommentLikes(String noCommentLikes) {
+        NoCommentLikes = noCommentLikes;
+    }
+
+    public String getNoCommentDislikes() {
+        return NoCommentDislikes;
+    }
+
+    public void setNoCommentDislikes(String noCommentDislikes) {
+        NoCommentDislikes = noCommentDislikes;
+    }
+
+    public String getNoReplies() {
+        return NoReplies;
+    }
+
+    public void setNoReplies(String noReplies) {
+        NoReplies = noReplies;
+    }
 
     public String getCommentRate() {
         return CommentRate;
