@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@android:color/white"
         android:orientation="vertical">
         <ImageView
             android:id="@+id/imageView"
@@ -23,6 +24,7 @@
     <ScrollView
         android:layout_marginTop="80dp"
         android:layout_width="match_parent"
+        android:layout_marginBottom="38dp"
         android:layout_height="550dp">
 
         <LinearLayout
@@ -40,14 +42,15 @@
                     android:layout_width="wrap_content"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:paddingTop="20dp"
+                    android:paddingTop="5dp"
                     android:paddingBottom="10dp"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
                     android:textStyle="bold"
+                    android:textColor="@android:color/black"
                     android:layout_gravity="center"
                     android:text="Article Heading"
-                    android:textSize="20dp" />
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -56,14 +59,13 @@
                 android:layout_width="400dp"
                 android:layout_height="250dp"
                 android:background="@android:color/white"
-                android:paddingLeft="20dp"
-                android:paddingRight="40dp"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/bronzeimage" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:orientation="vertical">
 
                 <ProgressBar
@@ -77,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
+                    android:textColor="@android:color/black"
                     android:paddingTop="0dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="0dp"
@@ -117,6 +120,7 @@ o Navigation properties and Eager, Explicit, and L" />
     </ScrollView>
 
     <LinearLayout
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -135,6 +139,7 @@ o Navigation properties and Eager, Explicit, and L" />
             android:layout_width="5dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@android:color/black"
             android:text="Like"
             android:textSize="15dp" />
 
@@ -150,6 +155,7 @@ o Navigation properties and Eager, Explicit, and L" />
             android:layout_width="5dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@android:color/black"
             android:textSize="15dp"
             android:text="Dislike" />
 
@@ -166,6 +172,7 @@ o Navigation properties and Eager, Explicit, and L" />
             android:layout_width="5dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@android:color/black"
             android:text="00"
             android:textSize="15dp" />
 

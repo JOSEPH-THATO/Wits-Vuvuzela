@@ -46,7 +46,7 @@ public class CommentsActivity extends AppCompatActivity {
     CommentSection commentSection;
     ArrayList<String> Keys;
     ArrayList<String> CommentsTracker;
-    int NumReplies = 0;
+    Integer NumReplies = 0;
     String CommentType = "";
 
     @Override
@@ -65,10 +65,11 @@ public class CommentsActivity extends AppCompatActivity {
         String key = bundle.getString("Key");
         String commentTitle = bundle.getString("CommentsTitle");
         String commentType = bundle.getString("CommentType");
-        int NumberReplies = bundle.getInt("NumberReplies");
+        Integer NumberReplies = bundle.getInt("NumberReplies");
         keys = bundle.getStringArrayList("Keys");
         commentTracker = bundle.getStringArrayList("CommentsTracker");
 
+        Keys = keys;
         Keys = keys;
         CommentsTracker = commentTracker;
         NumReplies = NumberReplies;
@@ -185,6 +186,7 @@ public class CommentsActivity extends AppCompatActivity {
                     RatesArrayList.add("None");
                     NoLikesArrayList.add(0);
                     NoDislikesArrayList.add(0);
+                    NoRepliesArrayList.add(NumReplies+=1);
 
                     EditComment.setText("");
 
@@ -293,7 +295,6 @@ public class CommentsActivity extends AppCompatActivity {
                         intent.putExtra("CommentsTracker", CommentsTracker);
                         intent.putExtra("NumberReplies", NoRepliesArrayList.get(position) );
                         intent.putExtra("CommentType", "Comment" );
-
 
                     startActivity(intent);
 
