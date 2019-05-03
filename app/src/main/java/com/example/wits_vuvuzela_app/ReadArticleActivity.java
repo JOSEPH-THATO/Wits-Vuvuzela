@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.InputStream;
@@ -251,9 +252,14 @@ public class ReadArticleActivity extends AppCompatActivity {
 
                 Document mBlogDocument = Jsoup.connect(UrlLink).get();
                 Elements mElementDataSize = mBlogDocument.select("div[class=entry-content]");
-                int mElementSize = mElementDataSize.size();
 
-                for (int i = 0; i < 10; i++) {
+                int size = 0;
+                Elements paragraphs = mBlogDocument.select("p");
+                for (Element p : paragraphs) {
+                    size+=1;
+                }
+
+                for (int i = 0; i < size-5; i++) {
 
                     Elements mElementArticle = mBlogDocument.select("p").eq(i);
                     String mArticleBody = mElementArticle.text();

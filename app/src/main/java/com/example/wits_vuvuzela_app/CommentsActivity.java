@@ -34,6 +34,8 @@ public class CommentsActivity extends AppCompatActivity {
     ArrayList<String> RatesArrayList;
     ArrayList<String> NamesArrayList;
     ArrayList<String> KeysArrayList;
+    ArrayList<String> UserLikedList1;
+    ArrayList<String> UserDislikedList1;
     ArrayList<Integer> NoLikesArrayList;
     ArrayList<Integer> NoDislikesArrayList;
     ArrayList<Integer> NoRepliesArrayList;
@@ -84,6 +86,8 @@ public class CommentsActivity extends AppCompatActivity {
         NoDislikesArrayList = new ArrayList<>();
         NoLikesArrayList = new ArrayList<>();
         NoRepliesArrayList = new ArrayList<>();
+        UserDislikedList1 = new ArrayList<>();
+        UserLikedList1 = new ArrayList<>();
 
         CommentsView = (ListView) findViewById(R.id.commentsListView);
         CustomAdapter customAdapter1 = new CustomAdapter();
@@ -113,6 +117,8 @@ public class CommentsActivity extends AppCompatActivity {
             NoDislikesArrayList = new ArrayList<>();
             NoLikesArrayList = new ArrayList<>();
             NoRepliesArrayList = new ArrayList<>();
+            UserDislikedList1 = new ArrayList<>();
+            UserLikedList1 = new ArrayList<>();
 
             databaseReferenceComments.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -125,6 +131,8 @@ public class CommentsActivity extends AppCompatActivity {
                     NoDislikesArrayList = new ArrayList<>();
                     NoLikesArrayList = new ArrayList<>();
                     NoRepliesArrayList = new ArrayList<>();
+                    UserDislikedList1 = new ArrayList<>();
+                    UserLikedList1 = new ArrayList<>();
 
                     for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
@@ -141,6 +149,8 @@ public class CommentsActivity extends AppCompatActivity {
                              NoRepliesArrayList.add(Integer.parseInt(commentSection.getNoReplies()));
                              UserLikeList = commentSection.getCommentLikedList();
                              UserDislikedList = commentSection.getCommentDislikedList();
+                             UserLikedList1.add(UserLikeList);
+                             UserDislikedList1.add(UserDislikedList);
                         }
                     }
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
@@ -186,7 +196,9 @@ public class CommentsActivity extends AppCompatActivity {
                     RatesArrayList.add("None");
                     NoLikesArrayList.add(0);
                     NoDislikesArrayList.add(0);
-                    NoRepliesArrayList.add(NumReplies+=1);
+                    NoRepliesArrayList.add(NumReplies);
+                    UserDislikedList1.add("User1/User2");
+                    UserLikedList1.add("User1/User2");
 
                     EditComment.setText("");
 
@@ -263,12 +275,12 @@ public class CommentsActivity extends AppCompatActivity {
             textView_NumDislikes.setText(String.valueOf(NoDislikesArrayList.get(position)));
             textView_NumComments.setText(String.valueOf(NoRepliesArrayList.get(position)));
 
-            if(UserLikeList.contains(Email)){
+            if(UserLikedList1.get(position).contains(Email)){
                 thumbsupImg.setImageResource(R.drawable.like);
                 thumbsdownImg.setImageResource(R.drawable.dislikebw);
             }
 
-            else if(UserDislikedList.contains(Email)){
+            else if(UserDislikedList1.get(position).contains(Email)){
                 thumbsupImg.setImageResource(R.drawable.likebw);
                 thumbsdownImg.setImageResource(R.drawable.dislike);
             }
@@ -277,8 +289,6 @@ public class CommentsActivity extends AppCompatActivity {
                 thumbsupImg.setImageResource(R.drawable.likebw);
                 thumbsdownImg.setImageResource(R.drawable.dislikebw);
             }
-
-            Toast.makeText(CommentsActivity.this, "88888 ", Toast.LENGTH_LONG).show();
 
             commentsImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -309,13 +319,13 @@ public class CommentsActivity extends AppCompatActivity {
                     int NoLikes = NoLikesArrayList.get(position);
                     int NoDislikes = NoDislikesArrayList.get(position);
 
-                    if(UserLikeList.contains(Email)){
+                    if(UserLikedList1.get(position).contains(Email)){
                         NoLikes-=1;
                         Rating = "None";
                         UserLikeList = RemoveUserFromLikedCommentList(Email,UserLikeList);
                     }
 
-                    else if(UserDislikedList.contains(Email)){
+                    else if(UserDislikedList1.get(position).contains(Email)){
                         NoDislikes -= 1;
                         NoLikes+=1;
                         Rating = "Like";
