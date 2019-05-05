@@ -38,6 +38,7 @@ import java.util.ArrayList;
 
 public class ReadArticleActivity extends AppCompatActivity {
 
+
     TextView ArticleBody;
     TextView ArticleHeading;
     String UrlLink;

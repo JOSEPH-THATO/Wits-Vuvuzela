@@ -32,11 +32,13 @@ import org.jsoup.select.Elements;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
 public class HomePage extends AppCompatActivity {
 
+    TextView txtDateTime;
     DatabaseReference databaseReference;
     DatabaseReference databaseReference2;
     Article article;
@@ -53,10 +55,14 @@ public class HomePage extends AppCompatActivity {
     ArrayList<Bitmap> ArticlesBitmap;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        //D
+
+
 
         HomePageBar = (ProgressBar)findViewById(R.id.HomePageBar);
 

@@ -102,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
                       }
                     }
                 });
+
+
+            }
+        });
+        ForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ResetPassword();
             }
         });
         Register.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
                 EnterRegistrationPage();
             }
         });
+        /*
+        ForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PasswordReset.class));
+            }
+        });*/
     }
 
 
@@ -126,12 +141,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void ResetPassword(){
+        Intent intent = new Intent(this, PasswordReset.class);
+        startActivity(intent);
+    }
+
     private void SetupUserInterface(){
 
         Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
         Password = (EditText) findViewById(R.id.EdTxtPasswordLogin);
         Login = (Button) findViewById(R.id.BtnLogin);
-        ForgotPassword = (TextView) findViewById(R.id.txtViewForgotPasswordLogin);
+        ForgotPassword = (TextView)findViewById(R.id.txtViewForgotPasswordLogin);
         Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
         progressBar = (ProgressBar)findViewById(R.id.progressBarLog);
 
