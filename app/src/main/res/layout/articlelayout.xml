@@ -37,14 +37,6 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/txtDateTime"
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:text="DateTime"
-            android:textColor="@color/colorAccent"
-            android:textSize="257dp" />
-
-        <TextView
             android:id="@+id/ArticleAuthor"
             android:layout_width="257dp"
             android:layout_height="wrap_content"
