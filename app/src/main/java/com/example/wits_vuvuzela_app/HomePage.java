@@ -60,32 +60,6 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        //D
-
-        Thread datetime = new Thread(){
-            @Override
-            public void run(){
-                try {
-                    while (!isInterrupted()){
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                TextView DateTime = (TextView)findViewById(R.id.txtDateTime);
-                                long date = System.currentTimeMillis();
-                                SimpleDateFormat dateF = new SimpleDateFormat("MMMM dd yyyy\nhh-mm-ss a");
-                                String dateString = dateF.format(date);
-                                DateTime.setText(dateString);
-                            }
-                        });
-                    }
-                }catch (InterruptedException e){
-
-                }
-            }
-        };
-        datetime.start();
-
 
         HomePageBar = (ProgressBar)findViewById(R.id.HomePageBar);
 
