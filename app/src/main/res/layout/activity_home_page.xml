@@ -26,6 +26,13 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
+<HorizontalScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/newsfeed"
@@ -43,13 +50,13 @@
             android:layout_width="match_parent"
             android:layout_height="108dp" />
 
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            tools:listitem="@layout/articlelayout" />
     </LinearLayout>
-
-
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        tools:listitem="@layout/articlelayout" />
+</HorizontalScrollView>
+    </LinearLayout>
 </LinearLayout>
