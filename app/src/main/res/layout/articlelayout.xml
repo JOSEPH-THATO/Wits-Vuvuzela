@@ -43,6 +43,13 @@
             android:textSize="10dp"
             android:text="Author" />
 
+        <TextView
+            android:id="@+id/txtDateTime"
+            android:layout_width="257dp"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="DateTime" />
+
 
     </LinearLayout>
 
