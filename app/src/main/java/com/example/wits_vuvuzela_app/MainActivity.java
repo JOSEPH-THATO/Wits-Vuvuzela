@@ -106,25 +106,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        ForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ResetPassword();
-            }
-        });
+
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EnterRegistrationPage();
             }
         });
-        /*
-        ForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PasswordReset.class));
-            }
-        });*/
+
     }
 
 
@@ -138,11 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this,HomePage.class);
         intent.putExtra("Email", Username.getText().toString().trim());
-        startActivity(intent);
-    }
-
-    private void ResetPassword(){
-        Intent intent = new Intent(this, PasswordReset.class);
         startActivity(intent);
     }
 
