@@ -24,8 +24,29 @@ public class MainActivityTest {
 
     @Test
     public void MainTestLaunch(){
-        View view = mainActivity.findViewById(R.id.loginID);
-        assertNotNull(view);
+
+
+
+        View LoginTV = mainActivity.findViewById(R.id.loginID);
+        assertNotNull(LoginTV);
+
+        View EmailET = mainActivity.findViewById(R.id.EdtxtUsernameLogin);
+        assertNotNull(EmailET);
+
+        View PasswordET = mainActivity.findViewById(R.id.EdTxtPasswordLogin);
+        assertNotNull(PasswordET);
+
+        View LoginBtn = mainActivity.findViewById(R.id.BtnLogin);
+        assertNotNull(LoginBtn);
+
+        View ForgotPasswordTV = mainActivity.findViewById(R.id.loginID);
+        assertNotNull(ForgotPasswordTV);
+
+        View NoAccountTV = mainActivity.findViewById(R.id.txtViewForgotPasswordLogin);
+        assertNotNull(NoAccountTV);
+
+        View RegisterTV = mainActivity.findViewById(R.id.txtViewRegisterLogin);
+        assertNotNull(RegisterTV);
     }
     @After
     public void tearDown() throws Exception {

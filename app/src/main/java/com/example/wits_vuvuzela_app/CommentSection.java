@@ -2,8 +2,8 @@ package com.example.wits_vuvuzela_app;
 
 public class CommentSection {
 
-    private String CommentID = "";
-    private String Comment = "";
+    private String CommentID = "abcdefgh";
+    private String Comment = "Sample Comment";
     private String UserName = "Abdullah";
     private String CommentTime = "NoDate";
     private String CommentRate = "None";
@@ -93,4 +93,113 @@ public class CommentSection {
         CommentTime = commentTime;
     }
 
+    public void LikeComment(String User){
+
+        int NoLikes = Integer.parseInt(NoCommentLikes);
+        int NoDislikes = Integer.parseInt(NoCommentDislikes);
+
+        if(CommentLikedList.contains(User)){
+            NoLikes-=1;
+            CommentLikedList = RemoveUserFromLikedCommentList(User);
+        }
+
+        else if(CommentDislikedList.contains(User)){
+            NoDislikes -= 1;
+            NoLikes+=1;
+            CommentDislikedList = RemoveUserFromDislikedCommentList(User);
+            CommentLikedList = AddUserToLikedList(User);
+        }
+
+        else{
+            NoLikes+=1;
+            CommentLikedList = AddUserToLikedList(User);
+        }
+
+        NoCommentLikes = String.valueOf(NoLikes);
+        NoCommentDislikes = String.valueOf(NoDislikes);
+
+    }
+
+    public void DislikeComment(String User){
+
+        int NoLikes = Integer.parseInt(NoCommentLikes);
+        int NoDislikes = Integer.parseInt(NoCommentDislikes);
+
+
+        if(CommentDislikedList.contains(User)){
+            NoDislikes-=1;
+            CommentDislikedList = RemoveUserFromDislikedCommentList(User);
+        }
+
+        else if(CommentLikedList.contains(User)){
+            NoDislikes += 1;
+            NoLikes -=1;
+            CommentDislikedList = AddUserToDislikedList(User);
+            CommentLikedList = RemoveUserFromLikedCommentList(User);
+        }
+
+        else{
+            NoDislikes+=1;
+            CommentDislikedList = AddUserToDislikedList(User);
+        }
+
+        NoCommentLikes = String.valueOf(NoLikes);
+        NoCommentDislikes = String.valueOf(NoDislikes);
+
+    }
+
+    public String AddUserToLikedList(String User) {
+
+        if(CommentLikedList.equals("")){
+            CommentLikedList+=User;
+        }
+        else {
+            CommentLikedList += ( "/" + User);
+        }
+
+        return CommentLikedList;
+    }
+
+    public String AddUserToDislikedList(String User) {
+        if (CommentDislikedList.equals("")) {
+            CommentDislikedList += User;
+        }
+        else {
+            CommentDislikedList += ( "/" + User);
+        }
+        return CommentDislikedList;
+    }
+
+    public String RemoveUserFromLikedCommentList(String User) {
+
+        String[] LikedArticle = CommentLikedList.split("/");
+
+        String NewList = "User";
+
+        for (int i = 0; i < LikedArticle.length; ++i) {
+            if (User.equals(LikedArticle[i])) {
+                continue;
+            }
+
+            NewList += ("/" + LikedArticle[i]);
+        }
+
+        return NewList;
+    }
+
+    public String RemoveUserFromDislikedCommentList(String User) {
+
+        String[] DislikedComment = CommentDislikedList.split("/");
+
+        String NewList = "User1";
+
+        for (int i = 0; i < DislikedComment.length; ++i) {
+            if (User.equals(DislikedComment[i])) {
+                continue;
+            }
+
+            NewList += ("/" + DislikedComment[i]);
+        }
+        return NewList;
+    }
 }

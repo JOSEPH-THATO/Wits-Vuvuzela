@@ -4,38 +4,21 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        maven{url "https//plugins.gradle.org/m2"}
+
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
         classpath 'com.google.gms:google-services:4.0.1'
-        classpath 'org.jacoco:org.jacoco.core:0.8.0'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7'
 
-        // classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
-
-        // classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
+        // classpath 'org.jacoco:org.acoco.core:0.8.0'
+        
         
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
-}
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
-    ])
 }
 
 
@@ -46,10 +29,10 @@ allprojects {
 
     }
 }
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
 /*
  android {
       lintOptions {

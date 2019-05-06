@@ -88,7 +88,7 @@ public class HomePage extends AppCompatActivity {
                     }
                 }
 
-                Toast.makeText(HomePage.this, "Welcome " + User, Toast.LENGTH_LONG).show();
+                Toast.makeText(HomePage.this, "Welcome ", Toast.LENGTH_LONG).show();
 
                 new doit().execute();
             }
@@ -156,8 +156,6 @@ public class HomePage extends AppCompatActivity {
                 Document mBlogDocument = Jsoup.connect("https://witsvuvuzela.com").get();
                 Elements mElementDataSize = mBlogDocument.select("div[class=el-dbe-blog-extra block_extended]");
                 int mElementSize = mElementDataSize.size();
-
-               //  Toast.makeText(HomePage.this, mElementSize+" sent", Toast.LENGTH_LONG).show();
 
                 for (int i = 0; i < 12; i++) {
 
@@ -290,12 +288,5 @@ public class HomePage extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    @Override
-    public void onBackPressed(){
-
-        Intent intent = new Intent(HomePage.this, MainActivity.class);
-        startActivity(intent);
     }
 }

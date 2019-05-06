@@ -1,21 +1,20 @@
-//apply plugin: 'com.android.application'
-//apply plugin: 'jacoco'
-
-//apply from: '../jacoco.gradle'
-
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
-
-jacoco {
-    toolVersion = '0.8.0'
-}
-
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
-}
+apply plugin:'org.sonarqube'
 
 android {
     compileSdkVersion 28
+
+    testOptions{
+        unitTests.returnDefaultValues = true;
+        unitTests.all{
+            jacoco{
+                includeNoLocationClasses = true;
+            }
+        }
+
+    }
+
     defaultConfig {
         applicationId "com.example.wits_vuvuzela_app"
         minSdkVersion 15
@@ -31,18 +30,38 @@ android {
         }
 
         debug {
+            debuggable true
             testCoverageEnabled true
         }
-
-
-
-        /* project.gradle.taskGraph.whenReady {
-            connectedDebugAndroidTest {
-                ignoreFailures = true
-            }
-        }*/
-
     }
+
+    compileOptions{
+       // sourceCompatability JavaVersion.VERSION_1_8
+       // targetCompatability JavaVersion.VERSION_1_8
+    }
+
+    lintOptions{
+        abortOnError false
+    }
+}
+
+
+sonarqube{
+
+    properties{
+
+        property "sonar.projectName","Wits-Vuvuzela-App"
+        property "sonar.projectKey","optisolcoms3009_Wits-Vuvuzela-App"
+        property "sonar.host.url","http://localhost:9000"
+        property "sonar.language","java"
+        property "sonar.sources","src/main/java"
+        property "sonar.java.sources","src/main/java"
+        property "sonar.sourceEncoding","UTF-8"
+        property "sonar.login","admin"
+        property "sonar.password","admin"
+    }
+
+
 }
 
 dependencies {
@@ -54,9 +73,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.0.1'
     // compile 'com.google.firebase:firebase-auth:16.1.0'
     testImplementation 'junit:junit:4.12'
+  //  testImplementation 'org.robolectric:3.7.1'
+    //androidTestUtik 'com.android.support.test:orchestrator:1.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'org.mockito:mockito-android:2.13.0'
+    androidTestImplementation 'junit:junit:4.12'
     implementation files('libs/jsoup-1.11.3.jar')
 }
 

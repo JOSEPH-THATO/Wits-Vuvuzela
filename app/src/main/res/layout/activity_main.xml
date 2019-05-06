@@ -48,14 +48,13 @@
                  android:id="@+id/loginID"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:text="LOGIN"
                  android:layout_gravity="center"
-                 android:textColor="@android:color/black"
-
-                 android:textSize="20dp"
-                 android:textStyle="bold"
                  android:layout_marginBottom="30dp"
-                 android:padding="10dp"/>
+                 android:padding="10dp"
+                 android:text="LOGIN"
+                 android:textColor="@android:color/black"
+                 android:textSize="20dp"
+                 android:textStyle="bold" />
 
              <EditText
 
