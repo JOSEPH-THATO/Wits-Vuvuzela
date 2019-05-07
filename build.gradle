@@ -6,10 +6,9 @@ buildscript {
         jcenter()
         maven{url "https//plugins.gradle.org/m2"}
 
-
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.4.0'
         classpath 'com.google.gms:google-services:4.0.1'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7'
 
@@ -21,6 +20,9 @@ buildscript {
     }
 }
 
+plugins {
+    id "org.sonarqube" version "2.7"
+}
 
 allprojects {
     repositories {
@@ -29,6 +31,8 @@ allprojects {
 
     }
 }
+
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

@@ -1,0 +1,123 @@
+
+hcom.example.wits_vuvuzela_app.HomePage$GetArticleImage#doInBackground([Ljava/lang/Void;)Ljava/lang/Void;r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.java˚ ˚(%"paramAnnotations*ƒ
+13r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.java˝ ˝(#ß§
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.java˝ ˝(!
+%0java.util.ArrayList"java.util.ArrayListπ
+∂
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.java˝ ˝(#
+%1"java.util.ArrayList#<init>()V*
+
+%0java.util.ArrayList›
+⁄
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.java˝ ˝(#A8
+6com.example.wits_vuvuzela_app.HomePage$GetArticleImage"
+Bit"__id*
+
+%0java.util.ArrayList*
+11*ﬁ
+4r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÉ É(\ﬁ
+€
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÑ Ñ(
+%11java.util.ArrayList"__id*C*A8
+6com.example.wits_vuvuzela_app.HomePage$GetArticleImage"
+Bit*
+11*Ç
+6r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÉ6 É([ÉÄ
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÉ6 É([
+%10java.io.InputStream"<java.net.URLConnection#getInputStream()Ljava/io/InputStream;*
+
+%9java.net.URLConnection2getInputStream()*
+4*ü
+7r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÇ Ç(7®
+•
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÇ Ç(7
+urljava.net.URL"__id*
+
+%7java.net.URLıÚ
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÉ6 É(J
+%9java.net.URLConnection"5java.net.URL#openConnection()Ljava/net/URLConnection;*
+
+urljava.net.URL2openConnection()*
+6*Ú
+8r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÇ Ç(6ôñ
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÇ" Ç(%
+%7java.net.URL"java.net.URL◊
+‘
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÇ Ç(6
+%8"(java.net.URL#<init>(Ljava/lang/String;)V*
+
+%7java.net.URL*
+
+%6java.lang.String*
+7*Œ
+9r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÇ& Ç(.‚
+ﬂ
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÇ& Ç(.
+%5java.util.ArrayList"__id*H*F8
+6com.example.wits_vuvuzela_app.HomePage$GetArticleImage"
+
+PicturesÍÁ
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÇ& Ç(5
+%6java.lang.String",java.util.ArrayList#get(I)Ljava/lang/Object;*
+
+%5java.util.ArrayList*
+""2get(I)*
+8*‰
+paramAnnotationsr
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.java˚% ˚(4¥
+±
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.java˙ ˙(
+%2"
+__annotate*
+java.lang.Override*
+
+voids$Arrayû
+õ
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.java˚. ˚(3
+voids$Array"__annotation*
+
+%2*
+13*¨
+11r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÅ  Å(!‚
+ﬂ
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÅ$ Å(,
+%3java.util.ArrayList"__id*H*F8
+6com.example.wits_vuvuzela_app.HomePage$GetArticleImage"
+
+Picturesƒ¡
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaÅ$ Å(3	
+%4int"java.util.ArrayList#size()I*
+
+%3java.util.ArrayList2size()*
+9
+1*ı
+1r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaâ â("|
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\HomePage.javaâ â(
+"":
+voids$ArrayB:8
+6com.example.wits_vuvuzela_app.HomePage$GetArticleImage

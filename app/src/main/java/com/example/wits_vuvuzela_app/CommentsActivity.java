@@ -66,7 +66,6 @@ public class CommentsActivity extends AppCompatActivity {
         CommentTitle1 = (TextView) findViewById(R.id.CommentTitle);
 
         CommentTitle1.setText(commentTitle);
-        //Article1.setText(Key);
 
         if (Key.equals("")) {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
@@ -76,10 +75,6 @@ public class CommentsActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                 //   Toast.makeText(CommentsActivity.this, "comment type " + CommentType ,Toast.LENGTH_LONG).show();
-
-
-                    KeysArrayList = new ArrayList<>();
                     CommentsList = new ArrayList<>();
                     KeysNumReplies = new ArrayList<>();
 
@@ -89,7 +84,6 @@ public class CommentsActivity extends AppCompatActivity {
 
                         if (commentSection.getCommentID().equals(Key)) {
 
-                            KeysArrayList.add(artistSnapshot.getKey());
                             CommentsList.add(commentSection);
                             KeysNumReplies.add(commentSection.getNoReplies());
                         }
@@ -112,21 +106,16 @@ public class CommentsActivity extends AppCompatActivity {
                                 commentSection.setUserName(Email);
                                 commentSection.setCommentID(Key);
                                 databaseReferenceComments.push().setValue(commentSection);
-                              //  Toast.makeText(CommentsActivity.this, "111 " ,Toast.LENGTH_LONG).show();
 
                                 DatabaseReference databaseReference99;
                                 if (CommentType.equals("Article")) {
                                     databaseReference99 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
                                     databaseReference99.child("noArticleReplies").setValue(String.valueOf(NumReplies += 1));
                                 } else if (CommentType.equals("Comment")) {
-                              //      Toast.makeText(CommentsActivity.this, "222 " ,Toast.LENGTH_LONG).show();
 
-                                    databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(Key);
+                                databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(Key);
                                     databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies += 1));
                                 }
-                                Toast.makeText(CommentsActivity.this, "333 " ,Toast.LENGTH_LONG).show();
-
-                               // CommentType = "Comment";
 
                                 CommentsList.add(commentSection);
 
@@ -146,8 +135,6 @@ public class CommentsActivity extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
     private class CustomAdapter extends BaseAdapter {
@@ -254,5 +241,4 @@ public class CommentsActivity extends AppCompatActivity {
             return convertView1;
         }
     }
-
 }

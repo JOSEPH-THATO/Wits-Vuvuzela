@@ -2,10 +2,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 apply plugin:'org.sonarqube'
 
+//tasks.sonarqube.dependsOn createTestReports
+
 android {
     compileSdkVersion 28
 
-    testOptions{
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+
+   /* testOptions{
         unitTests.returnDefaultValues = true;
         unitTests.all{
             jacoco{
@@ -13,7 +23,7 @@ android {
             }
         }
 
-    }
+    }*/
 
     defaultConfig {
         applicationId "com.example.wits_vuvuzela_app"
@@ -30,14 +40,9 @@ android {
         }
 
         debug {
-            debuggable true
+            //debuggable true
             testCoverageEnabled true
         }
-    }
-
-    compileOptions{
-       // sourceCompatability JavaVersion.VERSION_1_8
-       // targetCompatability JavaVersion.VERSION_1_8
     }
 
     lintOptions{
@@ -45,7 +50,37 @@ android {
     }
 }
 
+task createTestReports(type: JacocoReport, dependsOn: ['testDevDebugUnitTest', 'createDevDebugCoverageReport']) {
+    group = "Reporting"
 
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class',
+            
+            
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/*$ViewInjector*.*',
+                      '**/*$ViewBinder*.*',
+                      '**/*$MembersInjector*.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/dev/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+
+    executionData = files("${project.buildDir}/jacoco/testDevDebugUnitTest.exec")
+    def files = fileTree("${buildDir}/outputs/code-coverage/connected/flavors/DEV/").filter { it.isFile() }.files.name
+    //instrumentationFileName = "${buildDir}/outputs/code-coverage/connected/flavors/DEV/" + files[0];
+}
+
+/*
 sonarqube{
 
     properties{
@@ -60,9 +95,7 @@ sonarqube{
         property "sonar.login","admin"
         property "sonar.password","admin"
     }
-
-
-}
+}*/
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

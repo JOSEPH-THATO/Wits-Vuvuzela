@@ -60,10 +60,20 @@ script:
   #- ./gradlew connectedAndroidTest
   #- ./gradlew createDebugCoverageReport 
   # - ./gradlew createDebugAndroidTestCoverageReport
+  - sonar-scanner
    
 after_failure:
   - cat $TRAVIS_BUILD_DIR/app/build/reports/lint-results.xml
 after_success:
   -bash <(curl -s https://codecov.io/bash)
+
+addons:
+  sonarcloud:
+    organization: "optisolcoms3009" # the key of the org you chose at step #3
+    token:
+      secure: "9654c4595ac14c1f2268c9a59a17eae906b13052" # encrypted value of your token
+  #script:
+    # other script steps might be done before running the actual analysis
+   # - sonar-scanner
 
 
