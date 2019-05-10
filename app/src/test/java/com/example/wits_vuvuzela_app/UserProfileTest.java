@@ -26,16 +26,15 @@ public class UserProfileTest {
     public void setUser_fName() {
 
         String Input = "Abdullah";
+        String Expected = "Abdullah";
 
         UserProfile userProfile = new UserProfile();
 
         userProfile.setUser_fName(Input);
 
-        String Expected = "Abdullah";
         String Actual = userProfile.getUser_fName();
 
         assertEquals(Expected,Actual);
-
     }
 
     @Test
@@ -52,23 +51,21 @@ public class UserProfileTest {
         Actual = userProfile.getUser_lName();
 
         assertEquals(Expected,Actual);
-
     }
 
     @Test
     public void setUser_lName() {
 
         String Input = "Francisco";
+        String Expected = "Francisco";
 
         UserProfile userProfile = new UserProfile();
 
         userProfile.setUser_lName(Input);
 
-        String Expected = "Francisco";
         String Actual = userProfile.getUser_lName();
 
         assertEquals(Expected,Actual);
-
     }
 
     @Test
@@ -85,23 +82,21 @@ public class UserProfileTest {
         Actual = userProfile.getUser_username();
 
         assertEquals(Expected,Actual);
-
     }
 
     @Test
     public void setUser_username() {
 
         String Input = "AbdullahFrancisco";
+        String Expected = "AbdullahFrancisco";
 
         UserProfile userProfile = new UserProfile();
 
         userProfile.setUser_username(Input);
 
-        String Expected = "AbdullahFrancisco";
         String Actual = userProfile.getUser_username();
 
         assertEquals(Expected,Actual);
-
     }
 
     @Test
@@ -118,7 +113,6 @@ public class UserProfileTest {
         Actual = userProfile.getUser_email();
 
         assertEquals(Expected,Actual);
-
     }
 
     @Test
@@ -134,7 +128,6 @@ public class UserProfileTest {
         String Actual = userProfile.getUser_email();
 
         assertEquals(Expected,Actual);
-
     }
 
     @Test
@@ -151,22 +144,20 @@ public class UserProfileTest {
         Actual = userProfile.getUser_password();
 
         assertEquals(Expected,Actual);
-
     }
 
     @Test
     public void setUser_password() {
 
         String Input = "password";
+        String Expected = "password";
 
         UserProfile userProfile = new UserProfile();
 
         userProfile.setUser_password(Input);
 
-        String Expected = "password";
         String Actual = userProfile.getUser_password();
 
         assertEquals(Expected,Actual);
-
     }
 }

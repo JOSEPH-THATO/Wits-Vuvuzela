@@ -16,7 +16,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:padding="10dp"
-        android:background="@drawable/comment_border"
+        android:background="@drawable/title_border"
         android:orientation="vertical">
 
         <TextView
@@ -25,7 +25,7 @@
             android:textStyle="italic"
             android:textAlignment="textEnd"
             android:layout_gravity="end"
-            android:textColor="#ffff"
+            android:textColor="@android:color/black"
             android:layout_height="wrap_content"
             android:text="User Name" />
 
@@ -33,7 +33,7 @@
             android:id="@+id/commentID"
             android:layout_width="wrap_content"
             android:layout_weight="0.6"
-            android:textColor="#ffff"
+            android:textColor="@android:color/black"
             android:layout_height="wrap_content"
             android:text="User bhcbcvbfgvbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdddddddddddddddddddddd"/>
 

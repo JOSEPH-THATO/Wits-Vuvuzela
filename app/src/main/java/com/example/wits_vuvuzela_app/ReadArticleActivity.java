@@ -1,6 +1,5 @@
 package com.example.wits_vuvuzela_app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,17 +7,10 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.InputStream;
@@ -37,6 +30,7 @@ import java.util.ArrayList;
 
 public class ReadArticleActivity extends AppCompatActivity {
 
+
     TextView ArticleBody;
     TextView ArticleHeading;
     String UrlLink;
@@ -44,56 +38,37 @@ public class ReadArticleActivity extends AppCompatActivity {
     String Key;
     int likes=0;
     int dislikes=0;
-    String CommentS = "";
-    String LikedListS="";
-    String DislikedListS="";
+    int NoReplies = 0;
     DatabaseReference databaseReference;
     ImageView LikeButton;
     ImageView DislikeButton;
     TextView NumLikes;
     TextView NumDislikes;
+    TextView NumComments;
     ImageView CommentIconButton;
     Article article;
-    Rating rating;
     String Email="";
     ProgressBar ArticleBar;
-
-    TextView tvComment;
-    TextView tDislikes;
-    TextView tLList;
-    TextView tDList;
-    TextView tLikes;
-    ImageView backbtn;
-
-    CommentSection commentSection;
-    TextView SampleComments;
-    EditText EditComment;
-    ImageView CommentButton;
     ImageView ArticleImg;
-    ArrayList<String> Keys;
-    ArrayList<String> CommentsTracker;
+    Bitmap ImageUrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_article);
 
-        ArrayList<String> keys = new ArrayList<>();
-
         Bundle bundle = getIntent().getExtras();
         String heading = bundle.getString("Heading");
         String email = bundle.getString("Email");
         Email = email;
         head = heading;
-        Keys = new ArrayList<>();
-        CommentsTracker = new ArrayList<>();
 
         SetUpUI();
 
         ArticleImg.setVisibility(View.GONE);
 
-      //  databaseReference = FirebaseDatabase.getInstance().getReference().child("Comments");
         databaseReference = FirebaseDatabase.getInstance().getReference("Article");
+
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
 
@@ -107,53 +82,40 @@ public class ReadArticleActivity extends AppCompatActivity {
 
                     if(article.getArticleTitle().equals(head)){
 
-                        String links = article.getArticleLink();
                         String key = artistSnapshot.getKey();
-                        String Comments = article.getArticleComments();
-                        String Likes = article.getArticleLikes();
-                        String Dislikes = article.getArticleDislikes();
-                        String LikedList = article.getArticleLikedList();
-                        String DislikedList = article.getArticleDislikedList();
-                        String Img = article.getArticleImage();
 
-                        new DownLoadImageTask(ArticleImg).execute(Img);
+                        new GetArticleImage(article.getArticleImage()).execute();
 
-                        if(!article.ArticleAlreadyLiked(Email,LikedList) && !article.ArticleAlreadyDisliked(Email,DislikedList)){
-                            LikeButton.setImageResource(R.drawable.likebw);
-                            DislikeButton.setImageResource(R.drawable.dislikebw);
-                        }
-
-                        else if(article.ArticleAlreadyLiked(Email,LikedList)){
+                        if(article.getArticleLikedList().contains(Email)){
                             LikeButton.setImageResource(R.drawable.like);
                             DislikeButton.setImageResource(R.drawable.dislikebw);
                         }
 
-                        else if(article.ArticleAlreadyDisliked(Email,DislikedList)){
+                        else if(article.getArticleDislikedList().contains(Email)){
                             DislikeButton.setImageResource(R.drawable.dislike);
                             LikeButton.setImageResource(R.drawable.likebw);
                         }
 
+                        //if(!article.getArticleLikedList().contains(Email) && !article.getArticleDislikedList().contains(Email)){
+                        else{
+                            LikeButton.setImageResource(R.drawable.likebw);
+                            DislikeButton.setImageResource(R.drawable.dislikebw);
+                        }
+
                         Key = key;
-                        UrlLink = links;
-                        dislikes = Integer.parseInt(Dislikes);
-                        likes = Integer.parseInt(Likes);
-                        LikedListS = LikedList;
-                        DislikedListS = DislikedList;
-                        CommentS = Comments;
+                        UrlLink = article.getArticleLink();
+                        dislikes = Integer.parseInt(article.getArticleDislikes());
+                        likes = Integer.parseInt(article.getArticleLikes());
+                        NoReplies = Integer.parseInt(article.getNoArticleReplies());
 
                         NumLikes.setText(likes + " Likes");
                         NumDislikes.setText(dislikes + " Dislikes");
+                        NumComments.setText(String.valueOf(NoReplies));
 
                         CommentIconButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
-                                // if(!NewComment.equals("")) {
-                                //     AddComment(article, NewComment);
-                                // }
-                                //SendComments(CommentS);
-
-                                SendComments(CommentS);
+                                GoToCommentsPage();
                             }
                         });
 
@@ -170,6 +132,7 @@ public class ReadArticleActivity extends AppCompatActivity {
                                     DislikeArticle(article, Email);
                                 }
                         });
+
                         new doit().execute();
                     }
                 }
@@ -182,27 +145,23 @@ public class ReadArticleActivity extends AppCompatActivity {
         });
     }
 
-    private void SendComments(String Comments) {
-
-        Keys.add(Key);
-        CommentsTracker.add(head);
+    private void GoToCommentsPage() {
 
         Intent intent = new Intent(ReadArticleActivity.this, CommentsActivity.class);
         intent.putExtra("Key", Key);
         intent.putExtra("Email", Email);
-        intent.putExtra("ArticleComments", Comments);
         intent.putExtra("CommentsTitle", head);
-        intent.putExtra("Keys", Keys);
-        intent.putExtra("CommentsTracker", CommentsTracker);
+        intent.putExtra("NumberReplies", NoReplies );
+        intent.putExtra("CommentType", "Article" );
         startActivity(intent);
 
     }
 
-    public void LikeArticle(Article article,String User){
+    private void LikeArticle(Article article,String User){
 
         DatabaseReference databaseReference5;
 
-        article.LikeAnArticle(User,likes,dislikes,LikedListS,DislikedListS);
+        article.LikeAnArticle(User);
 
         databaseReference5 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
         databaseReference5.child("articleLikes").setValue(article.getArticleLikes());
@@ -212,12 +171,11 @@ public class ReadArticleActivity extends AppCompatActivity {
 
     }
 
-
-    public void DislikeArticle(Article article,String User){
+    private void DislikeArticle(Article article,String User){
 
         DatabaseReference databaseReference6;
 
-        article.DislikeAnArticle(User,likes,dislikes,LikedListS,DislikedListS);
+        article.DislikeAnArticle(User);
 
         databaseReference6 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
         databaseReference6.child("articleDislikes").setValue(article.getArticleDislikes());
@@ -229,8 +187,6 @@ public class ReadArticleActivity extends AppCompatActivity {
 
     public class doit extends AsyncTask<Void, Void, Void> {
 
-        ArrayList<String> Heading1;
-
         String words = "";
         String Author = "";
 
@@ -239,13 +195,16 @@ public class ReadArticleActivity extends AppCompatActivity {
 
             try {
 
-                Heading1 = new ArrayList<>();
-
                 Document mBlogDocument = Jsoup.connect(UrlLink).get();
-                Elements mElementDataSize = mBlogDocument.select("div[class=entry-content]");
-                int mElementSize = mElementDataSize.size();
+               // Elements mElementDataSize = mBlogDocument.select("div[class=entry-content]");
 
-                for (int i = 0; i < 10; i++) {
+                int size = 0;
+                Elements paragraphs = mBlogDocument.select("p");
+                for (Element p : paragraphs) {
+                    size+=1;
+                }
+
+                for (int i = 0; i < size-5; i++) {
 
                     Elements mElementArticle = mBlogDocument.select("p").eq(i);
                     String mArticleBody = mElementArticle.text();
@@ -255,11 +214,10 @@ public class ReadArticleActivity extends AppCompatActivity {
                     }
 
                     else if(i == 1){
-                        Heading1.add(mArticleBody);
+                        //articledate
                     }
 
                     else {
-                        Heading1.add(" " + mArticleBody);
                         words += mArticleBody;
                     }
                 }
@@ -276,59 +234,49 @@ public class ReadArticleActivity extends AppCompatActivity {
         }
     }
 
-
-    public void Goback(){
-        Intent intent = new Intent(this, HomePage.class);
-        startActivity(intent);
-    }
-
     private void SetUpUI(){
-
 
         CommentIconButton = (ImageView)findViewById(R.id.commentIconBtn);
         LikeButton = (ImageView)findViewById(R.id.likebtn);
         DislikeButton = (ImageView)findViewById(R.id.dislikebtn);
         NumDislikes = (TextView)findViewById(R.id.dislikeNum);
         NumLikes = (TextView)findViewById(R.id.likeNum);
+        NumComments = (TextView)findViewById(R.id.commentANum);
         ArticleHeading = (TextView) findViewById(R.id.ReadArticleHeading);
         ArticleBody = (TextView) findViewById(R.id.ReadArticleBody);
         ArticleBar = (ProgressBar)findViewById(R.id.ArticleBar);
         ArticleImg = (ImageView) findViewById(R.id.ArticleImageView);
-
     }
 
-    private class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
+    public class GetArticleImage extends AsyncTask<Void, Void, Void> {
 
-        public DownLoadImageTask(ImageView imageView) {
-            this.imageView = imageView;
+        Bitmap logo = null;
+        String Url = "";
+
+        public GetArticleImage(String url1) {
+            Url = url1;
         }
 
-        protected Bitmap doInBackground(String... urls) {
-            String urlOfImage = urls[0];
-            Bitmap logo = null;
-            try {
-                InputStream is = new URL(urlOfImage).openStream();
+        @Override
+        protected Void doInBackground(Void... voids) {
 
-                logo = BitmapFactory.decodeStream(is);
+            try {
+                URL url = new URL(Url);
+                logo = BitmapFactory.decodeStream(url.openConnection().getInputStream());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return logo;
+            return null;
         }
 
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            ImageUrl = logo;
+            ArticleImg.setImageBitmap(ImageUrl);
             ArticleImg.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void onBackPressed(){
-
-            Intent intent = new Intent(ReadArticleActivity.this, HomePage.class);
-            intent.putExtra("Email", Email);
-            startActivity(intent);
     }
 }
 

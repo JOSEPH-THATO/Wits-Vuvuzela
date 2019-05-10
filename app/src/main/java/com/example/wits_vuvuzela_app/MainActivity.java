@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
     ProgressBar progressBar;
-    String User="";
     UserProfile userProfile;
 
     @Override
@@ -81,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                           if(firebaseUser.isEmailVerified()) {
                               progressBar.setVisibility(View.GONE);
                               Login.setVisibility(View.VISIBLE);
-                            //  getUserName();
                               EnterHomePage();
                               Username.setText("");
                               Password.setText("");
@@ -102,14 +100,18 @@ public class MainActivity extends AppCompatActivity {
                       }
                     }
                 });
+
+
             }
         });
+
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EnterRegistrationPage();
             }
         });
+
     }
 
 
@@ -131,34 +133,9 @@ public class MainActivity extends AppCompatActivity {
         Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
         Password = (EditText) findViewById(R.id.EdTxtPasswordLogin);
         Login = (Button) findViewById(R.id.BtnLogin);
-        ForgotPassword = (TextView) findViewById(R.id.txtViewForgotPasswordLogin);
+        ForgotPassword = (TextView)findViewById(R.id.txtViewForgotPasswordLogin);
         Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
         progressBar = (ProgressBar)findViewById(R.id.progressBarLog);
 
     }
-
-    public void getUserName(){
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
-
-                    userProfile = artistSnapshot.getValue(UserProfile.class);
-
-                    if (userProfile.getUser_email().equals(Username.getText().toString())) {
-                        User = userProfile.getUser_username();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
 }

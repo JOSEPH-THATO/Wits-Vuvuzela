@@ -1,0 +1,42 @@
+
+:com.example.wits_vuvuzela_app.Register#validateUsername()Zr
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaÉ É($"5*ı
+2r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaã ã("|
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaå å(
+""*œ
+3r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaä ä( Õ 
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaä ä()	
+%1int"java.lang.String#length()I*#
+!
+usernameInputjava.lang.String2length()*
+2
+1*ı
+4r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaà à("|
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaâ â(
+""*Ä
+5r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaÖ Ö('®
+•
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaÖ Ö(D!
+usernameInputjava.lang.String"__id*
+""”–
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaá á(#
+%0boolean"java.lang.String#isEmpty()Z*#
+!
+usernameInputjava.lang.String2	isEmpty()*
+3
+4*ı
+1r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaé é("|
+r
+fC:\Users\Mra\Documents\Wits-Vuvuzela-App\app\src\main\java\com\example\wits_vuvuzela_app\Register.javaè è(
+""B*(
+&com.example.wits_vuvuzela_app.Register

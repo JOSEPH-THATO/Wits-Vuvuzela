@@ -261,37 +261,7 @@ public class ArticleTest {
 
     }
 
-    /*@Test
-    public void addComment() {
-
-        Article article = new Article();
-        article.setArticleComments("");
-
-        String Comment = "This is a sample Comment for an article that has no comment";
-        String User = "Abdullah";
-
-        article.AddComment(Comment,User);
-
-        String Expected = "Abdullah-This is a sample Comment for an article that has no comment";
-        String Actual = article.getArticleComments();
-
-        assertEquals(Expected,Actual);
-
-        Article article2 = new Article();
-
-        String Comment2 = "This is a sample Comment for an article that already has comments";
-        String User2 = "Francisco";
-
-        String Expected2 = article2.getArticleComments() + "/Francisco-This is a sample Comment for an article that already has comments";
-
-        article2.AddComment(Comment2,User2);
-
-        String Actual2 = article2.getArticleComments();
-
-        assertEquals(Expected2,Actual2);
-    }*/
-
-   /* @Test
+    @Test
     public void LikeAnArticle() {
 
         Article article = new Article();
@@ -354,9 +324,9 @@ public class ArticleTest {
 
         assertEquals(ExpectedLikes3,ActualLikes3);
         assertEquals(ExpectedDislikes3,ActualDislikes3);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void DislikeAnArticle() {
 
         Article article = new Article();
@@ -419,9 +389,9 @@ public class ArticleTest {
 
         assertEquals(ExpectedLikes3,ActualLikes3);
         assertEquals(ExpectedDislikes3,ActualDislikes3);
-    }*/
+    }
 
-  /*  @Test
+    @Test
     public void RemoveUserFromLikedArticleList() {
 
         String User = "Sheldon";
@@ -430,16 +400,14 @@ public class ArticleTest {
 
         article.setArticleLikedList("Sheldon/Cooper/Leornard");
 
-        article.RemoveUserFromLikedArticleList(User);
-
         String Actual = "User/Cooper/Leornard";
 
-        String Expected = article.getArticleLikedList();
+        String Expected = article.RemoveUserFromLikedArticleList(User);
 
         assertEquals(Expected,Actual);
 
-    }*/
-  /*
+    }
+
     @Test
     public void RemoveUserFromDislikedArticleList() {
 
@@ -449,11 +417,9 @@ public class ArticleTest {
 
         article.setArticleDislikedList("Sheldon/Cooper/Leornard");
 
-        article.RemoveUserFromDislikedArticleList(User);
-
         String Actual = "User1/Cooper/Leornard";
 
-        String Expected = article.getArticleDislikedList();
+        String Expected = article.RemoveUserFromDislikedArticleList(User);
 
         assertEquals(Expected,Actual);
 
@@ -463,90 +429,9 @@ public class ArticleTest {
 
         article2.setArticleDislikedList("");
 
-        article2.RemoveUserFromDislikedArticleList(User2);
+        String Expected2 = article2.RemoveUserFromDislikedArticleList(User2);
 
         String Actual2 = "User1/";
-
-        String Expected2 = article2.getArticleDislikedList();
-
-        assertEquals(Expected2,Actual2);
-
-    }
-
-    @Test
-    public void ArticleAlreadyLiked() {
-
-        String User = "Sheldon";
-
-        Boolean likeStatus = false;
-        Boolean Actual = false;
-        Article article = new Article();
-
-        article.setArticleLikedList("Sheldon/Cooper/Leornard");
-
-        Actual = true;
-
-        Boolean Expected = false;
-
-        if(article.ArticleAlreadyLiked(User)){
-            Expected = true;
-        }
-
-        assertEquals(Expected,Actual);
-
-    }
-
-    @Test
-    public void ArticleAlreadyDisliked() {
-
-        String User = "Sheldon";
-
-        Boolean likeStatus = false;
-        Boolean Actual = false;
-        Article article = new Article();
-
-        article.setArticleDislikedList("Sheldon/Cooper/Leornard");
-
-        Actual = true;
-
-        Boolean Expected = false;
-
-        if(article.ArticleAlreadyDisliked(User)){
-            Expected = true;
-        }
-
-        assertEquals(Expected,Actual);
-
-    }
-
-    @Test
-    public void AddComent() {
-
-        String NewComment = "This is a new Comment";
-        String User = "1758200@students.wits.ac.za";
-
-        Article article = new Article();
-
-        String Actual = article.getArticleComments()+ "/" + User+"-"+NewComment;
-
-        article.AddComment(NewComment,User);
-
-        String Expected = article.getArticleComments();
-
-        assertEquals(Expected,Actual);
-
-        String NewComment2 = "This is a second new Comment";
-        String User2 = "Francisco";
-
-        Article article2 = new Article();
-
-        article2.setArticleComments("");
-
-        String Actual2 = article2.getArticleComments()+ User2+"-"+NewComment2;
-
-        article2.AddComment(NewComment2,User2);
-
-        String Expected2 = article2.getArticleComments();
 
         assertEquals(Expected2,Actual2);
 
@@ -617,5 +502,4 @@ public class ArticleTest {
         assertEquals(Expected2,Actual2);
 
     }
-*/
 }
