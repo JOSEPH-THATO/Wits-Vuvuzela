@@ -1,7 +1,9 @@
 package com.example.wits_vuvuzela_app;
 
 import android.media.Image;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -29,6 +31,7 @@ public class Article {
     public void setNoArticleReplies(String noArticleReplies) {
         NoArticleReplies = noArticleReplies;
     }
+
 
     public String getArticleLikes() {
         return ArticleLikes;

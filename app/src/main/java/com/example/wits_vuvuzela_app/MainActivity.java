@@ -100,14 +100,18 @@ public class MainActivity extends AppCompatActivity {
                       }
                     }
                 });
+
+
             }
         });
+
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EnterRegistrationPage();
             }
         });
+
     }
 
 
@@ -129,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         Username = (EditText) findViewById(R.id.EdtxtUsernameLogin);
         Password = (EditText) findViewById(R.id.EdTxtPasswordLogin);
         Login = (Button) findViewById(R.id.BtnLogin);
-        ForgotPassword = (TextView) findViewById(R.id.txtViewForgotPasswordLogin);
+        ForgotPassword = (TextView)findViewById(R.id.txtViewForgotPasswordLogin);
         Register = (TextView) findViewById(R.id.txtViewRegisterLogin);
         progressBar = (ProgressBar)findViewById(R.id.progressBarLog);
 
