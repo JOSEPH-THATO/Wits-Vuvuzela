@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -250,8 +249,6 @@ public class CommentsActivity extends AppCompatActivity {
                 thumbsupImg.setImageResource(R.drawable.likebw);
                 thumbsdownImg.setImageResource(R.drawable.dislikebw);
             }
-
-            Toast.makeText(CommentsActivity.this, "88888 ", Toast.LENGTH_LONG).show();
 
             commentsImage.setOnClickListener(new View.OnClickListener() {
                 @Override
