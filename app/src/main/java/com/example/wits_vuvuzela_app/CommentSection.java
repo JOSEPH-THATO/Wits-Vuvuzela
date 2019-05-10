@@ -150,23 +150,23 @@ public class CommentSection {
 
     public String AddUserToLikedList(String User) {
 
-        if(CommentLikedList.equals("")){
-            CommentLikedList+=User;
-        }
-        else {
-            CommentLikedList += ( "/" + User);
-        }
+       // if(CommentLikedList.equals("")){
+       //     CommentLikedList+=User;
+       // }
+       // else {
+          CommentLikedList += ( "/" + User);
+       // }
 
         return CommentLikedList;
     }
 
     public String AddUserToDislikedList(String User) {
-        if (CommentDislikedList.equals("")) {
-            CommentDislikedList += User;
-        }
-        else {
+      //  if (CommentDislikedList.equals("")) {
+      //      CommentDislikedList += User;
+      //  }
+      //  else {
             CommentDislikedList += ( "/" + User);
-        }
+      //  }
         return CommentDislikedList;
     }
 

@@ -57,7 +57,7 @@ script:
   #- ./gradlew createDebugCoverageReport
   #- ./gradlew connectedCheck
 
-  #- ./gradlew connectedAndroidTest
+  - ./gradlew jacocoTestReport
   #- ./gradlew createDebugCoverageReport 
   # - ./gradlew createDebugAndroidTestCoverageReport
   - sonar-scanner

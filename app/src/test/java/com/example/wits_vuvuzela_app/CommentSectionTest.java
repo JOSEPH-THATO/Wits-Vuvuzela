@@ -489,7 +489,7 @@ public class CommentSectionTest {
 
         String Actual2 = commentSection2.getCommentLikedList();
 
-        String Expected2 = "James";
+        String Expected2 = "/James";
 
         assertEquals(Expected2,Actual2);
 
@@ -521,7 +521,7 @@ public class CommentSectionTest {
 
         String Actual2 = commentSection2.getCommentDislikedList();
 
-        String Expected2 = "James";
+        String Expected2 = "/James";
 
         assertEquals(Expected2,Actual2);
     }

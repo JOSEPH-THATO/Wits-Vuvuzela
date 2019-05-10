@@ -77,6 +77,7 @@ public class CommentsActivity extends AppCompatActivity {
 
                     CommentsList = new ArrayList<>();
                     KeysNumReplies = new ArrayList<>();
+                    KeysArrayList = new ArrayList<>();
 
                     for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
@@ -85,6 +86,7 @@ public class CommentsActivity extends AppCompatActivity {
                         if (commentSection.getCommentID().equals(Key)) {
 
                             CommentsList.add(commentSection);
+                            KeysArrayList.add(artistSnapshot.getKey());
                             KeysNumReplies.add(commentSection.getNoReplies());
                         }
                     }

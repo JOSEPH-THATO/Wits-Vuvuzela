@@ -479,7 +479,7 @@ public class CommentSectionTest {
 
         assertEquals(Expected,Actual);
 
-        String User2 = "James";
+        /*String User2 = "James";
 
         CommentSection commentSection2 = new CommentSection();
 
@@ -491,7 +491,7 @@ public class CommentSectionTest {
 
         String Expected2 = "James";
 
-        assertEquals(Expected2,Actual2);
+        assertEquals(Expected2,Actual2);*/
 
     }
 
@@ -510,7 +510,7 @@ public class CommentSectionTest {
         String Expected = "Francisco/Mansur/Abdullah";
 
         assertEquals(Expected,Actual);
-
+/*
         String User2 = "James";
 
         CommentSection commentSection2 = new CommentSection();
@@ -523,7 +523,7 @@ public class CommentSectionTest {
 
         String Expected2 = "James";
 
-        assertEquals(Expected2,Actual2);
+        assertEquals(Expected2,Actual2);*/
     }
 
     @Test
