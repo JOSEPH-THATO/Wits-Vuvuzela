@@ -20,10 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="sort by likes"
-<<<<<<< HEAD
-=======
-
->>>>>>> 4ff5d56ebbbe56907b5a89d3760832bd774cd14c
             android:layout_marginLeft="1dp"
             android:textColor="@android:color/black"
             android:textSize="18dp"
@@ -33,10 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sort by recent"
-<<<<<<< HEAD
-=======
-
->>>>>>> 4ff5d56ebbbe56907b5a89d3760832bd774cd14c
             android:layout_marginLeft="10dp"
             android:textColor="@android:color/black"
             android:textSize="18dp"
