@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class CommentsActivity extends AppCompatActivity {
 
@@ -90,6 +92,14 @@ public class CommentsActivity extends AppCompatActivity {
                             KeysNumReplies.add(commentSection.getNoReplies());
                         }
                     }
+
+                    Collections.sort(CommentsList, new Comparator<CommentSection>(){
+                        public int compare(CommentSection s1, CommentSection s2) {
+                            return s1.getNoCommentLikes().compareToIgnoreCase(s2.getNoCommentLikes());
+                        }
+                    });
+                    Collections.reverse(CommentsList);
+
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
                     CustomAdapter customAdapter1 = new CustomAdapter();
                     CommentsView.setAdapter(customAdapter1);
@@ -136,6 +146,12 @@ public class CommentsActivity extends AppCompatActivity {
 
                 }
             });
+        }
+    }
+
+    public void sortByLikes(){
+        for(int i = 0;i < CommentsList.size();++i){
+
         }
     }
 

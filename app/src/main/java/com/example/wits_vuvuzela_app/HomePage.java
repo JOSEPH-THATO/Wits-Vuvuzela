@@ -285,7 +285,7 @@ public class HomePage extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(HomePage.this, ReadArticleActivity.class);
                     intent.putExtra("Heading", ArticlesHead.get(position));
-                    intent.putExtra("Email", Email);
+                    intent.putExtra("Email", User);
                     SendArticle(ArticlesHead.get(position), ArticlesLink.get(position),ArticlesImgSrc.get(position));
                     startActivity(intent);
                 }

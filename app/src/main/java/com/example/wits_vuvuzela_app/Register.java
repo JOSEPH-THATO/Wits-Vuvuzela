@@ -168,20 +168,6 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public void confirmInput(View v) {
-        if (!validateEmail() | !validateUsername() | !validatePassword()) {
-            return;
-        }
-
-        String input = "Email: " + EmailAddress.getText().toString();
-        input += "\n";
-        input += "Username: " + Username.getText().toString();
-        input += "\n";
-        input += "Password: " + Password.getText().toString();
-
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
-    }
-
     private void SendEmailConfirmation(){
 
         firebaseauth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
