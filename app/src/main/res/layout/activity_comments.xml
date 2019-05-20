@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="sort by likes"
-            android:layout_marginTop="15dp"
+
             android:layout_marginLeft="1dp"
             android:textColor="@android:color/black"
             android:textSize="18dp"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sort by recent"
-            android:layout_marginTop="15dp"
+
             android:layout_marginLeft="10dp"
             android:textColor="@android:color/black"
             android:textSize="18dp"
