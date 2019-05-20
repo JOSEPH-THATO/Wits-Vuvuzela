@@ -28,6 +28,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
+        packagingOptions {
+            exclude 'LICENSE.txt'
+        }
+
         debug {
             debuggable true
             testCoverageEnabled true
@@ -150,6 +154,10 @@ dependencies {
     androidTestImplementation 'org.mockito:mockito-android:2.13.0'
     androidTestImplementation 'junit:junit:4.12'
     implementation files('libs/jsoup-1.11.3.jar')
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:2.1'
+
+    //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0'
+   // androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
