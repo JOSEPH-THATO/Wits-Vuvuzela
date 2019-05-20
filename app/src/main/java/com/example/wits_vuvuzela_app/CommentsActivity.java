@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,11 +23,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class CommentsActivity extends AppCompatActivity {
 
     EditText EditComment;
     ImageView CommentButton;
+    Button btnSortByLike;
+    Button btnSortByRcnt;
     private ListView CommentsView;
     DatabaseReference databaseReferenceComments;
     ArrayList<String> KeysArrayList;
@@ -63,6 +68,8 @@ public class CommentsActivity extends AppCompatActivity {
         CommentButton = (ImageView) findViewById(R.id.commentBtns);
         Article1 = (TextView) findViewById(R.id.title);
         CommentTitle1 = (TextView) findViewById(R.id.CommentTitle);
+        btnSortByLike = (Button) findViewById(R.id.sortlikeBtn);
+        btnSortByRcnt = (Button) findViewById(R.id.sortrecentBtn);
 
         CommentTitle1.setText(commentTitle);
 
@@ -89,6 +96,26 @@ public class CommentsActivity extends AppCompatActivity {
                             KeysNumReplies.add(commentSection.getNoReplies());
                         }
                     }
+
+                    btnSortByLike.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sortByLikes();
+                            CommentsView = (ListView) findViewById(R.id.commentsListView);
+                            CustomAdapter customAdapter1 = new CustomAdapter();
+                            CommentsView.setAdapter(customAdapter1);
+                        }
+                    });
+
+                    btnSortByRcnt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            reverseArrayLists();
+                            CommentsView = (ListView) findViewById(R.id.commentsListView);
+                            CustomAdapter customAdapter1 = new CustomAdapter();
+                            CommentsView.setAdapter(customAdapter1);
+                        }
+                    });
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
                     CustomAdapter customAdapter1 = new CustomAdapter();
                     CommentsView.setAdapter(customAdapter1);
@@ -136,6 +163,22 @@ public class CommentsActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void sortByLikes() {
+
+        Collections.sort(CommentsList, new Comparator<CommentSection>(){
+            public int compare(CommentSection s1, CommentSection s2) {
+                return s1.getNoCommentLikes().compareToIgnoreCase(s2.getNoCommentLikes());
+            }
+        });
+        Collections.reverse(CommentsList);
+
+    }
+    public void reverseArrayLists(){
+
+        Collections.reverse(CommentsList);
+
     }
 
     private class CustomAdapter extends BaseAdapter {
