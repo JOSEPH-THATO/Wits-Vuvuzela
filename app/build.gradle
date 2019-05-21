@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco-android'
-apply plugin:'org.sonarqube'
+apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco'
 
 android {
@@ -38,7 +38,7 @@ android {
         }
     }
 
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
 }
@@ -55,11 +55,12 @@ jacocoAndroidUnitTestReport {
 
 
 //jacoco {
- //   version "0.7.1.201405082137"
+//   version "0.7.1.201405082137"
 //}
 
 
-task jacocoTestReportTest(type: JacocoReport, dependsOn: ['testDebugUnitTest']) { //we use "debug" build type for test coverage (can be other)
+task jacocoTestReportTest(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+    //we use "debug" build type for test coverage (can be other)
     group = "reporting"
     description = "Generate unified Jacoco code coverage report"
 
@@ -96,12 +97,14 @@ task jacocoTestReportTest(type: JacocoReport, dependsOn: ['testDebugUnitTest']) 
             '*/*Component*.*', //Dagger2 generated code
             '**/*Module*.*' //Dagger2 generated code
     ]
-    def javaDebugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter) //we use "debug" build type for test coverage (can be other)
+    def javaDebugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter)
+    //we use "debug" build type for test coverage (can be other)
     def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
     def mainSrc = "${project.projectDir}/src/main/java"
 
     sourceDirectories = files([mainSrc])
-    classDirectories = files([javaDebugTree, kotlinDebugTree]) // we need to target both java and kotlin build folder
+    classDirectories = files([javaDebugTree, kotlinDebugTree])
+    // we need to target both java and kotlin build folder
     executionData = fileTree(dir: "$buildDir", includes: [
             "jacoco/testDebugUnitTest.exec", //we use "debug" build type for test coverage (can be other)
             "outputs/code-coverage/connected/*coverage.ec"
@@ -146,7 +149,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.firebase:firebase-database:17.0.0'
     testImplementation 'junit:junit:4.12'
-  //  testImplementation 'org.robolectric:3.7.1'
+    //  testImplementation 'org.robolectric:3.7.1'
     //androidTestUtik 'com.android.support.test:orchestrator:1.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
@@ -155,9 +158,10 @@ dependencies {
     androidTestImplementation 'junit:junit:4.12'
     implementation files('libs/jsoup-1.11.3.jar')
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:2.1'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
 
     //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0'
-   // androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
+    // androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
