@@ -38,23 +38,17 @@ import static org.junit.Assert.*;
 public class HomePageTest {
 
     @Rule
-    public ActivityRule<HomePage> homePageActivityRule = new ActivityRule<>(HomePage.class);
-    public  HomePage homepage =null;
-
+    public ActivityTestRule<HomePage> homePageActivityRule = new ActivityTestRule<>(HomePage.class);
     public IntentsTestRule<HomePage> homePageIntentsTestRule = new IntentsTestRule<>(
             HomePage.class);
+    public  HomePage homepage =null;
+
 
     @Before
     public void setUp() throws Exception {
-        homepage = homePageActivityRule.get();
+        homepage = homePageActivityRule.getActivity();
     }
 
-    public void stubAllExternalIntents() {
-        // By default Espresso Intents does not stub any Intents. Stubbing needs to be setup before
-        // every test run. In this case all external Intents will be blocked.
-        intending(not(isInternal()))
-                .respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
-    }
 
     @Test
     public void testHomepage()
@@ -63,12 +57,10 @@ public class HomePageTest {
         onView(withId(R.id.newsfeed)).check(matches(not(withText(""))));
         onView(withId(R.id.listview)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.BtnLogin)).perform(click());
-
-        /*intended(Matchers.allOf(
-                hasAction(Intent.ACTION_CALL),
-
-       */
+      /*  onView(withId(R.id.BtnLogin)).perform(click());
+        Intent intent = new Intent(homePageIntentsTestRule.getActivity(), ReadArticleActivity.class);
+        homePageIntentsTestRule.launchActivity(intent);
+      */
     }
 
     @After

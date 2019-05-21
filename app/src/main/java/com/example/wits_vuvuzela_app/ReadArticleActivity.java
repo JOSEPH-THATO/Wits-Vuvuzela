@@ -57,10 +57,20 @@ public class ReadArticleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_article);
 
-        Bundle bundle = getIntent().getExtras();
+       /* Intent bundle = getIntent();
+        String email =   bundle.getStringExtra("Email");
+        Email = email;*/
+
+        Intent bundle = getIntent();
+        String email = bundle.getStringExtra("Email");
+        String heading = bundle.getStringExtra("Heading");
+        Email = email;
+
+
+        /*Bundle bundle = getIntent().getExtras();
         String heading = bundle.getString("Heading");
         String email = bundle.getString("Email");
-        Email = email;
+        Email = email;*/
         head = heading;
 
         SetUpUI();
