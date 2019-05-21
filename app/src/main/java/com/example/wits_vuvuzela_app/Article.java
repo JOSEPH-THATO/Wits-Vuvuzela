@@ -1,6 +1,7 @@
 package com.example.wits_vuvuzela_app;
 
 import android.media.Image;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
