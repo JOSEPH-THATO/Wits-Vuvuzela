@@ -11,25 +11,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:gravity="center"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/sortlikeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sort by likes"
             android:layout_marginLeft="1dp"
+            android:text="sort by likes"
             android:textColor="@android:color/black"
             android:textSize="18dp"
             android:textStyle="bold" />
+
         <Button
             android:id="@+id/sortrecentBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sort by recent"
             android:layout_marginLeft="10dp"
+            android:text="Sort by recent"
             android:textColor="@android:color/black"
             android:textSize="18dp"
             android:textStyle="bold" />
@@ -39,29 +41,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="600dp"
-        android:layout_marginTop="10dp"
-        android:layout_centerInParent="true"
         android:orientation="vertical"
+        android:layout_marginTop="80dp"
         android:weightSum="5">
 
-    <TextView
-        android:background="@drawable/comment_border"
-        android:gravity="center_horizontal"
-        android:id="@+id/CommentTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Comment Titles"
-        android:textColor="@android:color/white"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/CommentTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/comment_border"
+            android:gravity="center_horizontal"
+            android:text="Comment Titles"
+            android:textColor="@android:color/white"
+            android:textSize="20dp" />
 
-    <ListView
-        android:id="@+id/commentsListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
-        tools:listitem="@layout/commentlayout"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
+        <ListView
+            android:id="@+id/commentsListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:footerDividersEnabled="false"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="50dp"
+            tools:listitem="@layout/commentlayout" />
 
     </LinearLayout>
 
@@ -74,10 +76,12 @@
         <EditText
             android:id="@+id/editComments"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:ems="10"
+            android:padding="2dp"
             android:layout_weight=".8"
-
+            android:layout_marginLeft="1dp"
+            android:background="@drawable/edittextborder"
             android:inputType="textMultiLine"
             android:hint="Type a comment"/>
         <ImageView
