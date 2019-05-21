@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "191434287155-a8s7f01ep9u2e2uvgqbcrioughflara3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wits_vuvuzela_app",
+            "certificate_hash": "08141afb0f66b77b2d67f4079fb2842eca18a1a4"
+          }
+        },
+        {
           "client_id": "191434287155-md5pli4490c599hcm1f7ptt741qiuqcn.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -25,15 +33,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191434287155-md5pli4490c599hcm1f7ptt741qiuqcn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
