@@ -63,12 +63,8 @@ public class HomePage extends AppCompatActivity {
 
         HomePageBar = (ProgressBar)findViewById(R.id.HomePageBar);
 
-       /// Inte
-
         Intent bundle = getIntent();
         String email =   bundle.getStringExtra("Email");
-       // String email = "dd";
-       // email = bundle.getString("Email");
          Email = email;
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Article");

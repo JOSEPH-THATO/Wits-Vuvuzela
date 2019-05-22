@@ -160,7 +160,12 @@ dependencies {
     androidTestImplementation 'junit:junit:4.12'
     implementation files('libs/jsoup-1.11.3.jar')
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:2.1'
+
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
+
 
     //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0'
     // androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
