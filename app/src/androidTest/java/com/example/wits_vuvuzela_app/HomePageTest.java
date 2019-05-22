@@ -54,8 +54,8 @@ public class HomePageTest {
     public void testHomepage()
     {
         View imageview = (homepage).findViewById(R.id.imageView);
-        onView(withId(R.id.newsfeed)).check(matches(not(withText(""))));
-        onView(withId(R.id.listview)).check(matches(isDisplayed()));
+        Espresso.onView(withId(R.id.newsfeed)).check(matches((withText("NEWSFEED"))));
+        Espresso.onView(withId(R.id.listview)).check(matches(isDisplayed()));
 
       /*  onView(withId(R.id.BtnLogin)).perform(click());
         Intent intent = new Intent(homePageIntentsTestRule.getActivity(), ReadArticleActivity.class);
