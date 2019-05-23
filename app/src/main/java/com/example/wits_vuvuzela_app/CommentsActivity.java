@@ -43,7 +43,12 @@ public class CommentsActivity extends AppCompatActivity {
     TextView CommentTitle1;
     CommentSection commentSection;
     int NumReplies = 0;
+    int listItems = 1;
     String CommentType = "";
+
+    Button btnShowMore;
+    Button btnShowLess;
+    CustomAdapter customAdapter1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +90,8 @@ public class CommentsActivity extends AppCompatActivity {
                     KeysNumReplies = new ArrayList<>();
                     KeysArrayList = new ArrayList<>();
 
+
+
                     for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
                         commentSection = artistSnapshot.getValue(CommentSection.class);
@@ -114,11 +121,46 @@ public class CommentsActivity extends AppCompatActivity {
                             CommentsView = (ListView) findViewById(R.id.commentsListView);
                             CustomAdapter customAdapter1 = new CustomAdapter();
                             CommentsView.setAdapter(customAdapter1);
+
                         }
                     });
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
+
+                    btnShowMore = new Button(CommentsActivity.this);
+                    btnShowMore.setText("show more");
+                    btnShowLess = new Button(CommentsActivity.this);
+                    btnShowLess.setText("show less");
+
+                    CommentsView.addFooterView(btnShowMore);
+                    CommentsView.addFooterView(btnShowLess);
+
+                    btnShowMore.setVisibility(View.VISIBLE);
+                    btnShowLess.setVisibility(View.GONE);
+
+                    customAdapter1 = new CustomAdapter();
                     CommentsView.setAdapter(customAdapter1);
+
+
+                     btnShowMore.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                listItems += CommentsList.size()-listItems;
+                                customAdapter1.notifyDataSetChanged();
+                                btnShowMore.setVisibility(View.GONE);
+                                btnShowLess.setVisibility(View.VISIBLE);
+                            }
+                     });
+                    btnShowLess.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            listItems =1;
+                            customAdapter1.notifyDataSetChanged();
+                            btnShowMore.setVisibility(View.VISIBLE);
+                            btnShowLess.setVisibility(View.GONE);
+                        }
+                    });
+
+
 
                     CommentButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -185,7 +227,8 @@ public class CommentsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return CommentsList.size();
+
+            return listItems;
         }
 
         @Override
