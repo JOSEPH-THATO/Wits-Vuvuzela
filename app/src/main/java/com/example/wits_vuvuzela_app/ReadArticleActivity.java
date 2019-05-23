@@ -48,6 +48,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     ImageView CommentIconButton;
     Article article;
     String Email="";
+    String Token="";
     ProgressBar ArticleBar;
     ImageView ArticleImg;
     Bitmap ImageUrl = null;
@@ -64,13 +65,10 @@ public class ReadArticleActivity extends AppCompatActivity {
         Intent bundle = getIntent();
         String email = bundle.getStringExtra("Email");
         String heading = bundle.getStringExtra("Heading");
+        String token = bundle.getStringExtra("Token");
+
         Email = email;
-
-
-        /*Bundle bundle = getIntent().getExtras();
-        String heading = bundle.getString("Heading");
-        String email = bundle.getString("Email");
-        Email = email;*/
+        Token = token;
         head = heading;
 
         SetUpUI();
@@ -160,6 +158,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         Intent intent = new Intent(ReadArticleActivity.this, CommentsActivity.class);
         intent.putExtra("Key", Key);
         intent.putExtra("Email", Email);
+        intent.putExtra("Token", Token);
         intent.putExtra("CommentsTitle", head);
         intent.putExtra("NumberReplies", NoReplies );
         intent.putExtra("CommentType", "Article" );

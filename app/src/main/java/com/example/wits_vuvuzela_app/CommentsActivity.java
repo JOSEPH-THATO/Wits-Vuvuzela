@@ -39,6 +39,7 @@ public class CommentsActivity extends AppCompatActivity {
     ArrayList<CommentSection> CommentsList;
     String Key = "";
     String Email = "";
+    String Token = "";
     TextView Article1;
     TextView CommentTitle1;
     CommentSection commentSection;
@@ -55,12 +56,15 @@ public class CommentsActivity extends AppCompatActivity {
         String key = bundle.getString("Key");
         String commentTitle = bundle.getString("CommentsTitle");
         String commentType = bundle.getString("CommentType");
+        String token = bundle.getString("Token");
+
         int NumberReplies = bundle.getInt("NumberReplies");
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
 
         Key = key;
         Email = email;
+        Token = token;
         NumReplies = NumberReplies;
         CommentType = commentType;
 
@@ -133,16 +137,20 @@ public class CommentsActivity extends AppCompatActivity {
                                 commentSection.setComment(NewComment);
                                 commentSection.setUserName(Email);
                                 commentSection.setCommentID(Key);
+                                commentSection.setCommentToken(Token);
                                 databaseReferenceComments.push().setValue(commentSection);
 
                                 DatabaseReference databaseReference99;
                                 if (CommentType.equals("Article")) {
                                     databaseReference99 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
                                     databaseReference99.child("noArticleReplies").setValue(String.valueOf(NumReplies += 1));
+
                                 } else if (CommentType.equals("Comment")) {
 
                                 databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(Key);
                                     databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies += 1));
+                                    databaseReference99.child("userComment").setValue(Email);
+
                                 }
 
                                 CommentsList.add(commentSection);
@@ -261,6 +269,8 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference8.child("noCommentDislikes").setValue(commentSectionLike.getNoCommentDislikes());
                     databaseReference8.child("commentLikedList").setValue(commentSectionLike.getCommentLikedList());
                     databaseReference8.child("commentDislikedList").setValue(commentSectionLike.getCommentDislikedList());
+                   // databaseReference8.child("commentToken").setValue(Token);
+                    databaseReference8.child("userLike").setValue(Email);
 
                 }
             });
@@ -280,6 +290,9 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference7.child("noCommentDislikes").setValue(commentSectionDislike.getNoCommentDislikes());
                     databaseReference7.child("commentLikedList").setValue(commentSectionDislike.getCommentLikedList());
                     databaseReference7.child("commentDislikedList").setValue(commentSectionDislike.getCommentDislikedList());
+                 //   databaseReference7.child("commentToken").setValue(Token);
+                    databaseReference7.child("userDislike").setValue(Email);
+
                 }
             });
             return convertView1;
