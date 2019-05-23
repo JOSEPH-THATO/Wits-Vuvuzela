@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -49,7 +50,7 @@
             android:id="@+id/likeCommentbtn"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:src="@drawable/likebw" />
+            android:src="@drawable/ic_thumb_up_black_24dp" />
 
         <TextView
             android:id="@+id/likeNum"
@@ -62,7 +63,7 @@
             android:id="@+id/dislikeCommentbtn"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:src="@drawable/dislikebw" />
+            android:src="@drawable/ic_thumb_down_black_24dp" />
 
         <TextView
             android:id="@+id/dislikeNum"
@@ -77,7 +78,7 @@
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:background="@android:color/white"
-            android:src="@drawable/comments3" />
+            android:src="@drawable/ic_comment_black_24dp" />
 
         <TextView
             android:id="@+id/commentNum"

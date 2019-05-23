@@ -14,9 +14,9 @@
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:background="@drawable/title_border"
         android:layout_marginTop="10dp"
         android:padding="10dp"
-        android:background="@drawable/title_border"
         android:orientation="vertical">
 
         <TextView
@@ -25,7 +25,8 @@
             android:textStyle="italic"
             android:textAlignment="textEnd"
             android:layout_gravity="end"
-            android:textColor="@android:color/black"
+            android:textColor="#545454"
+            android:textSize="15dp"
             android:layout_height="wrap_content"
             android:text="User Name" />
 
@@ -52,9 +53,9 @@
 
         <ImageView
             android:id="@+id/likeCommentbtn"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:src="@drawable/likebw" />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_thumb_up_black_24dp" />
 
         <TextView
             android:id="@+id/likeNum"
@@ -65,9 +66,9 @@
 
         <ImageView
             android:id="@+id/dislikeCommentbtn"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:src="@drawable/dislikebw" />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_thumb_down_black_24dp" />
 
         <TextView
             android:id="@+id/dislikeNum"
@@ -79,10 +80,10 @@
 
         <ImageButton
             android:id="@+id/commentCommentIconBtn"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@android:color/white"
-            android:src="@drawable/comments3" />
+            android:src="@drawable/ic_comment_black_24dp" />
 
         <TextView
             android:id="@+id/commentNum"
@@ -93,12 +94,5 @@
             android:text="0" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/background_dark"
-        android:text="TextView" />
 
 </LinearLayout>
