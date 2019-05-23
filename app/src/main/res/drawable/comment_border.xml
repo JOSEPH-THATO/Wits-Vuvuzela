@@ -3,7 +3,7 @@
 
 
     <solid
-        android:color="@color/backColor">
+        android:color="#4799E8">
     </solid>
 
     <!-- View border color and width -->

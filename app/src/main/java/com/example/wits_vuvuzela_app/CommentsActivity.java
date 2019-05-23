@@ -8,11 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +74,13 @@ public class CommentsActivity extends AppCompatActivity {
         btnSortByRcnt = (Button) findViewById(R.id.sortrecentBtn);
 
         CommentTitle1.setText(commentTitle);
+
+        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(CommentsActivity.this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.names));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(myAdapter);
+
+
 
         if (Key.equals("")) {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();

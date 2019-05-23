@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Wits-Vuvuzela-App</string>
+
+    <string-array name="names" >
+        <item>Sort by Like</item>
+        <item>Sort by recent</item>
+    </string-array>
 </resources>
