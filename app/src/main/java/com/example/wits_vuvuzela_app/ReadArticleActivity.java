@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,9 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 
 
 public class ReadArticleActivity extends AppCompatActivity {
@@ -56,10 +55,12 @@ public class ReadArticleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_article);
+        ImageButton BackArrow = (ImageButton)findViewById(R.id.backArrow);
 
        /* Intent bundle = getIntent();
         String email =   bundle.getStringExtra("Email");
         Email = email;*/
+
 
         Intent bundle = getIntent();
         String email = bundle.getStringExtra("Email");
@@ -82,6 +83,12 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
 
+        BackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
