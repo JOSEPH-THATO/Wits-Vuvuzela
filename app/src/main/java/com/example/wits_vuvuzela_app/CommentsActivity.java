@@ -8,11 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +33,7 @@ public class CommentsActivity extends AppCompatActivity {
 
     EditText EditComment;
     ImageView CommentButton;
-    Button btnSortByLike;
-    Button btnSortByRcnt;
+    ImageButton BackArrow;
     private ListView CommentsView;
     DatabaseReference databaseReferenceComments;
     ArrayList<String> KeysArrayList;
@@ -72,10 +74,48 @@ public class CommentsActivity extends AppCompatActivity {
         CommentButton = (ImageView) findViewById(R.id.commentBtns);
         Article1 = (TextView) findViewById(R.id.title);
         CommentTitle1 = (TextView) findViewById(R.id.CommentTitle);
-        btnSortByLike = (Button) findViewById(R.id.sortlikeBtn);
-        btnSortByRcnt = (Button) findViewById(R.id.sortrecentBtn);
-
+        BackArrow = (ImageButton)findViewById(R.id.backArrow);
         CommentTitle1.setText(commentTitle);
+
+        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(CommentsActivity.this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.sort_by));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(myAdapter);
+
+
+        BackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               onBackPressed();
+            }
+        });
+        /*
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ItemSelected = parent.getItemAtPosition(position).toString();
+/*
+                if (ItemSelected.equals("Sort by Like")){
+                    sortByLikes();
+                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+                    CustomAdapter customAdapter1 = new CustomAdapter();
+                    CommentsView.setAdapter(customAdapter1);
+                }
+                else if(ItemSelected.equals("Sort by recent")){
+
+                    reverseArrayLists();
+                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+                    CustomAdapter customAdapter1 = new CustomAdapter();
+                    CommentsView.setAdapter(customAdapter1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+*/
 
         if (Key.equals("")) {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
@@ -100,26 +140,6 @@ public class CommentsActivity extends AppCompatActivity {
                             KeysNumReplies.add(commentSection.getNoReplies());
                         }
                     }
-
-                    btnSortByLike.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            sortByLikes();
-                            CommentsView = (ListView) findViewById(R.id.commentsListView);
-                            CustomAdapter customAdapter1 = new CustomAdapter();
-                            CommentsView.setAdapter(customAdapter1);
-                        }
-                    });
-
-                    btnSortByRcnt.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            reverseArrayLists();
-                            CommentsView = (ListView) findViewById(R.id.commentsListView);
-                            CustomAdapter customAdapter1 = new CustomAdapter();
-                            CommentsView.setAdapter(customAdapter1);
-                        }
-                    });
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
                     CustomAdapter customAdapter1 = new CustomAdapter();
                     CommentsView.setAdapter(customAdapter1);

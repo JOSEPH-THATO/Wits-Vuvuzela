@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
-
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
                       }
                     }
                 });
-
-
             }
         });
 
@@ -117,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 
     private void EnterRegistrationPage() {
 
