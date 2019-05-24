@@ -3,7 +3,7 @@
 
     <string name="sort_by_prompt">Sort By</string>
 
-    <string-array name="sort_by" >
+    <string-array name="sort_by">
         <item>Sort by Like</item>
         <item>Sort by recent</item>
     </string-array>
