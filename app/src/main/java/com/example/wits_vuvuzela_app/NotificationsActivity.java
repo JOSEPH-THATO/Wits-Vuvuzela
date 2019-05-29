@@ -39,8 +39,8 @@ import java.util.ArrayList;
 public class NotificationsActivity extends AppCompatActivity {
 
 
+
     DatabaseReference databaseReference;
-    DatabaseReference databaseReference2;
     ListView listView;
     ArrayList<String> ArticlesBody;
     ArrayList<String> ArticlesTitle;
@@ -56,17 +56,26 @@ public class NotificationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notifications);
 
         Intent bundle = getIntent();
-        String email =   bundle.getStringExtra("Email");
+        String email = bundle.getStringExtra("email");
+        //String message = bundle.getStringExtra("message");
+        //String Title = bundle.getStringExtra("Title");
         Email = email;
 
+        Toast.makeText(NotificationsActivity.this,"email = " + Email ,Toast.LENGTH_SHORT).show();
+
+
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Notification");
+
+        HomePageBar = (ProgressBar)findViewById(R.id.HomePageBar1);
+        HomePageBar.setVisibility(View.VISIBLE);
 
         notification = new Notification();
 
         ArticlesBody = new ArrayList<>();
         ArticlesTitle = new ArrayList<>();
 
-        databaseReference2.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -74,9 +83,9 @@ public class NotificationsActivity extends AppCompatActivity {
 
                     notification = artistSnapshot.getValue(Notification.class);
 
-                    if (notification.getNotificationUser().equals(Email)) {
-                        ArticlesBody.add(notification.getNotificationTitle());
-                        ArticlesTitle.add(notification.getNotificationBody());
+                    if (notification.getNotificationTo().equals(Email)) {
+                        ArticlesBody.add(notification.getNotificationBody());
+                        ArticlesTitle.add(notification.getNotificationTitle());
                     }
                 }
             }
@@ -86,12 +95,12 @@ public class NotificationsActivity extends AppCompatActivity {
             }
         });
 
-        /*listView = (ListView) findViewById(R.id.listview);
-        HomePage.CustomAdapter customAdapter = new HomePage.CustomAdapter();
+        listView = (ListView) findViewById(R.id.listview2);
+        CustomAdapter customAdapter = new CustomAdapter();
 
         HomePageBar.setVisibility(View.GONE);
 
-        listView.setAdapter(customAdapter);*/
+        listView.setAdapter(customAdapter);
 
     }
 

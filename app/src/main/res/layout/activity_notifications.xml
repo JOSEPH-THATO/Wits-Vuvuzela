@@ -23,7 +23,7 @@
             android:textSize="20dp" />
 
         <ProgressBar
-            android:id="@+id/HomePageBar"
+            android:id="@+id/HomePageBar1"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="200dp"
@@ -33,7 +33,7 @@
 
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/listview2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"

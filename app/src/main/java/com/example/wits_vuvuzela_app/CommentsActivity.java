@@ -36,6 +36,7 @@ public class CommentsActivity extends AppCompatActivity {
     ImageButton BackArrow;
     private ListView CommentsView;
     DatabaseReference databaseReferenceComments;
+    DatabaseReference databaseReferenceNotifications;
     ArrayList<String> KeysArrayList;
     ArrayList<String> KeysNumReplies;
     ArrayList<CommentSection> CommentsList;
@@ -45,6 +46,7 @@ public class CommentsActivity extends AppCompatActivity {
     TextView Article1;
     TextView CommentTitle1;
     CommentSection commentSection;
+    Notification notification;
     int NumReplies = 0;
     String CommentType = "";
 
@@ -63,6 +65,7 @@ public class CommentsActivity extends AppCompatActivity {
         int NumberReplies = bundle.getInt("NumberReplies");
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
+        databaseReferenceNotifications = FirebaseDatabase.getInstance().getReference().child("Notification");
 
         Key = key;
         Email = email;
@@ -135,6 +138,18 @@ public class CommentsActivity extends AppCompatActivity {
 
                         if (commentSection.getCommentID().equals(Key)) {
 
+                            /*for (DataSnapshot artistSnapshots : dataSnapshot.getChildren()) {
+
+                               CommentSection commentSection1 = artistSnapshots.getValue(CommentSection.class);
+
+                                if (commentSection1.getCommentID().equals(artistSnapshot.getKey())) {
+
+                                    CommentsList.add(commentSection1);
+                                    KeysNumReplies.add(commentSection1.getNoReplies());
+
+                                }
+                            }*/
+
                             CommentsList.add(commentSection);
                             KeysArrayList.add(artistSnapshot.getKey());
                             KeysNumReplies.add(commentSection.getNoReplies());
@@ -206,6 +221,11 @@ public class CommentsActivity extends AppCompatActivity {
     public void reverseArrayLists(){
 
         Collections.reverse(CommentsList);
+
+    }
+
+    public void Hierarchialdata() {
+
 
     }
 
@@ -292,6 +312,17 @@ public class CommentsActivity extends AppCompatActivity {
                    // databaseReference8.child("commentToken").setValue(Token);
                     databaseReference8.child("userLike").setValue(Email);
 
+                    notification = new Notification();
+
+                    notification.setNotificationFrom(Email);
+                    notification.setNotificationTo(commentSectionLike.getUserName());
+                    notification.setNotificationBody(commentSectionLike.getComment());
+                    notification.setNotificationTitle("Liked Your Comment");
+                    //notification.setNotificationToken(commentSectionLike.getCommentToken());
+                    databaseReferenceNotifications.push().setValue(notification);
+
+
+
                 }
             });
 
@@ -313,9 +344,20 @@ public class CommentsActivity extends AppCompatActivity {
                  //   databaseReference7.child("commentToken").setValue(Token);
                     databaseReference7.child("userDislike").setValue(Email);
 
+                    notification = new Notification();
+
+                    notification.setNotificationFrom(Email);
+                    notification.setNotificationTo(commentSectionDislike.getUserName());
+                    notification.setNotificationBody(commentSectionDislike.getComment());
+                    notification.setNotificationTitle("Disliked Your Comment");
+                 //   notification.setNotificationToken(commentSectionDislike.getCommentToken());
+                    databaseReferenceNotifications.push().setValue(notification);
+
+
                 }
             });
             return convertView1;
         }
     }
+
 }

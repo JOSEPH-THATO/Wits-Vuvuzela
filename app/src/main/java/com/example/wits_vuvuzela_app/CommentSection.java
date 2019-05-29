@@ -128,18 +128,21 @@ public class CommentSection {
 
         if(CommentLikedList.contains(User)){
             NoLikes-=1;
+            UserLike = "";
             CommentLikedList = RemoveUserFromLikedCommentList(User);
         }
 
         else if(CommentDislikedList.contains(User)){
             NoDislikes -= 1;
             NoLikes+=1;
+            UserLike = User;
             CommentDislikedList = RemoveUserFromDislikedCommentList(User);
             CommentLikedList = AddUserToLikedList(User);
         }
 
         else{
             NoLikes+=1;
+            UserLike = User;
             CommentLikedList = AddUserToLikedList(User);
         }
 
@@ -156,18 +159,21 @@ public class CommentSection {
 
         if(CommentDislikedList.contains(User)){
             NoDislikes-=1;
+            UserDislike = "";
             CommentDislikedList = RemoveUserFromDislikedCommentList(User);
         }
 
         else if(CommentLikedList.contains(User)){
             NoDislikes += 1;
             NoLikes -=1;
+            UserDislike = User;
             CommentDislikedList = AddUserToDislikedList(User);
             CommentLikedList = RemoveUserFromLikedCommentList(User);
         }
 
         else{
             NoDislikes+=1;
+            UserDislike = User;
             CommentDislikedList = AddUserToDislikedList(User);
         }
 

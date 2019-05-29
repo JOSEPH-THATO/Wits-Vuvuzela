@@ -19,26 +19,17 @@ import com.google.firebase.messaging.RemoteMessage;
 import static android.content.ContentValues.TAG;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
     public static int NOTIFICATION_ID = 1;
 
-    public MyFirebaseMessagingService(){
+    public MyFirebaseMessagingService() {
 
     }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-     //   super.onMessageReceived(remoteMessage);
-        //generateNotification(remoteMessage.getNotification().getBody(),remoteMessage.getNotification().getTitle());
+        super.onMessageReceived(remoteMessage);
 
-       /* Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle(remoteMessage.getNotification().getTitle())
-                .setContentText(remoteMessage.getNotification().getBody())
-                .build();
-        NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
-      */
-
-        // ...
+        generateNotification(remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTitle(),remoteMessage);
 
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
@@ -55,7 +46,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // Handle message within 10 seconds
                 handleNow();
             }
-
         }
 
         // Check if message contains a notification payload.
@@ -91,21 +81,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
+    private void generateNotification(String body, String title,RemoteMessage remoteMessage) {
 
-}
+        String click_action = remoteMessage.getNotification().getClickAction();
+        //String message = remoteMessage.getData().get("message");
+        //String messageTitle = remoteMessage.getData().get("notTitle");
+        String email = remoteMessage.getData().get("email");
 
+        //Intent intent = new Intent(this, MainActivity.class);
 
-/*
-*
-*   private void generateNotification(String body, String title) {
+        Intent intent = new Intent(click_action);
 
-        Intent intent = new Intent(this,MainActivity.class);
+       // intent.putExtra("message",message);
+       // intent.putExtra("Title",messageTitle);
+        intent.putExtra("email",email);
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
         Uri soundUrl = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,getString(R.string.default_notification_channel_id))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(body)
@@ -113,16 +110,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(soundUrl)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if(NOTIFICATION_ID > 1073741824){
+        if (NOTIFICATION_ID > 1073741824) {
             NOTIFICATION_ID = 0;
         }
 
-        notificationManager.notify(NOTIFICATION_ID++,notificationBuilder.build());
-
+        notificationManager.notify(NOTIFICATION_ID++, notificationBuilder.build());
     }
+}
 
-*
-*
-* */
