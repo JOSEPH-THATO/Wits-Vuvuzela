@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -142,8 +143,7 @@ public class CommentsActivity extends AppCompatActivity {
                             KeysNumReplies.add(commentSection.getNoReplies());
                         }
                     }
-<<<<<<< HEAD
-
+                    /**
                     btnSortByLike.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -164,8 +164,7 @@ public class CommentsActivity extends AppCompatActivity {
 
                         }
                     });
-=======
->>>>>>> 4488613dda71d75475aba389a3cb7826100ccfd0
+**/
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
 
                     btnShowMore = new Button(CommentsActivity.this);
@@ -186,12 +185,14 @@ public class CommentsActivity extends AppCompatActivity {
                      btnShowMore.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                listItems += CommentsList.size()-listItems;
+                                listItems += CommentsList.size() - listItems;
                                 customAdapter1.notifyDataSetChanged();
                                 btnShowMore.setVisibility(View.GONE);
                                 btnShowLess.setVisibility(View.VISIBLE);
                             }
                      });
+
+
                     btnShowLess.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
