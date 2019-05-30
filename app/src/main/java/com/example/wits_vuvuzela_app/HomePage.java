@@ -51,6 +51,7 @@ public class HomePage extends AppCompatActivity {
     ArrayList<String> ArticlesAuth;
     ArrayList<String> ArticlesLink;
     ArrayList<String> ArticlesImgSrc;
+    ArrayList<String> ArticlesDate;
     String SendArticleHeading;
     String Email="";
     String Key = "";
@@ -59,8 +60,6 @@ public class HomePage extends AppCompatActivity {
     UserProfile userProfile;
     ArrayList<Bitmap> ArticlesBitmap;
     String Token = "";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +81,7 @@ public class HomePage extends AppCompatActivity {
         ArticlesLink = new ArrayList<>();
         ArticlesImgSrc = new ArrayList<>();
         ArticlesBitmap = new ArrayList<>();
+        ArticlesDate = new ArrayList<>();
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
@@ -94,7 +94,7 @@ public class HomePage extends AppCompatActivity {
                 String token = task.getResult().getToken();
                 Token = token;
 
-                Toast.makeText(HomePage.this,"token = " + token ,Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(HomePage.this,"token = " + token ,Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -154,9 +154,11 @@ public class HomePage extends AppCompatActivity {
             ImageView imageView = convertView1.findViewById(R.id.ArticleImage);
             TextView textView_heading = convertView1.findViewById(R.id.ArticleHeading);
             TextView textView_author = convertView1.findViewById(R.id.ArticleAuthor);
+            TextView textView_date = convertView1.findViewById(R.id.txtDateTime);
 
             imageView.setImageBitmap(ArticlesBitmap.get(position));
             textView_heading.setText(ArticlesHead.get(position));
+            textView_date.setText(ArticlesDate.get(position));
             textView_author.setText("By " + ArticlesAuth.get(position));
             return convertView1;
         }
@@ -168,6 +170,8 @@ public class HomePage extends AppCompatActivity {
         ArrayList<String> Author1;
         ArrayList<String> Link1;
         ArrayList<String> ImgSrc1;
+        ArrayList<String> Date1;
+
 
         String words = "";
 
@@ -180,12 +184,13 @@ public class HomePage extends AppCompatActivity {
                 Author1 = new ArrayList<>();
                 Link1 = new ArrayList<>();
                 ImgSrc1 = new ArrayList<>();
+                Date1 = new ArrayList<>();
 
                 Document mBlogDocument = Jsoup.connect("https://witsvuvuzela.com").get();
                 Elements mElementDataSize = mBlogDocument.select("div[class=el-dbe-blog-extra block_extended]");
                 int mElementSize = mElementDataSize.size();
 
-                for (int i = 0; i < 12; i++) {
+                for (int i = 0; i < 20; i++) {
 
                     Elements mElementArticle = mBlogDocument.select("h2[class=entry-title]").select("a[href]").eq(i);
                     String mArticleHead = mElementArticle.text();
@@ -198,6 +203,11 @@ public class HomePage extends AppCompatActivity {
 
                     Author1.add(mAuthorName);
                     words += mAuthorName;
+
+                    Elements mElementAuthorDate = mBlogDocument.select("span[class=published]").eq(i);
+                    String mAuthorDate = mElementAuthorDate.text();
+
+                    Date1.add(mAuthorDate);
 
                     String mArticleLink = mElementArticle.attr("href");
                     Link1.add(mArticleLink);
@@ -221,6 +231,7 @@ public class HomePage extends AppCompatActivity {
             ArticlesHead = Heading1;
             ArticlesLink = Link1;
             ArticlesImgSrc = ImgSrc1;
+            ArticlesDate = Date1;
 
             new GetArticleImage(ArticlesImgSrc).execute();
         }

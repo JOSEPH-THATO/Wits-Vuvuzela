@@ -1,5 +1,27 @@
 package com.example.wits_vuvuzela_app;
 
+<<<<<<< HEAD
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class CommentsActivityTest {
+
+    @Test
+    public void onCreate() {
+    }
+
+    @Test
+    public void sortByLikes() {
+    }
+
+    @Test
+    public void reverseArrayLists() {
+    }
+
+    @Test
+    public void hierarchialdata() {
+=======
 import android.support.test.espresso.Espresso;
 import android.support.test.runner.AndroidJUnit4;
 //import android.support.test.espresso.UiController;
@@ -110,6 +132,10 @@ public class CommentsActivityTest {
 
     @After
     public void tearDown() throws Exception {
+<<<<<<< HEAD
         commentsActivity = null;
+=======
+>>>>>>> 1bcaa90be40fbe43027199467808a6bd1c772df5
+>>>>>>> 37957fb8d69b39572512252550937082e5d447f6
     }
 }

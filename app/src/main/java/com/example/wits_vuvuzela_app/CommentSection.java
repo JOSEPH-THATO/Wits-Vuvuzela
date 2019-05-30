@@ -9,7 +9,7 @@ public class CommentSection {
     private String UserComment = "";
     private String UserName = "Abdullah";
     private String CommentTime = "NoDate";
-    private String CommentRate = "None";
+    private String CommentRate = "0";
     private String NoCommentLikes = "0";
     private String NoCommentDislikes = "0";
     private String NoReplies = "0";
@@ -136,6 +136,7 @@ public class CommentSection {
             NoDislikes -= 1;
             NoLikes+=1;
             UserLike = User;
+            UserDislike = "";
             CommentDislikedList = RemoveUserFromDislikedCommentList(User);
             CommentLikedList = AddUserToLikedList(User);
         }
@@ -167,6 +168,7 @@ public class CommentSection {
             NoDislikes += 1;
             NoLikes -=1;
             UserDislike = User;
+            UserLike="";
             CommentDislikedList = AddUserToDislikedList(User);
             CommentLikedList = RemoveUserFromLikedCommentList(User);
         }
@@ -237,3 +239,13 @@ public class CommentSection {
         return NewList;
     }
 }
+/*
+*             convertView.setLayoutParams(params);
+
+ LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            .setLayoutParams(params);
+ *
+* */

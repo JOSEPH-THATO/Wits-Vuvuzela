@@ -38,8 +38,6 @@ import java.util.ArrayList;
 
 public class NotificationsActivity extends AppCompatActivity {
 
-
-
     DatabaseReference databaseReference;
     ListView listView;
     ArrayList<String> ArticlesBody;
@@ -57,13 +55,9 @@ public class NotificationsActivity extends AppCompatActivity {
 
         Intent bundle = getIntent();
         String email = bundle.getStringExtra("email");
-        //String message = bundle.getStringExtra("message");
-        //String Title = bundle.getStringExtra("Title");
         Email = email;
 
         Toast.makeText(NotificationsActivity.this,"email = " + Email ,Toast.LENGTH_SHORT).show();
-
-
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Notification");
 
@@ -97,9 +91,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listview2);
         CustomAdapter customAdapter = new CustomAdapter();
-
         HomePageBar.setVisibility(View.GONE);
-
         listView.setAdapter(customAdapter);
 
     }
@@ -132,7 +124,7 @@ public class NotificationsActivity extends AppCompatActivity {
             TextView textView_body = convertView1.findViewById(R.id.NotificationBody);
 
             textView_title.setText(ArticlesTitle.get(position));
-            textView_body.setText(ArticlesTitle.get(position));
+            textView_body.setText(ArticlesBody.get(position));
             return convertView1;
         }
     }
