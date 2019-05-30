@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,9 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 
 
 public class ReadArticleActivity extends AppCompatActivity {
@@ -48,6 +47,7 @@ public class ReadArticleActivity extends AppCompatActivity {
     ImageView CommentIconButton;
     Article article;
     String Email="";
+    String Token="";
     ProgressBar ArticleBar;
     ImageView ArticleImg;
     Bitmap ImageUrl = null;
@@ -56,21 +56,20 @@ public class ReadArticleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_article);
+        ImageButton BackArrow = (ImageButton)findViewById(R.id.backArrow);
 
        /* Intent bundle = getIntent();
         String email =   bundle.getStringExtra("Email");
         Email = email;*/
 
+
         Intent bundle = getIntent();
         String email = bundle.getStringExtra("Email");
         String heading = bundle.getStringExtra("Heading");
+        String token = bundle.getStringExtra("Token");
+
         Email = email;
-
-
-        /*Bundle bundle = getIntent().getExtras();
-        String heading = bundle.getString("Heading");
-        String email = bundle.getString("Email");
-        Email = email;*/
+        Token = token;
         head = heading;
 
         SetUpUI();
@@ -82,6 +81,12 @@ public class ReadArticleActivity extends AppCompatActivity {
         ArticleHeading.setText(heading);
         ArticleBody.setText("Article Loading , Please Wait ...");
 
+        BackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -160,6 +165,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         Intent intent = new Intent(ReadArticleActivity.this, CommentsActivity.class);
         intent.putExtra("Key", Key);
         intent.putExtra("Email", Email);
+        intent.putExtra("Token", Token);
         intent.putExtra("CommentsTitle", head);
         intent.putExtra("NumberReplies", NoReplies );
         intent.putExtra("CommentType", "Article" );

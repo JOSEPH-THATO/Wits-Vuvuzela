@@ -37,14 +37,17 @@ public class CommentsActivity extends AppCompatActivity {
     ImageButton BackArrow;
     private ListView CommentsView;
     DatabaseReference databaseReferenceComments;
+    DatabaseReference databaseReferenceNotifications;
     ArrayList<String> KeysArrayList;
     ArrayList<String> KeysNumReplies;
     ArrayList<CommentSection> CommentsList;
     String Key = "";
     String Email = "";
+    String Token = "";
     TextView Article1;
     TextView CommentTitle1;
     CommentSection commentSection;
+    Notification notification;
     int NumReplies = 0;
     int listItems = 1;
     String CommentType = "";
@@ -63,12 +66,16 @@ public class CommentsActivity extends AppCompatActivity {
         String key = bundle.getString("Key");
         String commentTitle = bundle.getString("CommentsTitle");
         String commentType = bundle.getString("CommentType");
+        String token = bundle.getString("Token");
+
         int NumberReplies = bundle.getInt("NumberReplies");
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
+        databaseReferenceNotifications = FirebaseDatabase.getInstance().getReference().child("Notification");
 
         Key = key;
         Email = email;
+        Token = token;
         NumReplies = NumberReplies;
         CommentType = commentType;
 
@@ -91,11 +98,12 @@ public class CommentsActivity extends AppCompatActivity {
                onBackPressed();
             }
         });
+        /*
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ItemSelected = parent.getItemAtPosition(position).toString();
-
+/*
                 if (ItemSelected.equals("Sort by Like")){
                     sortByLikes();
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
@@ -116,7 +124,7 @@ public class CommentsActivity extends AppCompatActivity {
 
             }
         });
-
+*/
 
         if (Key.equals("")) {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
@@ -137,6 +145,18 @@ public class CommentsActivity extends AppCompatActivity {
                         commentSection = artistSnapshot.getValue(CommentSection.class);
 
                         if (commentSection.getCommentID().equals(Key)) {
+
+                            /*for (DataSnapshot artistSnapshots : dataSnapshot.getChildren()) {
+
+                               CommentSection commentSection1 = artistSnapshots.getValue(CommentSection.class);
+
+                                if (commentSection1.getCommentID().equals(artistSnapshot.getKey())) {
+
+                                    CommentsList.add(commentSection1);
+                                    KeysNumReplies.add(commentSection1.getNoReplies());
+
+                                }
+                            }*/
 
                             CommentsList.add(commentSection);
                             KeysArrayList.add(artistSnapshot.getKey());
@@ -218,16 +238,20 @@ public class CommentsActivity extends AppCompatActivity {
                                 commentSection.setComment(NewComment);
                                 commentSection.setUserName(Email);
                                 commentSection.setCommentID(Key);
+                                commentSection.setCommentToken(Token);
                                 databaseReferenceComments.push().setValue(commentSection);
 
                                 DatabaseReference databaseReference99;
                                 if (CommentType.equals("Article")) {
                                     databaseReference99 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
                                     databaseReference99.child("noArticleReplies").setValue(String.valueOf(NumReplies += 1));
+
                                 } else if (CommentType.equals("Comment")) {
 
                                 databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(Key);
                                     databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies += 1));
+                                    databaseReference99.child("userComment").setValue(Email);
+
                                 }
 
                                 CommentsList.add(commentSection);
@@ -263,6 +287,11 @@ public class CommentsActivity extends AppCompatActivity {
     public void reverseArrayLists(){
 
         Collections.reverse(CommentsList);
+
+    }
+
+    public void Hierarchialdata() {
+
 
     }
 
@@ -347,6 +376,19 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference8.child("noCommentDislikes").setValue(commentSectionLike.getNoCommentDislikes());
                     databaseReference8.child("commentLikedList").setValue(commentSectionLike.getCommentLikedList());
                     databaseReference8.child("commentDislikedList").setValue(commentSectionLike.getCommentDislikedList());
+                   // databaseReference8.child("commentToken").setValue(Token);
+                    databaseReference8.child("userLike").setValue(Email);
+
+                    notification = new Notification();
+
+                    notification.setNotificationFrom(Email);
+                    notification.setNotificationTo(commentSectionLike.getUserName());
+                    notification.setNotificationBody(commentSectionLike.getComment());
+                    notification.setNotificationTitle("Liked Your Comment");
+                    //notification.setNotificationToken(commentSectionLike.getCommentToken());
+                    databaseReferenceNotifications.push().setValue(notification);
+
+
 
                 }
             });
@@ -366,9 +408,23 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference7.child("noCommentDislikes").setValue(commentSectionDislike.getNoCommentDislikes());
                     databaseReference7.child("commentLikedList").setValue(commentSectionDislike.getCommentLikedList());
                     databaseReference7.child("commentDislikedList").setValue(commentSectionDislike.getCommentDislikedList());
+                 //   databaseReference7.child("commentToken").setValue(Token);
+                    databaseReference7.child("userDislike").setValue(Email);
+
+                    notification = new Notification();
+
+                    notification.setNotificationFrom(Email);
+                    notification.setNotificationTo(commentSectionDislike.getUserName());
+                    notification.setNotificationBody(commentSectionDislike.getComment());
+                    notification.setNotificationTitle("Disliked Your Comment");
+                 //   notification.setNotificationToken(commentSectionDislike.getCommentToken());
+                    databaseReferenceNotifications.push().setValue(notification);
+
+
                 }
             });
             return convertView1;
         }
     }
+
 }
