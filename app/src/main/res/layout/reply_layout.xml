@@ -96,4 +96,31 @@
         android:layout_height="1dp"
         android:background="@android:color/background_dark"
         android:text="TextView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:id="@+id/CommentLayout">
+
+        <EditText
+            android:id="@+id/editCommentsl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:padding="2dp"
+            android:layout_weight=".8"
+            android:layout_marginLeft="1dp"
+            android:background="@drawable/edittextborder"
+            android:inputType="textMultiLine"
+            android:hint="Type a comment"/>
+        <ImageView
+            android:id="@+id/commentBtnsl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/post_comment"
+            android:layout_weight=".2"
+            android:padding="6dp"/>
+    </LinearLayout>
 </LinearLayout>

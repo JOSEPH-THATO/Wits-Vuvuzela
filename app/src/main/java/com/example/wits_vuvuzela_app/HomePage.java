@@ -185,7 +185,7 @@ public class HomePage extends AppCompatActivity {
                 Elements mElementDataSize = mBlogDocument.select("div[class=el-dbe-blog-extra block_extended]");
                 int mElementSize = mElementDataSize.size();
 
-                for (int i = 0; i < 12; i++) {
+                for (int i = 0; i < 20; i++) {
 
                     Elements mElementArticle = mBlogDocument.select("h2[class=entry-title]").select("a[href]").eq(i);
                     String mArticleHead = mElementArticle.text();
