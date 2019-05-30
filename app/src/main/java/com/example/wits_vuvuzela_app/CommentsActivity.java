@@ -1,6 +1,8 @@
 package com.example.wits_vuvuzela_app;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,6 +26,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,21 +57,25 @@ public class CommentsActivity extends AppCompatActivity {
     CommentSection commentSection;
     Notification notification;
     int NumReplies = 0;
+    int listItems = 1;
     String CommentType = "";
+
+    Button btnShowMore;
+    Button btnShowLess;
+    CustomAdapter customAdapter1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-        Bundle bundle = getIntent().getExtras();
-        String email = bundle.getString("Email");
-        String key = bundle.getString("Key");
-        String commentTitle = bundle.getString("CommentsTitle");
-        String commentType = bundle.getString("CommentType");
-        String token = bundle.getString("Token");
-
-        int NumberReplies = bundle.getInt("NumberReplies");
+        Intent bundle = getIntent();
+        String email = bundle.getStringExtra("Email");
+        String key = bundle.getStringExtra("Key");
+        String commentTitle = bundle.getStringExtra("CommentsTitle");
+        String commentType = bundle.getStringExtra("CommentType");
+        int NumberReplies = bundle.getIntExtra("Number of Replies", NumReplies);
+        String token = bundle.getStringExtra("Token");
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
         databaseReferenceNotifications = FirebaseDatabase.getInstance().getReference().child("Notification");
@@ -81,18 +90,18 @@ public class CommentsActivity extends AppCompatActivity {
         CommentButton = (ImageView) findViewById(R.id.commentBtns);
         Article1 = (TextView) findViewById(R.id.title);
         CommentTitle1 = (TextView) findViewById(R.id.CommentTitle);
-        BackArrow = (ImageButton)findViewById(R.id.backArrow);
+        BackArrow = (ImageButton) findViewById(R.id.backArrow);
         CommentTitle1.setText(commentTitle);
 
-        Spinner spinner = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(CommentsActivity.this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.sort_by));
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(CommentsActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sort_by));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(myAdapter);
 
         BackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onBackPressed();
+                onBackPressed();
             }
         });
         /*
@@ -102,10 +111,10 @@ public class CommentsActivity extends AppCompatActivity {
                 String ItemSelected = parent.getItemAtPosition(position).toString();
 /*
                 if (ItemSelected.equals("Sort by Like")){
-                    sortByLikes();
+ //                   sortByLikes();
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
                     CustomAdapter customAdapter1 = new CustomAdapter();
-                    CommentsView.setAdapter(customAdapter1);
+//                    CommentsView.setAdapter(customAdapter1);
                 }
                 else if(ItemSelected.equals("Sort by recent")){
 
@@ -123,7 +132,7 @@ public class CommentsActivity extends AppCompatActivity {
         });
 */
 
-        if (Key.equals("")) {
+        if (key == "") {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
         } else {
 
@@ -151,6 +160,7 @@ public class CommentsActivity extends AppCompatActivity {
                         FullCommentIndent.add(commentSection.getCommentRate());
                     }
 
+
                     for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
                         commentSection = artistSnapshot.getValue(CommentSection.class);
@@ -170,9 +180,63 @@ public class CommentsActivity extends AppCompatActivity {
                             //retrieveReplies(commentKey, dataSnapshot.getChildren());
                         }
                     }
+                    /**
+                     btnSortByLike.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                    sortByLikes();
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
                     CustomAdapter customAdapter1 = new CustomAdapter();
                     CommentsView.setAdapter(customAdapter1);
+                    }
+                    });
+
+                     btnSortByRcnt.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                    reverseArrayLists();
+                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+                    CustomAdapter customAdapter1 = new CustomAdapter();
+                    CommentsView.setAdapter(customAdapter1);
+
+                    }
+                    });
+                     **/
+                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+
+                    btnShowMore = new Button(CommentsActivity.this);
+                    btnShowMore.setText("show more");
+                    btnShowLess = new Button(CommentsActivity.this);
+                    btnShowLess.setText("show less");
+
+                    CommentsView.addFooterView(btnShowMore);
+                    CommentsView.addFooterView(btnShowLess);
+
+                    btnShowMore.setVisibility(View.VISIBLE);
+                    btnShowLess.setVisibility(View.GONE);
+
+                    customAdapter1 = new CustomAdapter();
+                    CommentsView.setAdapter(customAdapter1);
+
+
+                    btnShowMore.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            listItems += CommentsList.size() - listItems;
+                            customAdapter1.notifyDataSetChanged();
+                            btnShowMore.setVisibility(View.GONE);
+                            btnShowLess.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+
+                    btnShowLess.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            listItems = 1;
+                            customAdapter1.notifyDataSetChanged();
+                            btnShowMore.setVisibility(View.VISIBLE);
+                            btnShowLess.setVisibility(View.GONE);
+                        }
+                    });
 
                     CommentButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -190,6 +254,9 @@ public class CommentsActivity extends AppCompatActivity {
                                 commentSection.setCommentToken(Token);
                                 commentSection.setCommentRate("0");
                                 databaseReferenceComments.push().setValue(commentSection);
+
+                                Toast.makeText(CommentsActivity.this, "Your comment has been added", Toast.LENGTH_SHORT).show();
+
 
                                 DatabaseReference databaseReference99;
                                 if (CommentType.equals("Article")) {
@@ -225,9 +292,9 @@ public class CommentsActivity extends AppCompatActivity {
     }
 
     private void retrieveReplies(String commentKey, Iterable<DataSnapshot> children) {
-        for (DataSnapshot artistSnapshot : children){
+        for (DataSnapshot artistSnapshot : children) {
             CommentSection commentSection = artistSnapshot.getValue(CommentSection.class);
-            if(commentSection != null && commentSection.getCommentID().equals(commentKey)){
+            if (commentSection != null && commentSection.getCommentID().equals(commentKey)) {
                 CommentsList.add(commentSection);
                 KeysArrayList.add(artistSnapshot.getKey());
                 KeysNumReplies.add(commentSection.getNoReplies());
@@ -236,7 +303,8 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
-    public void sortByLikes() {
+  /*public void sortByLikes() {
+>>>>>>> 1bcaa90be40fbe43027199467808a6bd1c772df5
 
         Collections.sort(CommentsList, new Comparator<CommentSection>(){
             public int compare(CommentSection s1, CommentSection s2) {
@@ -245,24 +313,23 @@ public class CommentsActivity extends AppCompatActivity {
         });
         Collections.reverse(CommentsList);
 
-    }
-    public void reverseArrayLists(){
+    }*/
+
+    public void reverseArrayLists() {
         Collections.reverse(CommentsList);
     }
 
     public void Hierarchialdata(String CommentKey) {
 
-        int indent = 0;
 
-        for(int k = 0;k < FullCommentsList.size();++k){
+        for (int k = 0; k < FullCommentsList.size(); ++k) {
 
             CommentSection commentSection2 = FullCommentsList.get(k);
 
             if (commentSection2.getCommentID().equals(CommentKey)) {
-                indent+=1;
                 CommentsList.add(commentSection2);
                 KeysArrayList.add(FullKeysArrayList.get(k));
-              //  CommentIndent.add(FullCommentIndent.get(k));
+                //  CommentIndent.add(FullCommentIndent.get(k));
                 Hierarchialdata(FullKeysArrayList.get(k));
 
             }
@@ -274,6 +341,7 @@ public class CommentsActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return CommentsList.size();
+            // return listItems;
         }
 
         @Override
@@ -298,7 +366,7 @@ public class CommentsActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
 
-           // int indent = Integer.parseInt(CommentsList.get(position).getCommentRate());
+            // int indent = Integer.parseInt(CommentsList.get(position).getCommentRate());
 
             params.setMarginStart(150);
 
@@ -352,14 +420,14 @@ public class CommentsActivity extends AppCompatActivity {
                         //newindent+=10;
                         int indent = Integer.parseInt(CommentsList.get(position).getCommentRate());
 
-                        indent+=100;
+                        indent += 100;
                         commentSection.setCommentRate(String.valueOf(indent));
                         databaseReferenceComments.push().setValue(commentSection);
 
                         DatabaseReference databaseReference99;
 
                         databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeysArrayList.get(position));
-                       // databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies += 1));
+                        // databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies += 1));
                         databaseReference99.child("userComment").setValue(Email);
 
                         CommentsList.add(commentSection);
@@ -387,6 +455,8 @@ public class CommentsActivity extends AppCompatActivity {
 
                     CommentSection commentSectionLike = CommentsList.get(position);
 
+                    //    Toast.makeText(CommentsActivity.this,"You have liked this comment",Toast.LENGTH_SHORT).show();
+
                     commentSectionLike.LikeComment(Email);
 
                     DatabaseReference databaseReference8;
@@ -397,6 +467,7 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference8.child("commentLikedList").setValue(commentSectionLike.getCommentLikedList());
                     databaseReference8.child("commentDislikedList").setValue(commentSectionLike.getCommentDislikedList());
                     databaseReference8.child("userDislike").setValue(commentSectionLike.getUserDislike());
+                    // databaseReference8.child("commentToken").setValue(Token);
                     databaseReference8.child("userLike").setValue(commentSectionLike.getUserLike());
 
                     notification = new Notification();
@@ -413,6 +484,8 @@ public class CommentsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
+                    // Toast.makeText(CommentsActivity.this,"You have disliked this comment",Toast.LENGTH_SHORT).show();
+
                     CommentSection commentSectionDislike = CommentsList.get(position);
 
                     commentSectionDislike.DislikeComment(Email);
@@ -426,6 +499,8 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference7.child("commentDislikedList").setValue(commentSectionDislike.getCommentDislikedList());
                     databaseReference7.child("userDislike").setValue(commentSectionDislike.getUserDislike());
                     databaseReference7.child("userLike").setValue(commentSectionDislike.getUserLike());
+                    //   databaseReference7.child("commentToken").setValue(Token);
+                    databaseReference7.child("userDislike").setValue(commentSectionDislike.getUserDislike());
 
                     notification = new Notification();
 

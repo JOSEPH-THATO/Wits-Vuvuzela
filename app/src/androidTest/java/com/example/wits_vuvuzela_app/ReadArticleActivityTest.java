@@ -8,6 +8,9 @@ import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -26,8 +29,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtL
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
 
 public class ReadArticleActivityTest {
@@ -70,16 +76,35 @@ public class ReadArticleActivityTest {
 
     @Test
     public void readArticleTest(){
-        Espresso.onView(withId(R.id.ReadArticleHeading)).check(matches(not(withText("Article Heading"))));
-        Espresso.onView(withId(R.id.ReadArticleBody)).check(matches(not(withText(""))));
-        View imageview = (readArticleActivity).findViewById(R.id.ArticleImageView);
-        Espresso.onView(withId(R.id.likeNum)).check(matches(not(withText(""))));
-        Espresso.onView(withId(R.id.dislikeNum)).check(matches(not(withText(""))));
-        Espresso.onView(withId(R.id.commentANum)).check(matches(not(withText(""))));
-       // Espresso.onView(withId(R.id.commentBtn)).perform(handleConstraints(click(), isDisplayingAtLeast(65)));
-        Espresso.onView(withId(R.id.likebtn)).perform(handleConstraints(click(), isDisplayingAtLeast(65)));
-        Espresso.onView(withId(R.id.dislikebtn)).perform(handleConstraints(click(), isDisplayingAtLeast(65)));
+
+        View readArticleHeading = (readArticleActivity).findViewById(R.id.ReadArticleHeading);
+        assertNotNull(readArticleHeading);
+        View likeNum = (readArticleActivity).findViewById(R.id.likeNum);
+        assertNotNull(likeNum);
+        View dislikeNum = (readArticleActivity).findViewById(R.id.dislikeNum);
+        assertNotNull(dislikeNum);
+        View commentANum = (readArticleActivity).findViewById(R.id.commentANum);
+        assertNotNull(commentANum);
+        View BackArrow = (readArticleActivity).findViewById(R.id.backArrow);
+        assertNotNull(BackArrow);
+        View likebtn = (readArticleActivity).findViewById(R.id.likebtn);
+        assertNotNull(likebtn);
+        View dislikebtn = (readArticleActivity).findViewById(R.id.dislikebtn);
+        assertNotNull(dislikebtn);
+
     }
+    /*@Test
+    public void ensureListViewIsPresent() throws Exception {
+        ReadArticleActivity activity = readArticleActivityActivityRule.getActivity();
+        View viewById = activity.findViewById(R.id.listview);
+        assertThat(viewById,notNullValue());
+        assertThat(viewById, instanceOf(ListView.class));
+        ListView listView = (ListView) viewById;
+        ListAdapter adapter = listView.getAdapter();
+        assertThat(adapter, instanceOf(ArrayAdapter.class));
+        assertThat(adapter.getCount(), greaterThan(15));
+
+    }*/
 
 
     @After

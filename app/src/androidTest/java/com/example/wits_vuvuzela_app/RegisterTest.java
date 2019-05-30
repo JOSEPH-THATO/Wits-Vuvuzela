@@ -8,10 +8,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertNotNull;
+
 //import static org.junit.Assert.assertNotNull;
 
 public class RegisterTest {
-/*
+
     @Rule
     public ActivityTestRule<Register> registerActivityTestRule = new ActivityTestRule<Register>(Register.class);
     public  Register register =null;
@@ -59,5 +61,5 @@ public class RegisterTest {
     public void tearDown() throws Exception {
         register=null;
 
-    }*/
+    }
 }
