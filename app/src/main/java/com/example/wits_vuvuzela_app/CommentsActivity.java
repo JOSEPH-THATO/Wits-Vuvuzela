@@ -52,12 +52,12 @@ public class CommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-        Bundle bundle = getIntent().getExtras();
-        String email = bundle.getString("Email");
-        String key = bundle.getString("Key");
-        String commentTitle = bundle.getString("CommentsTitle");
-        String commentType = bundle.getString("CommentType");
-        int NumberReplies = bundle.getInt("NumberReplies");
+        Intent bundle = getIntent();
+        String email = bundle.getStringExtra("Email");
+        String key = bundle.getStringExtra("Key");
+        String commentTitle = bundle.getStringExtra("CommentsTitle");
+        String commentType = bundle.getStringExtra("CommentType");
+        int NumberReplies = bundle.getIntExtra("Number of Replies", NumReplies);
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
 
@@ -91,10 +91,10 @@ public class CommentsActivity extends AppCompatActivity {
                 String ItemSelected = parent.getItemAtPosition(position).toString();
 
                 if (ItemSelected.equals("Sort by Like")){
-                    sortByLikes();
+ //                   sortByLikes();
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
                     CustomAdapter customAdapter1 = new CustomAdapter();
-                    CommentsView.setAdapter(customAdapter1);
+//                    CommentsView.setAdapter(customAdapter1);
                 }
                 else if(ItemSelected.equals("Sort by recent")){
 
@@ -112,7 +112,7 @@ public class CommentsActivity extends AppCompatActivity {
         });
 
 
-        if (Key.equals("")) {
+        if (key == "") {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
         } else {
 
@@ -184,7 +184,7 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
-    public void sortByLikes() {
+  /*public void sortByLikes() {
 
         Collections.sort(CommentsList, new Comparator<CommentSection>(){
             public int compare(CommentSection s1, CommentSection s2) {
@@ -193,7 +193,7 @@ public class CommentsActivity extends AppCompatActivity {
         });
         Collections.reverse(CommentsList);
 
-    }
+    }*/
     public void reverseArrayLists(){
 
         Collections.reverse(CommentsList);
@@ -204,7 +204,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return CommentsList.size();
+           return 0;
         }
 
         @Override
