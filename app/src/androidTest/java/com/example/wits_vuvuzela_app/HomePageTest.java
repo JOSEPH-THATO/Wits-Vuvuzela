@@ -5,7 +5,7 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
+//import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.support.test.rule.ActivityTestRule;
@@ -22,10 +22,6 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.isInternal;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -39,8 +35,6 @@ public class HomePageTest {
 
     @Rule
     public ActivityTestRule<HomePage> homePageActivityRule = new ActivityTestRule<>(HomePage.class);
-    public IntentsTestRule<HomePage> homePageIntentsTestRule = new IntentsTestRule<>(
-            HomePage.class);
     public  HomePage homepage =null;
 
 
@@ -53,14 +47,13 @@ public class HomePageTest {
     @Test
     public void testHomepage()
     {
-        View imageview = (homepage).findViewById(R.id.imageView);
-        Espresso.onView(withId(R.id.newsfeed)).check(matches((withText("NEWSFEED"))));
-        Espresso.onView(withId(R.id.listview)).check(matches(isDisplayed()));
+        View newsfeed = (homepage).findViewById(R.id.newsfeed);
+        assertNotNull(newsfeed);
+        View listview = (homepage).findViewById(R.id.listview);
+        assertNotNull(listview);
+        View progressBar = (homepage).findViewById(R.id.HomePageBar);
+        assertNotNull(progressBar);
 
-      /*  onView(withId(R.id.BtnLogin)).perform(click());
-        Intent intent = new Intent(homePageIntentsTestRule.getActivity(), ReadArticleActivity.class);
-        homePageIntentsTestRule.launchActivity(intent);
-      */
     }
 
     @After

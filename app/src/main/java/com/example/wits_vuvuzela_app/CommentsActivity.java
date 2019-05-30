@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -57,21 +58,25 @@ public class CommentsActivity extends AppCompatActivity {
     CommentSection commentSection;
     Notification notification;
     int NumReplies = 0;
+    int listItems = 1;
     String CommentType = "";
+
+    Button btnShowMore;
+    Button btnShowLess;
+    CustomAdapter customAdapter1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-        Bundle bundle = getIntent().getExtras();
-        String email = bundle.getString("Email");
-        String key = bundle.getString("Key");
-        String commentTitle = bundle.getString("CommentsTitle");
-        String commentType = bundle.getString("CommentType");
-        String token = bundle.getString("Token");
-
-        int NumberReplies = bundle.getInt("NumberReplies");
+        Intent bundle = getIntent();
+        String email = bundle.getStringExtra("Email");
+        String key = bundle.getStringExtra("Key");
+        String commentTitle = bundle.getStringExtra("CommentsTitle");
+        String commentType = bundle.getStringExtra("CommentType");
+        int NumberReplies = bundle.getIntExtra("Number of Replies", NumReplies);
+        String token = bundle.getStringExtra("Token");
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
         databaseReferenceNotifications = FirebaseDatabase.getInstance().getReference().child("Notification");
@@ -108,10 +113,10 @@ public class CommentsActivity extends AppCompatActivity {
                 String ItemSelected = parent.getItemAtPosition(position).toString();
 /*
                 if (ItemSelected.equals("Sort by Like")){
-                    sortByLikes();
+ //                   sortByLikes();
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
                     CustomAdapter customAdapter1 = new CustomAdapter();
-                    CommentsView.setAdapter(customAdapter1);
+//                    CommentsView.setAdapter(customAdapter1);
                 }
                 else if(ItemSelected.equals("Sort by recent")){
 
@@ -129,7 +134,7 @@ public class CommentsActivity extends AppCompatActivity {
         });
 */
 
-        if (Key.equals("")) {
+        if (key == "") {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
         } else {
 
@@ -170,9 +175,65 @@ public class CommentsActivity extends AppCompatActivity {
 
                         }
                     }
+                    /**
+                    btnSortByLike.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sortByLikes();
+                            CommentsView = (ListView) findViewById(R.id.commentsListView);
+                            CustomAdapter customAdapter1 = new CustomAdapter();
+                            CommentsView.setAdapter(customAdapter1);
+                        }
+                    });
+
+                    btnSortByRcnt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            reverseArrayLists();
+                            CommentsView = (ListView) findViewById(R.id.commentsListView);
+                            CustomAdapter customAdapter1 = new CustomAdapter();
+                            CommentsView.setAdapter(customAdapter1);
+
+                        }
+                    });
+**/
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
+
+                    btnShowMore = new Button(CommentsActivity.this);
+                    btnShowMore.setText("show more");
+                    btnShowLess = new Button(CommentsActivity.this);
+                    btnShowLess.setText("show less");
+
+                    CommentsView.addFooterView(btnShowMore);
+                    CommentsView.addFooterView(btnShowLess);
+
+                    btnShowMore.setVisibility(View.VISIBLE);
+                    btnShowLess.setVisibility(View.GONE);
+
+                    customAdapter1 = new CustomAdapter();
                     CommentsView.setAdapter(customAdapter1);
+
+
+                     btnShowMore.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                listItems += CommentsList.size() - listItems;
+                                customAdapter1.notifyDataSetChanged();
+                                btnShowMore.setVisibility(View.GONE);
+                                btnShowLess.setVisibility(View.VISIBLE);
+                            }
+                     });
+
+
+                    btnShowLess.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            listItems =1;
+                            customAdapter1.notifyDataSetChanged();
+                            btnShowMore.setVisibility(View.VISIBLE);
+                            btnShowLess.setVisibility(View.GONE);
+                        }
+                    });
 
                     CommentButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -226,7 +287,7 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
-    public void sortByLikes() {
+  /*public void sortByLikes() {
 
         Collections.sort(CommentsList, new Comparator<CommentSection>(){
             public int compare(CommentSection s1, CommentSection s2) {
@@ -235,7 +296,7 @@ public class CommentsActivity extends AppCompatActivity {
         });
         Collections.reverse(CommentsList);
 
-    }
+    }*/
     public void reverseArrayLists(){
 
         Collections.reverse(CommentsList);
@@ -262,7 +323,8 @@ public class CommentsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return CommentsList.size();
+           return CommentsList.size();
+          // return listItems;
         }
 
         @Override
@@ -292,7 +354,6 @@ public class CommentsActivity extends AppCompatActivity {
             TextView textView_author = convertView1.findViewById(R.id.commentID);
 
             textView_heading.setText(CommentsList.get(position).getUserName());
-            textView_author.setPadding(10,10,50,10);
             textView_author.setText(CommentsList.get(position).getComment());
             textView_NumLikes.setText(CommentsList.get(position).getNoCommentLikes());
             textView_NumDislikes.setText(CommentsList.get(position).getNoCommentDislikes());
@@ -393,5 +454,4 @@ public class CommentsActivity extends AppCompatActivity {
             return convertView1;
         }
     }
-
 }
