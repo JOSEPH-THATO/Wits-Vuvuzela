@@ -18,7 +18,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 //import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -65,6 +67,16 @@ public class CommentsActivityTest {
     }*/
 
     @Test
+    public void TestViews(){
+        CommentsActivity commentsActivity = new CommentsActivity();
+        if (commentsActivity.customAdapter1 != null) {
+            View listview = (commentsActivity).findViewById(R.id.listview);
+            assertNotNull(listview);
+        }
+
+    }
+
+    @Test
     public void TestCommentsActivity(){
 
         View backArrow = (commentsActivity).findViewById(R.id.backArrow);
@@ -73,26 +85,31 @@ public class CommentsActivityTest {
         assertNotNull(txtComment);
         View CommentTitle = (commentsActivity).findViewById(R.id.CommentTitle);
         assertNotNull(CommentTitle);
-//        Espresso.onView(withId(R.id.listview)).check(matches(isDisplayed()));
-        View editComments = (commentsActivity).findViewById(R.id.editComments);
-        assertNotNull(editComments);
+
+
 
 
 
         /*
-       Espresso.onView(withId(R.id.backArrow)).perform(click());
        Espresso.onView(withId(R.id.txtcomment)).check(matches((withText(""))));
-        Espresso.onView(withId(R.id.CommentTitle)).check(matches((withText(""))));
       Espresso.onView(withId(R.id.listview)).check(matches(isDisplayed()));
-      Espresso.onView(withId(R.id.editComments)).perform(typeText(comment));
       Espresso.closeSoftKeyboard();;
-     // Espresso.onView(withId(R.id.commentBtns)).perform(click());
      */
 
     }
 
 
+    @Test
+    public void CommentEdit() throws Exception{
+        onView(withId(R.id.editComments)).perform(replaceText(comment));
+        View editComments = (commentsActivity).findViewById(R.id.editComments);
+        assertNotNull(editComments);
+        onView(withId(R.id.commentBtns)).perform(click());
+
+    }
+
     @After
     public void tearDown() throws Exception {
+        commentsActivity = null;
     }
 }

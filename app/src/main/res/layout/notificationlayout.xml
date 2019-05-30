@@ -11,7 +11,7 @@
 
         <TextView
             android:id="@+id/NotificationTitle"
-            android:layout_width="348dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Abdullah Liked Your Comment "

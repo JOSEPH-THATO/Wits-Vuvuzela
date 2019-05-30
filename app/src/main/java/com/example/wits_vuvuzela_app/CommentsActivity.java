@@ -61,30 +61,19 @@ public class CommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-<<<<<<< HEAD
         Intent bundle = getIntent();
         String email = bundle.getStringExtra("Email");
         String key = bundle.getStringExtra("Key");
         String commentTitle = bundle.getStringExtra("CommentsTitle");
         String commentType = bundle.getStringExtra("CommentType");
         int NumberReplies = bundle.getIntExtra("Number of Replies", NumReplies);
-=======
-        Bundle bundle = getIntent().getExtras();
-        String email = bundle.getString("Email");
-        String key = bundle.getString("Key");
-        String commentTitle = bundle.getString("CommentsTitle");
-        String commentType = bundle.getString("CommentType");
-        String token = bundle.getString("Token");
 
-        int NumberReplies = bundle.getInt("NumberReplies");
->>>>>>> a828b3eef5196a6cf02df338700595d3ea8f2508
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
         databaseReferenceNotifications = FirebaseDatabase.getInstance().getReference().child("Notification");
 
         Key = key;
         Email = email;
-        Token = token;
         NumReplies = NumberReplies;
         CommentType = commentType;
 
@@ -95,10 +84,7 @@ public class CommentsActivity extends AppCompatActivity {
         BackArrow = (ImageButton)findViewById(R.id.backArrow);
         CommentTitle1.setText(commentTitle);
 
-        Spinner spinner = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(CommentsActivity.this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.sort_by));
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(myAdapter);
+
 
 
         BackArrow.setOnClickListener(new View.OnClickListener() {
@@ -107,33 +93,8 @@ public class CommentsActivity extends AppCompatActivity {
                onBackPressed();
             }
         });
-        /*
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String ItemSelected = parent.getItemAtPosition(position).toString();
-/*
-                if (ItemSelected.equals("Sort by Like")){
- //                   sortByLikes();
-                    CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
-//                    CommentsView.setAdapter(customAdapter1);
-                }
-                else if(ItemSelected.equals("Sort by recent")){
 
-                    reverseArrayLists();
-                    CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
-                    CommentsView.setAdapter(customAdapter1);
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-*/
 
         if (key == "") {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
@@ -172,7 +133,48 @@ public class CommentsActivity extends AppCompatActivity {
                             KeysNumReplies.add(commentSection.getNoReplies());
                         }
                     }
-                    /**
+                    /*
+                    Spinner spinner = (Spinner)findViewById(R.id.spinner);
+                    ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(CommentsActivity.this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.sort_by));
+                    myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(myAdapter);
+
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String ItemSelected = parent.getItemAtPosition(position).toString();
+
+                            if (ItemSelected.equals("Sort by Like")){
+                                if(CommentsList!=null){
+                                    sortByLikes();
+                                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+                                    CustomAdapter customAdapter1 = new CustomAdapter();
+                                    CommentsView.setAdapter(customAdapter1);
+                                }else{
+                                    Toast.makeText(CommentsActivity.this, "Can't sort by like", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                            else if(ItemSelected.equals("Sort by recent")){
+
+                                reverseArrayLists();
+                                CommentsView = (ListView) findViewById(R.id.commentsListView);
+                                CustomAdapter customAdapter1 = new CustomAdapter();
+                                CommentsView.setAdapter(customAdapter1);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+                    */
+                    Button btnSortByLike =(Button)findViewById(R.id.idLike);
+                    Button btnSortByRcnt =(Button)findViewById(R.id.idDisLike);
+
+
                     btnSortByLike.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -193,7 +195,7 @@ public class CommentsActivity extends AppCompatActivity {
 
                         }
                     });
-**/
+
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
 
                     btnShowMore = new Button(CommentsActivity.this);
@@ -283,7 +285,7 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
-  /*public void sortByLikes() {
+  public void sortByLikes() {
 
         Collections.sort(CommentsList, new Comparator<CommentSection>(){
             public int compare(CommentSection s1, CommentSection s2) {
@@ -292,7 +294,7 @@ public class CommentsActivity extends AppCompatActivity {
         });
         Collections.reverse(CommentsList);
 
-    }*/
+    }
     public void reverseArrayLists(){
 
         Collections.reverse(CommentsList);
@@ -308,12 +310,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-<<<<<<< HEAD
-           return 0;
-=======
-
             return listItems;
->>>>>>> a828b3eef5196a6cf02df338700595d3ea8f2508
         }
 
         @Override
@@ -333,111 +330,115 @@ public class CommentsActivity extends AppCompatActivity {
 
             View convertView1 = layoutInflater.inflate(R.layout.commentlayout, parent, false);
 
-            TextView textView_NumLikes = convertView1.findViewById(R.id.likeNum);
-            TextView textView_NumDislikes = convertView1.findViewById(R.id.dislikeNum);
-            TextView textView_NumComments = convertView1.findViewById(R.id.commentNum);
-            ImageView thumbsupImg = convertView1.findViewById(R.id.likeCommentbtn);
-            ImageView thumbsdownImg = convertView1.findViewById(R.id.dislikeCommentbtn);
-            ImageView commentsImage = convertView1.findViewById(R.id.commentCommentIconBtn);
-            TextView textView_heading = convertView1.findViewById(R.id.CommentUser);
-            TextView textView_author = convertView1.findViewById(R.id.commentID);
 
-            textView_heading.setText(CommentsList.get(position).getUserName());
-            textView_author.setText(CommentsList.get(position).getComment());
-            textView_NumLikes.setText(CommentsList.get(position).getNoCommentLikes());
-            textView_NumDislikes.setText(CommentsList.get(position).getNoCommentDislikes());
-            textView_NumComments.setText(CommentsList.get(position).getNoReplies());
+                TextView textView_NumLikes = convertView1.findViewById(R.id.likeNum);
+                TextView textView_NumDislikes = convertView1.findViewById(R.id.dislikeNum);
+                TextView textView_NumComments = convertView1.findViewById(R.id.commentNum);
+                ImageView thumbsupImg = convertView1.findViewById(R.id.likeCommentbtn);
+                ImageView thumbsdownImg = convertView1.findViewById(R.id.dislikeCommentbtn);
+                ImageView commentsImage = convertView1.findViewById(R.id.commentCommentIconBtn);
+                TextView textView_heading = convertView1.findViewById(R.id.CommentUser);
+                TextView textView_author = convertView1.findViewById(R.id.commentID);
 
-            if (CommentsList.get(position).getCommentLikedList().contains(Email)) {
-                thumbsupImg.setImageResource(R.drawable.like);
-                thumbsdownImg.setImageResource(R.drawable.dislikebw);
-            } else if (CommentsList.get(position).getCommentDislikedList().contains(Email)) {
-                thumbsupImg.setImageResource(R.drawable.likebw);
-                thumbsdownImg.setImageResource(R.drawable.dislike);
-            } else {
-                thumbsupImg.setImageResource(R.drawable.likebw);
-                thumbsdownImg.setImageResource(R.drawable.dislikebw);
+                textView_heading.setText(CommentsList.get(position).getUserName());
+                textView_author.setText(CommentsList.get(position).getComment());
+                textView_NumLikes.setText(CommentsList.get(position).getNoCommentLikes());
+                textView_NumDislikes.setText(CommentsList.get(position).getNoCommentDislikes());
+                textView_NumComments.setText(CommentsList.get(position).getNoReplies());
+
+                if (CommentsList.get(position).getCommentLikedList().contains(Email)) {
+                    thumbsupImg.setImageResource(R.drawable.like);
+                    thumbsdownImg.setImageResource(R.drawable.dislikebw);
+                } else if (CommentsList.get(position).getCommentDislikedList().contains(Email)) {
+                    thumbsupImg.setImageResource(R.drawable.likebw);
+                    thumbsdownImg.setImageResource(R.drawable.dislike);
+                } else {
+                    thumbsupImg.setImageResource(R.drawable.likebw);
+                    thumbsdownImg.setImageResource(R.drawable.dislikebw);
+                }
+
+
+                commentsImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(CommentsActivity.this, CommentsActivity.class);
+                        intent.putExtra("Email", Email);
+                        intent.putExtra("Key", KeysArrayList.get(position));
+                        intent.putExtra("CommentsTitle", CommentsList.get(position).getComment());
+                        intent.putExtra("NumberReplies", Integer.parseInt(CommentsList.get(position).getNoReplies()));
+                        intent.putExtra("CommentType", "Comment");
+
+                        startActivity(intent);
+                    }
+                });
+
+
+                thumbsupImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        CommentSection commentSectionLike = CommentsList.get(position);
+
+                        commentSectionLike.LikeComment(Email);
+
+                        DatabaseReference databaseReference8;
+                        databaseReference8 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeysArrayList.get(position));
+                        databaseReference8.child("commentRate").setValue("Like");
+                        databaseReference8.child("noCommentLikes").setValue(commentSectionLike.getNoCommentLikes());
+                        databaseReference8.child("noCommentDislikes").setValue(commentSectionLike.getNoCommentDislikes());
+                        databaseReference8.child("commentLikedList").setValue(commentSectionLike.getCommentLikedList());
+                        databaseReference8.child("commentDislikedList").setValue(commentSectionLike.getCommentDislikedList());
+                        // databaseReference8.child("commentToken").setValue(Token);
+                        databaseReference8.child("userLike").setValue(Email);
+
+                        notification = new Notification();
+
+                        notification.setNotificationFrom(Email);
+                        notification.setNotificationTo(commentSectionLike.getUserName());
+                        notification.setNotificationBody(commentSectionLike.getComment());
+                        notification.setNotificationTitle("Liked Your Comment");
+                        //notification.setNotificationToken(commentSectionLike.getCommentToken());
+                        databaseReferenceNotifications.push().setValue(notification);
+
+
+                    }
+                });
+
+                thumbsdownImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        CommentSection commentSectionDislike = CommentsList.get(position);
+
+                        commentSectionDislike.DislikeComment(Email);
+
+                        DatabaseReference databaseReference7;
+                        databaseReference7 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeysArrayList.get(position));
+                        databaseReference7.child("commentRate").setValue("Dislike");
+                        databaseReference7.child("noCommentLikes").setValue(commentSectionDislike.getNoCommentLikes());
+                        databaseReference7.child("noCommentDislikes").setValue(commentSectionDislike.getNoCommentDislikes());
+                        databaseReference7.child("commentLikedList").setValue(commentSectionDislike.getCommentLikedList());
+                        databaseReference7.child("commentDislikedList").setValue(commentSectionDislike.getCommentDislikedList());
+                        //   databaseReference7.child("commentToken").setValue(Token);
+                        databaseReference7.child("userDislike").setValue(Email);
+
+                        notification = new Notification();
+
+                        notification.setNotificationFrom(Email);
+                        notification.setNotificationTo(commentSectionDislike.getUserName());
+                        notification.setNotificationBody(commentSectionDislike.getComment());
+                        notification.setNotificationTitle("Disliked Your Comment");
+                        //   notification.setNotificationToken(commentSectionDislike.getCommentToken());
+                        databaseReferenceNotifications.push().setValue(notification);
+
+
+                    }
+                });
+                return convertView1;
             }
 
-            commentsImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    Intent intent = new Intent(CommentsActivity.this, CommentsActivity.class);
-                    intent.putExtra("Email", Email);
-                    intent.putExtra("Key", KeysArrayList.get(position));
-                    intent.putExtra("CommentsTitle", CommentsList.get(position).getComment());
-                    intent.putExtra("NumberReplies", Integer.parseInt(CommentsList.get(position).getNoReplies()));
-                    intent.putExtra("CommentType", "Comment");
-
-                    startActivity(intent);
-                }
-            });
-
-            thumbsupImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    CommentSection commentSectionLike = CommentsList.get(position);
-
-                    commentSectionLike.LikeComment(Email);
-
-                    DatabaseReference databaseReference8;
-                    databaseReference8 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeysArrayList.get(position));
-                    databaseReference8.child("commentRate").setValue("Like");
-                    databaseReference8.child("noCommentLikes").setValue(commentSectionLike.getNoCommentLikes());
-                    databaseReference8.child("noCommentDislikes").setValue(commentSectionLike.getNoCommentDislikes());
-                    databaseReference8.child("commentLikedList").setValue(commentSectionLike.getCommentLikedList());
-                    databaseReference8.child("commentDislikedList").setValue(commentSectionLike.getCommentDislikedList());
-                   // databaseReference8.child("commentToken").setValue(Token);
-                    databaseReference8.child("userLike").setValue(Email);
-
-                    notification = new Notification();
-
-                    notification.setNotificationFrom(Email);
-                    notification.setNotificationTo(commentSectionLike.getUserName());
-                    notification.setNotificationBody(commentSectionLike.getComment());
-                    notification.setNotificationTitle("Liked Your Comment");
-                    //notification.setNotificationToken(commentSectionLike.getCommentToken());
-                    databaseReferenceNotifications.push().setValue(notification);
-
-
-
-                }
-            });
-
-            thumbsdownImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    CommentSection commentSectionDislike = CommentsList.get(position);
-
-                    commentSectionDislike.DislikeComment(Email);
-
-                    DatabaseReference databaseReference7;
-                    databaseReference7 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeysArrayList.get(position));
-                    databaseReference7.child("commentRate").setValue("Dislike");
-                    databaseReference7.child("noCommentLikes").setValue(commentSectionDislike.getNoCommentLikes());
-                    databaseReference7.child("noCommentDislikes").setValue(commentSectionDislike.getNoCommentDislikes());
-                    databaseReference7.child("commentLikedList").setValue(commentSectionDislike.getCommentLikedList());
-                    databaseReference7.child("commentDislikedList").setValue(commentSectionDislike.getCommentDislikedList());
-                 //   databaseReference7.child("commentToken").setValue(Token);
-                    databaseReference7.child("userDislike").setValue(Email);
-
-                    notification = new Notification();
-
-                    notification.setNotificationFrom(Email);
-                    notification.setNotificationTo(commentSectionDislike.getUserName());
-                    notification.setNotificationBody(commentSectionDislike.getComment());
-                    notification.setNotificationTitle("Disliked Your Comment");
-                 //   notification.setNotificationToken(commentSectionDislike.getCommentToken());
-                    databaseReferenceNotifications.push().setValue(notification);
-
-
-                }
-            });
-            return convertView1;
-        }
     }
 
 }
