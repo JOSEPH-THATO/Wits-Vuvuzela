@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Comment;
@@ -100,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
                       }
                     }
                 });
-
-
             }
         });
 
@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 
     private void EnterRegistrationPage() {
 

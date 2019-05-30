@@ -19,12 +19,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -49,10 +53,12 @@ public class HomePage extends AppCompatActivity {
     ArrayList<String> ArticlesImgSrc;
     String SendArticleHeading;
     String Email="";
+    String Key = "";
     ProgressBar HomePageBar;
     String User = "abc";
     UserProfile userProfile;
     ArrayList<Bitmap> ArticlesBitmap;
+    String Token = "";
 
 
 
@@ -77,6 +83,22 @@ public class HomePage extends AppCompatActivity {
         ArticlesImgSrc = new ArrayList<>();
         ArticlesBitmap = new ArrayList<>();
 
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+
+                if(!task.isSuccessful()){
+                    return;
+                }
+
+                String token = task.getResult().getToken();
+                Token = token;
+
+                Toast.makeText(HomePage.this,"token = " + token ,Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -87,9 +109,12 @@ public class HomePage extends AppCompatActivity {
 
                     if (userProfile.getUser_email().equals(Email)) {
                         User = userProfile.getUser_username();
+                        Key = artistSnapshot.getKey();
                         break;
                     }
                 }
+
+               // SaveToken(Token);
 
                 Toast.makeText(HomePage.this, "Welcome ", Toast.LENGTH_LONG).show();
 
@@ -286,10 +311,20 @@ public class HomePage extends AppCompatActivity {
                     Intent intent = new Intent(HomePage.this, ReadArticleActivity.class);
                     intent.putExtra("Heading", ArticlesHead.get(position));
                     intent.putExtra("Email", User);
+                    intent.putExtra("Token", Token);
                     SendArticle(ArticlesHead.get(position), ArticlesLink.get(position),ArticlesImgSrc.get(position));
                     startActivity(intent);
                 }
             });
         }
+    }
+
+    private void SaveToken(String Token){
+
+        DatabaseReference databaseReference88;
+
+        databaseReference88 = FirebaseDatabase.getInstance().getReference("UserProfile").child(Key);
+        databaseReference88.child("UserToken").setValue(Token);
+
     }
 }

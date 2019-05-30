@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,33 +37,54 @@ public class CommentsActivity extends AppCompatActivity {
     ImageButton BackArrow;
     private ListView CommentsView;
     DatabaseReference databaseReferenceComments;
+    DatabaseReference databaseReferenceNotifications;
     ArrayList<String> KeysArrayList;
     ArrayList<String> KeysNumReplies;
     ArrayList<CommentSection> CommentsList;
     String Key = "";
     String Email = "";
+    String Token = "";
     TextView Article1;
     TextView CommentTitle1;
     CommentSection commentSection;
+    Notification notification;
     int NumReplies = 0;
+    int listItems = 1;
     String CommentType = "";
+
+    Button btnShowMore;
+    Button btnShowLess;
+    CustomAdapter customAdapter1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
+<<<<<<< HEAD
         Intent bundle = getIntent();
         String email = bundle.getStringExtra("Email");
         String key = bundle.getStringExtra("Key");
         String commentTitle = bundle.getStringExtra("CommentsTitle");
         String commentType = bundle.getStringExtra("CommentType");
         int NumberReplies = bundle.getIntExtra("Number of Replies", NumReplies);
+=======
+        Bundle bundle = getIntent().getExtras();
+        String email = bundle.getString("Email");
+        String key = bundle.getString("Key");
+        String commentTitle = bundle.getString("CommentsTitle");
+        String commentType = bundle.getString("CommentType");
+        String token = bundle.getString("Token");
+
+        int NumberReplies = bundle.getInt("NumberReplies");
+>>>>>>> a828b3eef5196a6cf02df338700595d3ea8f2508
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
+        databaseReferenceNotifications = FirebaseDatabase.getInstance().getReference().child("Notification");
 
         Key = key;
         Email = email;
+        Token = token;
         NumReplies = NumberReplies;
         CommentType = commentType;
 
@@ -85,11 +107,12 @@ public class CommentsActivity extends AppCompatActivity {
                onBackPressed();
             }
         });
+        /*
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ItemSelected = parent.getItemAtPosition(position).toString();
-
+/*
                 if (ItemSelected.equals("Sort by Like")){
  //                   sortByLikes();
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
@@ -110,7 +133,7 @@ public class CommentsActivity extends AppCompatActivity {
 
             }
         });
-
+*/
 
         if (key == "") {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
@@ -124,20 +147,92 @@ public class CommentsActivity extends AppCompatActivity {
                     KeysNumReplies = new ArrayList<>();
                     KeysArrayList = new ArrayList<>();
 
+
+
                     for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
                         commentSection = artistSnapshot.getValue(CommentSection.class);
 
                         if (commentSection.getCommentID().equals(Key)) {
 
+                            /*for (DataSnapshot artistSnapshots : dataSnapshot.getChildren()) {
+
+                               CommentSection commentSection1 = artistSnapshots.getValue(CommentSection.class);
+
+                                if (commentSection1.getCommentID().equals(artistSnapshot.getKey())) {
+
+                                    CommentsList.add(commentSection1);
+                                    KeysNumReplies.add(commentSection1.getNoReplies());
+
+                                }
+                            }*/
+
                             CommentsList.add(commentSection);
                             KeysArrayList.add(artistSnapshot.getKey());
                             KeysNumReplies.add(commentSection.getNoReplies());
                         }
                     }
+                    /**
+                    btnSortByLike.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sortByLikes();
+                            CommentsView = (ListView) findViewById(R.id.commentsListView);
+                            CustomAdapter customAdapter1 = new CustomAdapter();
+                            CommentsView.setAdapter(customAdapter1);
+                        }
+                    });
+
+                    btnSortByRcnt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            reverseArrayLists();
+                            CommentsView = (ListView) findViewById(R.id.commentsListView);
+                            CustomAdapter customAdapter1 = new CustomAdapter();
+                            CommentsView.setAdapter(customAdapter1);
+
+                        }
+                    });
+**/
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
+
+                    btnShowMore = new Button(CommentsActivity.this);
+                    btnShowMore.setText("show more");
+                    btnShowLess = new Button(CommentsActivity.this);
+                    btnShowLess.setText("show less");
+
+                    CommentsView.addFooterView(btnShowMore);
+                    CommentsView.addFooterView(btnShowLess);
+
+                    btnShowMore.setVisibility(View.VISIBLE);
+                    btnShowLess.setVisibility(View.GONE);
+
+                    customAdapter1 = new CustomAdapter();
                     CommentsView.setAdapter(customAdapter1);
+
+
+                     btnShowMore.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                listItems += CommentsList.size() - listItems;
+                                customAdapter1.notifyDataSetChanged();
+                                btnShowMore.setVisibility(View.GONE);
+                                btnShowLess.setVisibility(View.VISIBLE);
+                            }
+                     });
+
+
+                    btnShowLess.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            listItems =1;
+                            customAdapter1.notifyDataSetChanged();
+                            btnShowMore.setVisibility(View.VISIBLE);
+                            btnShowLess.setVisibility(View.GONE);
+                        }
+                    });
+
+
 
                     CommentButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -152,16 +247,20 @@ public class CommentsActivity extends AppCompatActivity {
                                 commentSection.setComment(NewComment);
                                 commentSection.setUserName(Email);
                                 commentSection.setCommentID(Key);
+                                commentSection.setCommentToken(Token);
                                 databaseReferenceComments.push().setValue(commentSection);
 
                                 DatabaseReference databaseReference99;
                                 if (CommentType.equals("Article")) {
                                     databaseReference99 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
                                     databaseReference99.child("noArticleReplies").setValue(String.valueOf(NumReplies += 1));
+
                                 } else if (CommentType.equals("Comment")) {
 
                                 databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(Key);
                                     databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies += 1));
+                                    databaseReference99.child("userComment").setValue(Email);
+
                                 }
 
                                 CommentsList.add(commentSection);
@@ -200,11 +299,21 @@ public class CommentsActivity extends AppCompatActivity {
 
     }
 
+    public void Hierarchialdata() {
+
+
+    }
+
     private class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
+<<<<<<< HEAD
            return 0;
+=======
+
+            return listItems;
+>>>>>>> a828b3eef5196a6cf02df338700595d3ea8f2508
         }
 
         @Override
@@ -280,6 +389,19 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference8.child("noCommentDislikes").setValue(commentSectionLike.getNoCommentDislikes());
                     databaseReference8.child("commentLikedList").setValue(commentSectionLike.getCommentLikedList());
                     databaseReference8.child("commentDislikedList").setValue(commentSectionLike.getCommentDislikedList());
+                   // databaseReference8.child("commentToken").setValue(Token);
+                    databaseReference8.child("userLike").setValue(Email);
+
+                    notification = new Notification();
+
+                    notification.setNotificationFrom(Email);
+                    notification.setNotificationTo(commentSectionLike.getUserName());
+                    notification.setNotificationBody(commentSectionLike.getComment());
+                    notification.setNotificationTitle("Liked Your Comment");
+                    //notification.setNotificationToken(commentSectionLike.getCommentToken());
+                    databaseReferenceNotifications.push().setValue(notification);
+
+
 
                 }
             });
@@ -299,9 +421,23 @@ public class CommentsActivity extends AppCompatActivity {
                     databaseReference7.child("noCommentDislikes").setValue(commentSectionDislike.getNoCommentDislikes());
                     databaseReference7.child("commentLikedList").setValue(commentSectionDislike.getCommentLikedList());
                     databaseReference7.child("commentDislikedList").setValue(commentSectionDislike.getCommentDislikedList());
+                 //   databaseReference7.child("commentToken").setValue(Token);
+                    databaseReference7.child("userDislike").setValue(Email);
+
+                    notification = new Notification();
+
+                    notification.setNotificationFrom(Email);
+                    notification.setNotificationTo(commentSectionDislike.getUserName());
+                    notification.setNotificationBody(commentSectionDislike.getComment());
+                    notification.setNotificationTitle("Disliked Your Comment");
+                 //   notification.setNotificationToken(commentSectionDislike.getCommentToken());
+                    databaseReferenceNotifications.push().setValue(notification);
+
+
                 }
             });
             return convertView1;
         }
     }
+
 }

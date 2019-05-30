@@ -4,6 +4,9 @@ public class CommentSection {
 
     private String CommentID = "abcdefgh";
     private String Comment = "Sample Comment";
+    private String UserLike = "";
+    private String UserDislike = "";
+    private String UserComment = "";
     private String UserName = "Abdullah";
     private String CommentTime = "NoDate";
     private String CommentRate = "None";
@@ -12,6 +15,31 @@ public class CommentSection {
     private String NoReplies = "0";
     private String CommentLikedList =  "User1/User2";
     private String CommentDislikedList =  "User1/User2";
+    private String CommentToken =  "";
+
+    public String getUserLike() {
+        return UserLike;
+    }
+
+    public void setUserLike(String userLike) {
+        UserLike = userLike;
+    }
+
+    public String getUserDislike() {
+        return UserDislike;
+    }
+
+    public void setUserDislike(String userDislike) {
+        UserDislike = userDislike;
+    }
+
+    public String getCommentToken() {
+        return CommentToken;
+    }
+
+    public void setCommentToken(String commentToken) {
+        CommentToken = commentToken;
+    }
 
     public String getCommentLikedList() {
         return CommentLikedList;
@@ -100,18 +128,21 @@ public class CommentSection {
 
         if(CommentLikedList.contains(User)){
             NoLikes-=1;
+            UserLike = "";
             CommentLikedList = RemoveUserFromLikedCommentList(User);
         }
 
         else if(CommentDislikedList.contains(User)){
             NoDislikes -= 1;
             NoLikes+=1;
+            UserLike = User;
             CommentDislikedList = RemoveUserFromDislikedCommentList(User);
             CommentLikedList = AddUserToLikedList(User);
         }
 
         else{
             NoLikes+=1;
+            UserLike = User;
             CommentLikedList = AddUserToLikedList(User);
         }
 
@@ -128,18 +159,21 @@ public class CommentSection {
 
         if(CommentDislikedList.contains(User)){
             NoDislikes-=1;
+            UserDislike = "";
             CommentDislikedList = RemoveUserFromDislikedCommentList(User);
         }
 
         else if(CommentLikedList.contains(User)){
             NoDislikes += 1;
             NoLikes -=1;
+            UserDislike = User;
             CommentDislikedList = AddUserToDislikedList(User);
             CommentLikedList = RemoveUserFromLikedCommentList(User);
         }
 
         else{
             NoDislikes+=1;
+            UserDislike = User;
             CommentDislikedList = AddUserToDislikedList(User);
         }
 
