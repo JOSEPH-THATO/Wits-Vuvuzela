@@ -237,3 +237,13 @@ public class CommentSection {
         return NewList;
     }
 }
+/*
+*             convertView.setLayoutParams(params);
+
+ LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            .setLayoutParams(params);
+ *
+* */
