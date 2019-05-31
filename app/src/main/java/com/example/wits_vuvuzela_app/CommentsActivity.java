@@ -155,7 +155,7 @@ public class CommentsActivity extends AppCompatActivity {
                         }
 
                     }
-/*
+
                     if(sortBy.equals("Recent")){
                         Collections.reverse(FullCommentsList);
                         Collections.reverse(CommentsList);
@@ -177,7 +177,6 @@ public class CommentsActivity extends AppCompatActivity {
                             }
                         }
                         CommentsList = CommentsList2;
-
                     }
 
                     else if(sortBy.equals("Likes")){
@@ -206,7 +205,6 @@ public class CommentsActivity extends AppCompatActivity {
                                 String CommentKey = commentSection.getCommentKey();
 
                                 CommentsList2.add(commentSection);
-                                KeysNumReplies.add(commentSection.getNoReplies());
 
                                 Hierarchialdata(CommentKey);
 
@@ -214,7 +212,7 @@ public class CommentsActivity extends AppCompatActivity {
                         }
                         CommentsList = CommentsList2;
                     }
-*/
+
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
                     CustomAdapter customAdapter1 = new CustomAdapter();
                     CommentsView.setAdapter(customAdapter1);
