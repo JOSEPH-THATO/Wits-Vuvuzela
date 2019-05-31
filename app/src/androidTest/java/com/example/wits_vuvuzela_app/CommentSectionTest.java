@@ -154,8 +154,8 @@ public class CommentSectionTest {
     @Test
     public void getCommentRate() {
 
-        String Actual = "";
-        String Expected = "None";
+        String Actual = "0";
+        String Expected = "0";
 
         CommentSection commentSection = new CommentSection();
 
@@ -167,9 +167,9 @@ public class CommentSectionTest {
     @Test
     public void setCommentRate() {
 
-        String Input = "Like";
+        String Input = "1";
         String Actual = "";
-        String Expected = "Like";
+        String Expected = "1";
 
         CommentSection commentSection = new CommentSection();
 

@@ -155,7 +155,7 @@ public class CommentSectionTest {
     public void getCommentRate() {
 
         String Actual = "";
-        String Expected = "None";
+        String Expected = "0";
 
         CommentSection commentSection = new CommentSection();
 
