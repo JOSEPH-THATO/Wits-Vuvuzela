@@ -154,7 +154,11 @@ public class CommentSectionTest {
     @Test
     public void getCommentRate() {
 
+<<<<<<< HEAD
         String Actual = "0";
+=======
+        String Actual = "";
+>>>>>>> 0b5d7ee9ca1fc68c078adf76dbe44c3ee8963211
         String Expected = "0";
 
         CommentSection commentSection = new CommentSection();

@@ -50,6 +50,7 @@ public class CommentsActivityTest {
         };
     }*/
 
+<<<<<<< HEAD
         /*    @Test
             public void TestViews() {
                 CommentsActivity commentsActivity = new CommentsActivity();
@@ -59,6 +60,8 @@ public class CommentsActivityTest {
                 }
 
             }*/
+=======
+>>>>>>> 0b5d7ee9ca1fc68c078adf76dbe44c3ee8963211
 
             @Test
             public void TestCommentsActivity() {
