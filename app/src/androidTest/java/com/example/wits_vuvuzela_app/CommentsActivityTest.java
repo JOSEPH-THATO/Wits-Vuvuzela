@@ -50,15 +50,6 @@ public class CommentsActivityTest {
         };
     }*/
 
-            @Test
-            public void TestViews() {
-                CommentsActivity commentsActivity = new CommentsActivity();
-                if (commentsActivity.customAdapter1 != null) {
-                    View listview = (commentsActivity).findViewById(R.id.listview);
-                    assertNotNull(listview);
-                }
-
-            }
 
             @Test
             public void TestCommentsActivity() {
