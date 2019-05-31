@@ -9,6 +9,10 @@ public class Notification {
     private String NotificationBody = "";
     private String NotificationToken = "";
 
+    public void setNotificationToken(String notificationToken) {
+        NotificationToken = notificationToken;
+    }
+
     public String getNotificationFrom() {
         return NotificationFrom;
     }

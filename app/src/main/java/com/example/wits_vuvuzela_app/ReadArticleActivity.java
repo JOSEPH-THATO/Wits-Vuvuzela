@@ -72,7 +72,18 @@ public class ReadArticleActivity extends AppCompatActivity {
         Token = token;
         head = heading;
 
+
         SetUpUI();
+
+        ArticleHeading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReadArticleActivity.this, NotificationsActivity.class);
+                intent.putExtra("email", Email);
+                startActivity(intent);
+            }
+        });
+
 
         ArticleImg.setVisibility(View.GONE);
 
@@ -234,7 +245,12 @@ public class ReadArticleActivity extends AppCompatActivity {
                     }
 
                     else {
-                        words += mArticleBody;
+                        if(words.contains("Photo:") || words.contains("FEATURED IMAGE:") || words.contains("RELATED ARTICLES:")){
+                            continue;
+                        }
+                        else {
+                            words += (" " + mArticleBody);
+                        }
                     }
                 }
             } catch (Exception e) {

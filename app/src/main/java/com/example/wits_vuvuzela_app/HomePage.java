@@ -70,7 +70,7 @@ public class HomePage extends AppCompatActivity {
 
         Intent bundle = getIntent();
         String email =   bundle.getStringExtra("Email");
-         Email = email;
+        Email = email;
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Article");
         databaseReference2 = FirebaseDatabase.getInstance().getReference().child("UserProfile");
@@ -190,7 +190,7 @@ public class HomePage extends AppCompatActivity {
                 Elements mElementDataSize = mBlogDocument.select("div[class=el-dbe-blog-extra block_extended]");
                 int mElementSize = mElementDataSize.size();
 
-                for (int i = 0; i < 20; i++) {
+                for (int i = 0; i < 23; i++) {
 
                     Elements mElementArticle = mBlogDocument.select("h2[class=entry-title]").select("a[href]").eq(i);
                     String mArticleHead = mElementArticle.text();
@@ -204,15 +204,14 @@ public class HomePage extends AppCompatActivity {
                     Author1.add(mAuthorName);
                     words += mAuthorName;
 
-                    Elements mElementAuthorDate = mBlogDocument.select("span[class=published]").eq(i);
+                    Elements mElementAuthorDate = mBlogDocument.select("span[class=published]").eq(i+12);
                     String mAuthorDate = mElementAuthorDate.text();
-
                     Date1.add(mAuthorDate);
 
                     String mArticleLink = mElementArticle.attr("href");
                     Link1.add(mArticleLink);
 
-                    Elements img = mBlogDocument.select("div.post-media-container").select("img").eq(i);
+                    Elements img = mBlogDocument.select("div.post-media-container").select("img").eq(i+12);
                     String ImgSrc = img.attr("src");
                     ImgSrc1.add(ImgSrc);
 

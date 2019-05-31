@@ -38,14 +38,12 @@ import java.util.ArrayList;
 
 public class NotificationsActivity extends AppCompatActivity {
 
-    DatabaseReference databaseReference;
-    ListView listView;
+    DatabaseReference databaseReferencess;
+    private ListView listView;
     ArrayList<String> ArticlesBody;
     ArrayList<String> ArticlesTitle;
     String Email="";
-    String Key = "";
     ProgressBar HomePageBar;
-    String User = "abc";
     Notification notification;
 
     @Override
@@ -59,7 +57,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
         Toast.makeText(NotificationsActivity.this,"email = " + Email ,Toast.LENGTH_SHORT).show();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Notification");
+        databaseReferencess = FirebaseDatabase.getInstance().getReference().child("Notification");
 
         HomePageBar = (ProgressBar)findViewById(R.id.HomePageBar1);
         HomePageBar.setVisibility(View.VISIBLE);
@@ -69,18 +67,26 @@ public class NotificationsActivity extends AppCompatActivity {
         ArticlesBody = new ArrayList<>();
         ArticlesTitle = new ArrayList<>();
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReferencess.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
+                    notification = new Notification();
+
                     notification = artistSnapshot.getValue(Notification.class);
 
-                    if (notification.getNotificationTo().equals(Email)) {
+                    Toast.makeText(NotificationsActivity.this,"email n= " + notification.getNotificationTo() ,Toast.LENGTH_SHORT).show();
+
+                    if (notification.getNotificationTo().contains(Email)) {
+                       // Toast.makeText(NotificationsActivity.this,"email j= " +  ,Toast.LENGTH_SHORT).show();
+
                         ArticlesBody.add(notification.getNotificationBody());
                         ArticlesTitle.add(notification.getNotificationTitle());
                     }
+                    Toast.makeText(NotificationsActivity.this,"email hb= " + Email ,Toast.LENGTH_SHORT).show();
+
                 }
             }
             @Override

@@ -2,6 +2,7 @@ package com.example.wits_vuvuzela_app;
 
 public class CommentSection {
 
+    private String CommentKey = "";
     private String CommentID = "abcdefgh";
     private String Comment = "Sample Comment";
     private String UserLike = "";
@@ -16,6 +17,22 @@ public class CommentSection {
     private String CommentLikedList =  "User1/User2";
     private String CommentDislikedList =  "User1/User2";
     private String CommentToken =  "";
+
+    public String getCommentKey() {
+        return CommentKey;
+    }
+
+    public void setCommentKey(String commentKey) {
+        CommentKey = commentKey;
+    }
+
+    public String getUserComment() {
+        return UserComment;
+    }
+
+    public void setUserComment(String userComment) {
+        UserComment = userComment;
+    }
 
     public String getUserLike() {
         return UserLike;

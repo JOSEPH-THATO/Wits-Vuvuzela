@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelReader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,25 +31,26 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Comment;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class CommentsActivity extends AppCompatActivity {
 
     EditText EditComment;
+    LinearLayout CommentLayoutMain;
     ImageView CommentButton;
     ImageButton BackArrow;
     private ListView CommentsView;
     DatabaseReference databaseReferenceComments;
     DatabaseReference databaseReferenceNotifications;
-    ArrayList<String> KeysArrayList;
     ArrayList<String> KeysNumReplies;
-    ArrayList<String> CommentIndent;
     ArrayList<CommentSection> CommentsList;
-    ArrayList<String> FullKeysArrayList;
+    ArrayList<CommentSection> CommentsList2;
     ArrayList<String> FullKeysNumReplies;
-    ArrayList<String> FullCommentIndent;
     ArrayList<CommentSection> FullCommentsList;
     String Key = "";
     String Email = "";
@@ -59,10 +62,13 @@ public class CommentsActivity extends AppCompatActivity {
     int NumReplies = 0;
     int listItems = 1;
     String CommentType = "";
+    String CurrentDate = "";
+    String CurrentTime = "";
+    Spinner spinner = null;
 
-    Button btnShowMore;
-    Button btnShowLess;
-    CustomAdapter customAdapter1;
+  //  Button btnShowMore;
+  //  Button btnShowLess;
+  //  CustomAdapter customAdapter1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +85,15 @@ public class CommentsActivity extends AppCompatActivity {
 
         databaseReferenceComments = FirebaseDatabase.getInstance().getReference().child("CommentSection");
         databaseReferenceNotifications = FirebaseDatabase.getInstance().getReference().child("Notification");
+        CommentLayoutMain = (LinearLayout)findViewById(R.id.CommentLayoutMain);
 
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        String time = format.format(calendar.getTime());
+
+        CurrentTime = time;
+        CurrentDate = currentDate;
         Key = key;
         Email = email;
         Token = token;
@@ -93,7 +107,7 @@ public class CommentsActivity extends AppCompatActivity {
         BackArrow = (ImageButton) findViewById(R.id.backArrow);
         CommentTitle1.setText(commentTitle);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(CommentsActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sort_by));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(myAdapter);
@@ -104,33 +118,6 @@ public class CommentsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        /*
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String ItemSelected = parent.getItemAtPosition(position).toString();
-/*
-                if (ItemSelected.equals("Sort by Like")){
- //                   sortByLikes();
-                    CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
-//                    CommentsView.setAdapter(customAdapter1);
-                }
-                else if(ItemSelected.equals("Sort by recent")){
-
-                    reverseArrayLists();
-                    CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
-                    CommentsView.setAdapter(customAdapter1);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-*/
 
         if (key == "") {
             Toast.makeText(CommentsActivity.this, "No Key Found ", Toast.LENGTH_LONG).show();
@@ -140,26 +127,32 @@ public class CommentsActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    RunSpinner();
+
+                    CommentLayoutMain.setVisibility(View.VISIBLE);
+
                     CommentsList = new ArrayList<>();
                     KeysNumReplies = new ArrayList<>();
-                    KeysArrayList = new ArrayList<>();
-                    CommentIndent = new ArrayList<>();
 
                     FullCommentsList = new ArrayList<>();
                     FullKeysNumReplies = new ArrayList<>();
-                    FullKeysArrayList = new ArrayList<>();
-                    FullCommentIndent = new ArrayList<>();
 
                     for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
                         commentSection = artistSnapshot.getValue(CommentSection.class);
 
                         FullCommentsList.add(commentSection);
-                        FullKeysArrayList.add(artistSnapshot.getKey());
                         FullKeysNumReplies.add(commentSection.getNoReplies());
-                        FullCommentIndent.add(commentSection.getCommentRate());
+                        commentSection.setCommentKey(artistSnapshot.getKey());
+
+                        DatabaseReference databaseReference55;
+                        databaseReference55 = FirebaseDatabase.getInstance().getReference("CommentSection").child(artistSnapshot.getKey());
+                        databaseReference55.child("commentKey").setValue(artistSnapshot.getKey());
                     }
 
+                   //  RunSpinner();
+
+                     Toast.makeText(CommentsActivity.this,"You have disliked this comment",Toast.LENGTH_SHORT).show();
 
                     for (DataSnapshot artistSnapshot : dataSnapshot.getChildren()) {
 
@@ -167,41 +160,18 @@ public class CommentsActivity extends AppCompatActivity {
 
                         if (commentSection.getCommentID().equals(Key)) {
 
-                            String CommentKey = artistSnapshot.getKey();
+                            String CommentKey = commentSection.getCommentKey();
 
                             CommentsList.add(commentSection);
-                            KeysArrayList.add(artistSnapshot.getKey());
                             KeysNumReplies.add(commentSection.getNoReplies());
-                            CommentIndent.add(commentSection.getCommentRate());
 
                             Hierarchialdata(CommentKey);
 
-                            //String commentKey = commentSection.getCommentID();
-                            //retrieveReplies(commentKey, dataSnapshot.getChildren());
                         }
                     }
-                    /**
-                     btnSortByLike.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                    sortByLikes();
-                    CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
-                    CommentsView.setAdapter(customAdapter1);
-                    }
-                    });
 
-                     btnSortByRcnt.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                    reverseArrayLists();
                     CommentsView = (ListView) findViewById(R.id.commentsListView);
-                    CustomAdapter customAdapter1 = new CustomAdapter();
-                    CommentsView.setAdapter(customAdapter1);
-
-                    }
-                    });
-                     **/
-                    CommentsView = (ListView) findViewById(R.id.commentsListView);
-
+/*
                     btnShowMore = new Button(CommentsActivity.this);
                     btnShowMore.setText("show more");
                     btnShowLess = new Button(CommentsActivity.this);
@@ -214,9 +184,9 @@ public class CommentsActivity extends AppCompatActivity {
                     btnShowLess.setVisibility(View.GONE);
 
                     customAdapter1 = new CustomAdapter();
-                    CommentsView.setAdapter(customAdapter1);
+                    CommentsView.setAdapter(customAdapter1);*/
 
-
+/*
                     btnShowMore.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -237,7 +207,7 @@ public class CommentsActivity extends AppCompatActivity {
                             btnShowLess.setVisibility(View.GONE);
                         }
                     });
-
+*/
                     CommentButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -253,17 +223,14 @@ public class CommentsActivity extends AppCompatActivity {
                                 commentSection.setCommentID(Key);
                                 commentSection.setCommentToken(Token);
                                 commentSection.setCommentRate("0");
+                                commentSection.setCommentTime(CurrentTime+" "+CurrentDate);
                                 databaseReferenceComments.push().setValue(commentSection);
 
                                 Toast.makeText(CommentsActivity.this, "Your comment has been added", Toast.LENGTH_SHORT).show();
 
-
                                 DatabaseReference databaseReference99;
-                                if (CommentType.equals("Article")) {
-                                    databaseReference99 = FirebaseDatabase.getInstance().getReference("Article").child(Key);
-                                    databaseReference99.child("noArticleReplies").setValue(String.valueOf(NumReplies += 1));
 
-                                } else if (CommentType.equals("Comment")) {
+                                if (CommentType.equals("Comment")) {
 
                                     databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(Key);
                                     databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies += 1));
@@ -291,36 +258,7 @@ public class CommentsActivity extends AppCompatActivity {
         }
     }
 
-    private void retrieveReplies(String commentKey, Iterable<DataSnapshot> children) {
-        for (DataSnapshot artistSnapshot : children) {
-            CommentSection commentSection = artistSnapshot.getValue(CommentSection.class);
-            if (commentSection != null && commentSection.getCommentID().equals(commentKey)) {
-                CommentsList.add(commentSection);
-                KeysArrayList.add(artistSnapshot.getKey());
-                KeysNumReplies.add(commentSection.getNoReplies());
-                retrieveReplies(commentSection.getCommentID(), children);
-            }
-        }
-    }
-
-  /*public void sortByLikes() {
->>>>>>> 1bcaa90be40fbe43027199467808a6bd1c772df5
-
-        Collections.sort(CommentsList, new Comparator<CommentSection>(){
-            public int compare(CommentSection s1, CommentSection s2) {
-                return s1.getNoCommentLikes().compareToIgnoreCase(s2.getNoCommentLikes());
-            }
-        });
-        Collections.reverse(CommentsList);
-
-    }*/
-
-    public void reverseArrayLists() {
-        Collections.reverse(CommentsList);
-    }
-
     public void Hierarchialdata(String CommentKey) {
-
 
         for (int k = 0; k < FullCommentsList.size(); ++k) {
 
@@ -328,10 +266,7 @@ public class CommentsActivity extends AppCompatActivity {
 
             if (commentSection2.getCommentID().equals(CommentKey)) {
                 CommentsList.add(commentSection2);
-                KeysArrayList.add(FullKeysArrayList.get(k));
-                //  CommentIndent.add(FullCommentIndent.get(k));
-                Hierarchialdata(FullKeysArrayList.get(k));
-
+                Hierarchialdata(FullCommentsList.get(k).getCommentKey());
             }
         }
     }
@@ -361,17 +296,9 @@ public class CommentsActivity extends AppCompatActivity {
 
             View convertView1 = layoutInflater.inflate(R.layout.reply_layout, parent, false);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
+            int indent = Integer.parseInt(CommentsList.get(position).getCommentRate());
 
-            // int indent = Integer.parseInt(CommentsList.get(position).getCommentRate());
-
-            params.setMarginStart(150);
-
-            parent.setLayoutParams(params);
-
+            LinearLayout layoutm = convertView1.findViewById(R.id.replylayoutt);
             TextView textView_NumLikes = convertView1.findViewById(R.id.likeNum);
             TextView textView_NumDislikes = convertView1.findViewById(R.id.dislikeNum);
             TextView textView_NumComments = convertView1.findViewById(R.id.commentNum);
@@ -382,10 +309,39 @@ public class CommentsActivity extends AppCompatActivity {
             TextView textView_author = convertView1.findViewById(R.id.commentID);
             final EditText editText_comment = convertView1.findViewById(R.id.editCommentsl);
             ImageView button_comment = convertView1.findViewById(R.id.commentBtnsl);
+            Button showless = convertView1.findViewById(R.id.buttonless);
+            Button showmore = convertView1.findViewById(R.id.buttonmore);
             final LinearLayout linearLayout = convertView1.findViewById(R.id.CommentLayout);
 
             linearLayout.setVisibility(View.GONE);
 
+            showless.setVisibility(View.GONE);
+            showmore.setVisibility(View.GONE);
+
+           showless.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommentsList.subList(position+1,CommentsList.size()).clear();
+                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+                    CustomAdapter customAdapter1 = new CustomAdapter();
+                    CommentsView.setAdapter(customAdapter1);
+                }
+            });
+            showmore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    for(int i = position;i< CommentsList.size();++i){
+                        CommentsList.add(i,FullCommentsList.get(i));
+                    }
+
+                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+                    CustomAdapter customAdapter1 = new CustomAdapter();
+                    CommentsView.setAdapter(customAdapter1);
+                }
+            });
+
+            layoutm.setPadding(indent,0,0,0);
             textView_heading.setText(CommentsList.get(position).getUserName());
             textView_author.setText(CommentsList.get(position).getComment());
             textView_NumLikes.setText(CommentsList.get(position).getNoCommentLikes());
@@ -403,6 +359,14 @@ public class CommentsActivity extends AppCompatActivity {
                 thumbsdownImg.setImageResource(R.drawable.dislikebw);
             }
 
+            if(CommentsList.size() != 0 && CommentsList.size() != 1 && position != CommentsList.size()) {
+                if (Integer.parseInt(CommentsList.get(position).getCommentRate()) < Integer.parseInt(CommentsList.get(position + 1).getCommentRate())) {
+
+                    showless.setVisibility(View.VISIBLE);
+
+                }
+            }
+
             button_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -414,20 +378,20 @@ public class CommentsActivity extends AppCompatActivity {
                     if (!NewComment.equals("")) {
 
                         commentSection.setComment(NewComment);
-                        commentSection.setUserName(Email);
-                        commentSection.setCommentID(KeysArrayList.get(position));
+                        commentSection.setUserName(CommentsList.get(position).getCommentRate());
+                        commentSection.setCommentID(CommentsList.get(position).getCommentKey());
                         commentSection.setCommentToken(Token);
-                        //newindent+=10;
+                        commentSection.setCommentTime(CurrentDate);
                         int indent = Integer.parseInt(CommentsList.get(position).getCommentRate());
-
-                        indent += 100;
+                        indent += 80;
                         commentSection.setCommentRate(String.valueOf(indent));
                         databaseReferenceComments.push().setValue(commentSection);
 
                         DatabaseReference databaseReference99;
 
-                        databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeysArrayList.get(position));
-                        // databaseReference99.child("noReplies").setValue(String.valueOf(NumReplies += 1));
+                        databaseReference99 = FirebaseDatabase.getInstance().getReference("CommentSection").child(CommentsList.get(position).getCommentKey());
+                        int NoReplies = Integer.parseInt(CommentsList.get(position).getNoReplies());
+                        databaseReference99.child("noReplies").setValue(String.valueOf(NoReplies+= 1));
                         databaseReference99.child("userComment").setValue(Email);
 
                         CommentsList.add(commentSection);
@@ -437,7 +401,6 @@ public class CommentsActivity extends AppCompatActivity {
                         CommentsView = (ListView) findViewById(R.id.commentsListView);
                         CustomAdapter customAdapter1 = new CustomAdapter();
                         CommentsView.setAdapter(customAdapter1);
-
                     }
                 }
             });
@@ -446,6 +409,8 @@ public class CommentsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     linearLayout.setVisibility(View.VISIBLE);
+                    CommentLayoutMain.setVisibility(View.GONE);
+
                 }
             });
 
@@ -460,14 +425,14 @@ public class CommentsActivity extends AppCompatActivity {
                     commentSectionLike.LikeComment(Email);
 
                     DatabaseReference databaseReference8;
-                    databaseReference8 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeysArrayList.get(position));
-                    databaseReference8.child("commentRate").setValue("Like");
+                    databaseReference8 = FirebaseDatabase.getInstance().getReference("CommentSection").child(CommentsList.get(position).getCommentKey());
+                  //  databaseReference8.child("commentRate").setValue("Like");
                     databaseReference8.child("noCommentLikes").setValue(commentSectionLike.getNoCommentLikes());
                     databaseReference8.child("noCommentDislikes").setValue(commentSectionLike.getNoCommentDislikes());
                     databaseReference8.child("commentLikedList").setValue(commentSectionLike.getCommentLikedList());
                     databaseReference8.child("commentDislikedList").setValue(commentSectionLike.getCommentDislikedList());
+                  //  databaseReference8.child("commentTime").setValue(CurrentDate);
                     databaseReference8.child("userDislike").setValue(commentSectionLike.getUserDislike());
-                    // databaseReference8.child("commentToken").setValue(Token);
                     databaseReference8.child("userLike").setValue(commentSectionLike.getUserLike());
 
                     notification = new Notification();
@@ -491,16 +456,14 @@ public class CommentsActivity extends AppCompatActivity {
                     commentSectionDislike.DislikeComment(Email);
 
                     DatabaseReference databaseReference7;
-                    databaseReference7 = FirebaseDatabase.getInstance().getReference("CommentSection").child(KeysArrayList.get(position));
-                    databaseReference7.child("commentRate").setValue("Dislike");
+                    databaseReference7 = FirebaseDatabase.getInstance().getReference("CommentSection").child(CommentsList.get(position).getCommentKey());
                     databaseReference7.child("noCommentLikes").setValue(commentSectionDislike.getNoCommentLikes());
                     databaseReference7.child("noCommentDislikes").setValue(commentSectionDislike.getNoCommentDislikes());
                     databaseReference7.child("commentLikedList").setValue(commentSectionDislike.getCommentLikedList());
                     databaseReference7.child("commentDislikedList").setValue(commentSectionDislike.getCommentDislikedList());
+                    //databaseReference7.child("commentTime").setValue(CurrentDate);
                     databaseReference7.child("userDislike").setValue(commentSectionDislike.getUserDislike());
                     databaseReference7.child("userLike").setValue(commentSectionDislike.getUserLike());
-                    //   databaseReference7.child("commentToken").setValue(Token);
-                    databaseReference7.child("userDislike").setValue(commentSectionDislike.getUserDislike());
 
                     notification = new Notification();
 
@@ -514,4 +477,112 @@ public class CommentsActivity extends AppCompatActivity {
             return convertView1;
         }
     }
+
+    public void sortByLikes(){
+        Collections.sort(FullCommentsList, new Comparator<CommentSection>(){
+            public int compare(CommentSection s1, CommentSection s2) {
+                return s1.getNoCommentLikes().compareToIgnoreCase(s2.getNoCommentLikes());
+            }
+        });
+        Collections.reverse(FullCommentsList);
+
+        Collections.sort(CommentsList, new Comparator<CommentSection>(){
+            public int compare(CommentSection s1, CommentSection s2) {
+                return s1.getNoCommentLikes().compareToIgnoreCase(s2.getNoCommentLikes());
+            }
+        });
+        Collections.reverse(CommentsList);
+
+        CommentsList2 = new ArrayList<>();
+
+        for (int i = 0;i < CommentsList.size();++i) {
+
+           CommentSection commentSection = CommentsList.get(i);
+
+            if (commentSection.getCommentID().equals(Key)) {
+
+                String CommentKey = commentSection.getCommentKey();
+
+                CommentsList2.add(commentSection);
+                KeysNumReplies.add(commentSection.getNoReplies());
+
+                Hierarchialdata(CommentKey);
+
+            }
+        }
+        CommentsList = CommentsList2;
+
+        CommentsView = (ListView) findViewById(R.id.commentsListView);
+        CustomAdapter customAdapter1 = new CustomAdapter();
+        CommentsView.setAdapter(customAdapter1);
+    }
+
+    public void reverseArrayLists() {
+
+        Collections.reverse(FullCommentsList);
+        Collections.reverse(CommentsList);
+
+        CommentsList2 = new ArrayList<>();
+
+        for (int i = 0;i < CommentsList.size();++i) {
+
+            CommentSection commentSection = CommentsList.get(i);
+
+            if (commentSection.getCommentID().equals(Key)) {
+
+                String CommentKey = commentSection.getCommentKey();
+
+                CommentsList2.add(commentSection);
+                KeysNumReplies.add(commentSection.getNoReplies());
+
+                Hierarchialdata(CommentKey);
+
+            }
+        }
+        CommentsList = CommentsList2;
+
+        CommentsView = (ListView) findViewById(R.id.commentsListView);
+        CustomAdapter customAdapter1 = new CustomAdapter();
+        CommentsView.setAdapter(customAdapter1);
+    }
+
+    public void RunSpinner(){
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ItemSelected = parent.getItemAtPosition(position).toString();
+
+                if (ItemSelected.equals("Sort by Like")){
+                    sortByLikes();
+                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+                    CustomAdapter customAdapter1 = new CustomAdapter();
+                    CommentsView.setAdapter(customAdapter1);
+                }
+                else if(ItemSelected.equals("Sort by recent")){
+                    reverseArrayLists();
+                    CommentsView = (ListView) findViewById(R.id.commentsListView);
+                    CustomAdapter customAdapter1 = new CustomAdapter();
+                    CommentsView.setAdapter(customAdapter1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 }
+
+/*
+    private void retrieveReplies(String commentKey, Iterable<DataSnapshot> children) {
+        for (DataSnapshot artistSnapshot : children) {
+            CommentSection commentSection = artistSnapshot.getValue(CommentSection.class);
+            if (commentSection != null && commentSection.getCommentID().equals(commentKey)) {
+                CommentsList.add(commentSection);
+                KeysNumReplies.add(commentSection.getNoReplies());
+                retrieveReplies(commentSection.getCommentID(), children);
+            }
+        }
+    }*/

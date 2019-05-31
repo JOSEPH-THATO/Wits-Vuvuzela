@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:id="@+id/replylayoutt"
+    android:layout_marginStart="50dp"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -20,8 +22,8 @@
             android:id="@+id/CommentUser"
             android:textStyle="italic"
             android:textAlignment="textEnd"
+            android:textSize="10dp"
             android:layout_gravity="end"
-            android:textColor="@android:color/black"
             android:layout_height="wrap_content"
             android:text="User Name" />
 
@@ -39,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginStart="200dp"
         android:gravity="center_horizontal"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -48,26 +51,29 @@
 
         <ImageView
             android:id="@+id/likeCommentbtn"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="5dp"
             android:src="@drawable/ic_thumb_up_black_24dp" />
 
         <TextView
             android:id="@+id/likeNum"
-            android:layout_width="50dp"
+            android:layout_width="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:text="0"
             android:textSize="15dp" />
 
         <ImageView
             android:id="@+id/dislikeCommentbtn"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="5dp"
             android:src="@drawable/ic_thumb_down_black_24dp" />
 
         <TextView
             android:id="@+id/dislikeNum"
-            android:layout_width="50dp"
+            android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:layout_marginRight="10dp"
@@ -75,27 +81,21 @@
 
         <ImageButton
             android:id="@+id/commentCommentIconBtn"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:background="@android:color/white"
+            android:layout_marginRight="5dp"
             android:src="@drawable/ic_comment_black_24dp" />
 
         <TextView
             android:id="@+id/commentNum"
-            android:layout_width="50dp"
+            android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:layout_marginRight="10dp"
             android:text="0" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/background_dark"
-        android:text="TextView" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -123,4 +123,18 @@
             android:layout_weight=".2"
             android:padding="6dp"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Showless" />
+
+    <Button
+        android:id="@+id/buttonmore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Showmore" />
+
+
 </LinearLayout>

@@ -65,53 +65,52 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        Login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (Username.getText().toString() != "" && Password.getText().toString() != "") {
 
-                progressBar.setVisibility(View.VISIBLE);
-                Login.setVisibility(View.GONE);
+            Login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                firebaseAuth.signInWithEmailAndPassword(Username.getText().toString(),Password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                      if(task.isSuccessful()){
+                    progressBar.setVisibility(View.VISIBLE);
+                    Login.setVisibility(View.GONE);
 
-                          firebaseUser = firebaseAuth.getCurrentUser();
+                    firebaseAuth.signInWithEmailAndPassword(Username.getText().toString(), Password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                          if(firebaseUser.isEmailVerified()) {
-                              progressBar.setVisibility(View.GONE);
-                              Login.setVisibility(View.VISIBLE);
-                              EnterHomePage();
-                              Username.setText("");
-                              Password.setText("");
-                          }
+                                firebaseUser = firebaseAuth.getCurrentUser();
 
-                          else{
-                              progressBar.setVisibility(View.GONE);
-                              Login.setVisibility(View.VISIBLE);
-                              Toast.makeText(MainActivity.this,"Email not yet verified , Please Go To Your Email",Toast.LENGTH_SHORT).show();
-                          }
-                      }
-                      else {
+                                if (firebaseUser.isEmailVerified()) {
+                                    progressBar.setVisibility(View.GONE);
+                                    Login.setVisibility(View.VISIBLE);
+                                    EnterHomePage();
+                                    Username.setText("");
+                                    Password.setText("");
+                                } else {
+                                    progressBar.setVisibility(View.GONE);
+                                    Login.setVisibility(View.VISIBLE);
+                                    Toast.makeText(MainActivity.this, "Email not yet verified , Please Go To Your Email", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
 
-                          progressBar.setVisibility(View.GONE);
-                          Login.setVisibility(View.VISIBLE);
-                          Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
-                          Username.setError("Wrong Email of password");
-                      }
-                    }
-                });
-            }
-        });
+                                progressBar.setVisibility(View.GONE);
+                                Login.setVisibility(View.VISIBLE);
+                                Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                Username.setError("Wrong Email of password");
+                            }
+                        }
+                    });
+                }
+            });
 
-        Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EnterRegistrationPage();
-            }
-        });
-
+            Register.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EnterRegistrationPage();
+                }
+            });
+        }
     }
 
     private void EnterRegistrationPage() {
